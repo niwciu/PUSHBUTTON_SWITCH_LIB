@@ -2,5 +2,11 @@ out/
 Release/
 Debug/
 Build/
+.vscode/
+# HW test ingnored files
+.metadata/
+.cproject
+.project
+.settings/
 
 
