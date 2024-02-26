@@ -4,17 +4,17 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "build template_test",
+            "label": "build key_test",
             "type": "shell",
             "command": "make",
             "args": [
                 "all",
                 "-j12",
-                "-o template_test.o"
+                "-o key_test.o"
                 
             ],
             "options": {
-                "cwd": "${workspaceFolder}/test/template/out"
+                "cwd": "${workspaceFolder}/test/key/out"
             },
             "group": {
                 "kind": "build",
@@ -24,12 +24,12 @@
             // "dependsOn":["run lizard test"],
         },
         {
-            "label": "clean template_test",
+            "label": "clean key_test",
             "type": "shell",
             "command": "make clean",
             "args": [],
             "options": {
-                "cwd": "${workspaceFolder}/test/template/out"
+                "cwd": "${workspaceFolder}/test/key/out"
             },
             "group": {
                 "kind": "build",
@@ -38,11 +38,11 @@
         },
         {
             "type": "shell",
-            "label": "run template_test",
-            "command": "./template_test.exe",
+            "label": "run key_test",
+            "command": "./key_test.exe",
             "args": [],
             "options": {
-                "cwd": "${workspaceFolder}/test/template/out"
+                "cwd": "${workspaceFolder}/test/key/out"
             },
             "group": "test"
         },
