@@ -54,7 +54,7 @@ set(TEST_SRCS
     key_test_main.c
     key_test_runner.c
     key_test.c
-	#mock_module.c
+	mock_key_GPIO_driver.c
 )
 
 set(GLOBAL_DEFINES

@@ -1,4 +1,6 @@
 #include "unity/fixture/unity_fixture.h"
+#include "key_switch.h"
+#include "mock_key_GPIO_driver.h"
 
 // #include "tested_module.h"
 
@@ -14,7 +16,8 @@ TEST_TEAR_DOWN(key)
     /* Cleanup after every test */
 }
 
-TEST(key, FirstTest)
+TEST(key, WhenKey1InitThenKey1PinStateIsHigh)
 {
-    TEST_FAIL_MESSAGE("Implement your test!");
+    key_init(&KEY_1);
+    TEST_ASSERT_EQUAL(HIGH,KEY_1_PIN_STATE);
 }
