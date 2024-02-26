@@ -35,7 +35,7 @@ const key_driver_interface_t* KEY_2_GPIO_interface_get(void){
 
 static void key_1_gpio_init(void)
 {
-    
+    KEY_1_PIN_STATE=HIGH;
 }
 
 static void key_2_gpio_init(void)
