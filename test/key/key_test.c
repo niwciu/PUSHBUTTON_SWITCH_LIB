@@ -28,3 +28,43 @@ TEST(key, WhenKey2InitThenKey2PinStateIsHigh)
 
     TEST_ASSERT_EQUAL(HIGH,KEY_2_PIN_STATE);
 }
+
+TEST(key, GivenKey1InitAndIncTimerFunctionRegisteredWhenKey1PushAndPinStateIsStableForDebounceTimeThenChangeIncTestTimer)
+{
+    TEST_TIMER=0;
+    register_key_push_callback(&KEY_1,inc_test_tmer);
+    check_key_push(&KEY_1);
+    KEY_1.key_debounce_timer=DEBOUNCE_TIME;
+    check_key_push(&KEY_1);
+    TEST_ASSERT_EQUAL(1,TEST_TIMER);
+}
+
+// TEST(key, )
+// {
+
+//     TEST_FAIL_MESSAGE("added new test")
+// }
+
+// TEST(key, )
+// {
+
+//     TEST_FAIL_MESSAGE("added new test")
+// }
+
+// TEST(key, )
+// {
+
+//     TEST_FAIL_MESSAGE("added new test")
+// }
+
+// TEST(key, )
+// {
+
+//     TEST_FAIL_MESSAGE("added new test")
+// }
+
+// TEST(key, )
+// {
+
+//     TEST_FAIL_MESSAGE("added new test")
+// }
