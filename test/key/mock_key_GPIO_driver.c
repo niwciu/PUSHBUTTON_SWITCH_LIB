@@ -40,6 +40,7 @@ static void key_1_gpio_init(void)
 
 static void key_2_gpio_init(void)
 {
+    KEY_2_PIN_STATE=HIGH;
 }
 
 static enum PIN_state_e get_key_1_state(void)
