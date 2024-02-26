@@ -21,3 +21,9 @@ TEST(key, WhenKey1InitThenKey1PinStateIsHigh)
     key_init(&KEY_1);
     TEST_ASSERT_EQUAL(HIGH,KEY_1_PIN_STATE);
 }
+
+TEST(key, WhenKey2InitThenKey2PinStateIsHigh)
+{
+    key_init(&KEY_2);
+    TEST_ASSERT_EQUAL(HIGH,KEY_2_PIN_STATE);
+}
