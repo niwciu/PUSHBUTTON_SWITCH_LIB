@@ -9,6 +9,7 @@ TEST_GROUP(key);
 TEST_SETUP(key)
 {
     /* Init before every test */
+    init_keys();
 }
 
 TEST_TEAR_DOWN(key)
@@ -18,12 +19,12 @@ TEST_TEAR_DOWN(key)
 
 TEST(key, WhenKey1InitThenKey1PinStateIsHigh)
 {
-    key_init(&KEY_1);
+
     TEST_ASSERT_EQUAL(HIGH,KEY_1_PIN_STATE);
 }
 
 TEST(key, WhenKey2InitThenKey2PinStateIsHigh)
 {
-    key_init(&KEY_2);
+
     TEST_ASSERT_EQUAL(HIGH,KEY_2_PIN_STATE);
 }

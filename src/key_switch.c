@@ -21,19 +21,15 @@ typedef void *key_up_callback_func_p(void);
 key_t KEY_1;
 key_t KEY_2;
 
-void key_init(key_t *key)
+/**
+ * @brief  Function that initialize hardwer se they can work as inputs
+ */
+void init_keys(void)
 {
-    // get GPIO_driver_interface_addres
-    if(key==&KEY_1)
-    {
-        key->GPIO_interface=KEY_1_GPIO_interface_get();
-    }
-    else if (key==&KEY_2)
-    {
-        key->GPIO_interface=KEY_2_GPIO_interface_get();
-    }
-    
-    key->GPIO_interface->GPIO_init();
-    // 
+    KEY_1.GPIO_interface=KEY_1_GPIO_interface_get();
+    KEY_2.GPIO_interface=KEY_2_GPIO_interface_get();
+
+    KEY_1.GPIO_interface->GPIO_init();
+    KEY_2.GPIO_interface->GPIO_init();
 }
 

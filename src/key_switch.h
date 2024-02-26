@@ -31,7 +31,7 @@ typedef struct
 extern key_t KEY_1;
 extern key_t KEY_2;
 
-void key_init(key_t *key);
+void init_keys(void);
 
 #ifdef __cplusplus
 }
