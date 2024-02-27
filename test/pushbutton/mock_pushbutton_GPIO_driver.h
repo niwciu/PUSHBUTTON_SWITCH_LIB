@@ -9,8 +9,8 @@
  * 
  */
 #include <stdint.h>
-extern enum PIN_state_e KEY_1_PIN_STATE;
-extern enum PIN_state_e KEY_2_PIN_STATE;
+extern enum button_state_e PUSHBUTTON_1_STATE;
+extern enum button_state_e PUSHBUTTON_2_STATE;
 extern uint8_t TEST_TIMER;
 
-void inc_test_tmer(void);
+void inc_test_timer(void);

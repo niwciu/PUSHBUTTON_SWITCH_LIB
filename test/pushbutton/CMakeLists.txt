@@ -6,11 +6,11 @@
 #        For build using Unix Makefiles:
 #          	1. cmake -S./ -B out -G"Unix Makefiles"
 #			2. enter the "out" folder
-#          	3. make all -o key_test.o (-jXX additionaly to speed up)
+#          	3. make all -o pushbutton_test.o (-jXX additionaly to speed up)
 #        For build using Ninja:
 #          	1. cmake -S./ -B out -G"Ninja"
 # 			2. enter the "out" folder
-#         	3. ninja -C out -o key_test.o (optional with -V  and -jxx ->xx numnber of cores)
+#         	3. ninja -C out -o pushbutton_test.o (optional with -V  and -jxx ->xx numnber of cores)
 # additional custom targets for this project:
 # 		If lizard is installed and you are in the out folder:
 # 			1. make ccm -> code complexity metrix print in console
@@ -24,7 +24,7 @@
 #############################################################################################################################
 cmake_minimum_required(VERSION 3.10)
 
-project(key_test C)
+project(pushbutton_test C)
 
 add_subdirectory(../unity unity)
 
@@ -47,14 +47,14 @@ set(TEST_INCLUDE_DIRS
 )
 
 set(SRCS
-	../../src/key_switch.c
+	../../src/pushbutton_switch.c
 )
 
 set(TEST_SRCS
-    key_test_main.c
-    key_test_runner.c
-    key_test.c
-	mock_key_GPIO_driver.c
+    pushbutton_test_main.c
+    pushbutton_test_runner.c
+    pushbutton_test.c
+	mock_pushbutton_GPIO_driver.c
 )
 
 set(GLOBAL_DEFINES
