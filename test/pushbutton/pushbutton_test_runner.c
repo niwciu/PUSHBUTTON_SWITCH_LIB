@@ -13,7 +13,7 @@ TEST_GROUP_RUNNER(pushbutton)
    RUN_TEST_CASE(pushbutton, GivenKey1InitAndIncTimerFunctionRegisteredWhenKey1PushAndTestTimerIncrementedOnceWhenKey1ContinueslyPushedAndFirstRepetitionDelayPassThenTestTimerValueIs2);
    RUN_TEST_CASE(pushbutton, GivenKey1InitAndIncTimerFunctionRegisteredWhenKey1PushAndTestTimerIncrementedOnceWhenKey1ContinueslyPushedForTimeLessThenFirstRepetitionTimeThenTestTimerValueIs1);
    RUN_TEST_CASE(pushbutton, GivenKey1InitAndIncTimerFunctionRegisteredWhenKey1PushAndTestTimerIncrementedOnceWhenKey1ContinueslyPushedForTimeLongerThenFirstRepetitionDelayButShorterThenSecondRepetitionShouldAccourThenTestTimerValueIs2);
-   // RUN_TEST_CASE(pushbutton, );
+   RUN_TEST_CASE(pushbutton, GivenKey1InitAndIncTimerFunctionRegisteredWhenKey1PushForTimeEqualToReachDoubleRepetitionThenTestTimerValueIs3);
    // RUN_TEST_CASE(pushbutton, );
    // RUN_TEST_CASE(pushbutton, );
    // RUN_TEST_CASE(pushbutton, );
