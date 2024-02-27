@@ -22,6 +22,7 @@ typedef struct
 {
     pushbutton_driver_interface_t *GPIO_interface;                                         
     debounce_repetition_timer_t deb_rep_timer;
+    uint8_t REPETITION_FLAG;
     pushbutton_callback_t push_callback;
     pushbutton_callback_t up_callback;
     //
@@ -70,7 +71,6 @@ void check_button_push(enum pushbutton_e button_name,enum pushbutton_repetition_
     if (BUTTON != NULL)
     {
         enum button_state_e BUTTON_input_state = BUTTON->GPIO_interface->get_button_state();
-
         if (BUTTON_input_state == PUSHED)
         {
             if ((BUTTON->deb_rep_timer) == 1)
@@ -80,7 +80,15 @@ void check_button_push(enum pushbutton_e button_name,enum pushbutton_repetition_
                 
                 if(repetition==REPETITION_ON)
                 {
-                    BUTTON->deb_rep_timer = PUSHBUTTON_FIRST_REPETITION_TIME;
+                    if((BUTTON->REPETITION_FLAG)==0)
+                    {
+                        BUTTON->deb_rep_timer = PUSHBUTTON_FIRST_REPETITION_TIME;
+                        BUTTON->REPETITION_FLAG=1;
+                    }
+                    else
+                    {
+                         BUTTON->deb_rep_timer = PUSHBUTTON_CONTINUES_REPETITION_TIME;
+                    }
                 }
                 else
                 {
@@ -94,6 +102,7 @@ void check_button_push(enum pushbutton_e button_name,enum pushbutton_repetition_
         else
         {
             BUTTON->deb_rep_timer = PUSHBUTTON_DEBOUNCE_TIME;
+            BUTTON->REPETITION_FLAG=0;
         }
     }
 }
