@@ -7,7 +7,7 @@ TEST_GROUP_RUNNER(pushbutton)
    RUN_TEST_CASE(pushbutton, WhenKey2InitThenKey2PinStateIsHigh);
    RUN_TEST_CASE(pushbutton, GivenKey1InitAndIncTimerFunctionRegisteredWhenKey1PushAndPinStateIsStableForDebounceTimeThenChangeIncTestTimer);
 
-   // RUN_TEST_CASE(pushbutton, );
+   // RUN_TEST_CASE(pushbutton, GivenKey2InitAndIncTimerFunctionRegisteredWhenKey2PushAndPinStateIsStableForDebounceTimeThenChangeIncTestTimer);
    // RUN_TEST_CASE(pushbutton, );
    // RUN_TEST_CASE(pushbutton, );
    // RUN_TEST_CASE(pushbutton, );

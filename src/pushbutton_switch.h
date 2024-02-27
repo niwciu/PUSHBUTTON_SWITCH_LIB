@@ -21,7 +21,6 @@ extern "C"
 #define PUSHBUTTON_DEBOUNCE_TIME 200
 
 typedef void (*pushbutton_callback_t)(void);
-typedef uint8_t input_debounce_timer_t; // Todo czy to tu musi być? jak tylko do unit testów to chya nie
 
 enum pushbutton_e{
     BUTTON_1,
