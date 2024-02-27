@@ -45,20 +45,19 @@ TEST(pushbutton, GivenKey1InitAndIncTimerFunctionRegisteredWhenKey1PushAndPinSta
     TEST_ASSERT_EQUAL(1,TEST_TIMER);
 }
 
-// check 
 
-// TEST(pushbutton, GivenKey2InitAndIncTimerFunctionRegisteredWhenKey2PushAndPinStateIsStableForDebounceTimeThenChangeIncTestTimer)
-// {
-//     register_button_push_callback(BUTTON_2,inc_test_timer);
-//     check_button_push(BUTTON_2);
-//     PUSHBUTTON_2_STATE=PUSHED;
-//     check_button_push(BUTTON_2);
-//     debounce_timer_delay(PUSHBUTTON_DEBOUNCE_TIME-2,BUTTON_2);
-//     check_button_push(BUTTON_2);
-//     dec_debounce_timer(BUTTON_2);
-//     check_button_push(BUTTON_2);
-//     TEST_ASSERT_EQUAL(1,TEST_TIMER);
-// }
+TEST(pushbutton, GivenKey2InitAndIncTimerFunctionRegisteredWhenKey2PushAndPinStateIsStableForDebounceTimeThenChangeIncTestTimer)
+{
+    register_button_push_callback(BUTTON_2,inc_test_timer);
+    check_button_push(BUTTON_2);
+    PUSHBUTTON_2_STATE=PUSHED;
+    check_button_push(BUTTON_2);
+    debounce_timer_delay(PUSHBUTTON_DEBOUNCE_TIME-2,BUTTON_2);
+    check_button_push(BUTTON_2);
+    dec_debounce_timer(BUTTON_2);
+    check_button_push(BUTTON_2);
+    TEST_ASSERT_EQUAL(1,TEST_TIMER);
+}
 
 // TEST(pushbutton, )
 // {
