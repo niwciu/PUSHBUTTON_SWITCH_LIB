@@ -67,7 +67,7 @@ void init_pushbuttons(void)
     // PUSHBUTTON_2.debounce_timer=PUSHBUTTON_DEBOUNCE_TIME;
 }
 
-void check_button_push(enum pushbutton_e button_name)
+void check_button_push(enum pushbutton_e button_name,enum pushbutton_repetition_e repetition)
 {
     pushbutton_t *BUTTON = get_pushbutton_struct_adres(button_name);
 

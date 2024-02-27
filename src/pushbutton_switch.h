@@ -26,11 +26,15 @@ enum pushbutton_e{
     BUTTON_1,
     BUTTON_2,
 };
+enum pushbutton_repetition_e{
+    REPETITION_ON,
+    REPETITION_OFF,
+};
 
 
 void init_pushbuttons(void);
 
-void check_button_push(enum pushbutton_e button_name);
+void check_button_push(enum pushbutton_e button_name,enum pushbutton_repetition_e repetition);
 void register_button_push_callback(enum pushbutton_e button_name,pushbutton_callback_t callback_on_push);
 void dec_debounce_timer(enum pushbutton_e button_name);
 
