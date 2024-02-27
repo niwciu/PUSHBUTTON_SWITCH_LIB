@@ -78,13 +78,9 @@ void check_button_push(enum pushbutton_e button_name,enum pushbutton_repetition_
                 if (BUTTON->push_callback != NULL)
                     BUTTON->push_callback();
                 
-                // jeśli repetycja to załaduj na nowo debounce timer
-                // jeśli brak repetycji to ustaw Timer na 0
                 if(repetition==REPETITION_ON)
                 {
-                    printf("test\r\n");
                     BUTTON->deb_rep_timer = PUSHBUTTON_FIRST_REPETITION_TIME;
-                    
                 }
                 else
                 {
