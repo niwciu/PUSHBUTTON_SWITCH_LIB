@@ -20,6 +20,7 @@ extern "C"
 
 #define PUSHBUTTON_DEBOUNCE_TIME 200U
 #define PUSHBUTTON_FIRST_REPETITION_TIME 1000U
+#define PUSHBUTTON_CONTINUES_REPETITION_TIME 500U
 
 typedef void (*pushbutton_callback_t)(void);
 
