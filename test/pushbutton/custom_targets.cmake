@@ -34,7 +34,7 @@ endif()
 # Prints static analize output for src folder in the console
 add_custom_target(cppcheck_src cppcheck ../../../src --enable=all --inconclusive --force --inline-suppr --platform=win64 --suppress=missingInclude --suppress=missingIncludeSystem --suppress=unusedFunction)
 # Prints static analize output for specific test_module folder in the console
-add_custom_target(cppcheck_test cppcheck ../../../test/lcd_hd44780 -itest/lcd_hd44780/out -itest/lcd_hd44780/out_avr --enable=all --inconclusive --force --inline-suppr --platform=win64 --suppress=missingInclude --suppress=missingIncludeSystem || echo "test")
+add_custom_target(cppcheck_test cppcheck ../../../test/pushbutton -itest/pushbutton/out -itest/pushbutton/out_avr --enable=all --inconclusive --force --inline-suppr --platform=win64 --suppress=missingInclude --suppress=missingIncludeSystem || echo "test")
 
 # TARGET FOR CREATING CODE COVERAGE REPORTS
 # check if python 3 and gcovr are available 
@@ -53,4 +53,4 @@ else()
 		message(STATUS "python3 and gcovr were not found. \r\n\tInstall python 3 and gcovr to get predefined targets for uint tests code coverage report generation")
 	endif()
 endif()
-add_custom_target(ccr python3 -m gcovr CMakeFiles/lcd_hd44780_test.dir/D_/0_Projekty/6_Biblioteki/LCD_HD44780/src -r ../../.. --html-details ../../../reports/Code_Coverage/lcd_hd44780_gcov_report.html)
+add_custom_target(ccr python3 -m gcovr CMakeFiles/pushbutton_test.dir/D_/0_Projekty/6_Biblioteki/KEY_SWITCH_LIB/src -r ../../.. --html-details ../../../reports/Code_Coverage/pushbutton_switch_gcov_report.html)
