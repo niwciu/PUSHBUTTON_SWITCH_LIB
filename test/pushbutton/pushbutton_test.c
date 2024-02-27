@@ -134,11 +134,42 @@ TEST(pushbutton,GivenKey1InitAndIncTimerFunctionRegisteredWhenKey1PushAndSignali
     check_button_push(BUTTON_1);
     TEST_ASSERT_EQUAL(1,TEST_TIMER);
 }
-// TEST(pushbutton, )
-// {
+TEST(pushbutton, GivenKey1InitAndIncTimerFunctionRegisteredWhenKey1PushAndSignalisBouncingWhenSignalIsStableLessByOneThenDefinedTimeThenTestTimerIsNotInc)
+{
+    register_button_push_callback(BUTTON_1,inc_test_timer);
+    check_button_push(BUTTON_1);
 
-//     TEST_FAIL_MESSAGE("added new test")
-// }
+    PUSHBUTTON_1_STATE=PUSHED;
+    check_button_push(BUTTON_1);
+    debounce_timer_delay(5,BUTTON_1);
+    check_button_push(BUTTON_1);
+
+    PUSHBUTTON_1_STATE=UP;
+    check_button_push(BUTTON_1);
+    debounce_timer_delay(120,BUTTON_1);
+    check_button_push(BUTTON_1);
+
+    PUSHBUTTON_1_STATE=PUSHED;
+    check_button_push(BUTTON_1);
+    debounce_timer_delay(150,BUTTON_1);
+    check_button_push(BUTTON_1);
+
+    PUSHBUTTON_1_STATE=UP;
+    check_button_push(BUTTON_1);
+    debounce_timer_delay(35,BUTTON_1);
+    check_button_push(BUTTON_1);
+
+    PUSHBUTTON_1_STATE=PUSHED;
+    check_button_push(BUTTON_1);
+    debounce_timer_delay(PUSHBUTTON_DEBOUNCE_TIME-2,BUTTON_1);
+    check_button_push(BUTTON_1);
+    check_button_push(BUTTON_1);
+    check_button_push(BUTTON_1);
+    check_button_push(BUTTON_1);
+    check_button_push(BUTTON_1);
+    check_button_push(BUTTON_1);
+    TEST_ASSERT_EQUAL(0,TEST_TIMER);
+}
 
 // TEST(pushbutton, )
 // {
