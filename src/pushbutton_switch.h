@@ -18,7 +18,8 @@ extern "C"
 #include "pushbutton_switch_interface.h"
 #include <stdint.h>
 
-#define PUSHBUTTON_DEBOUNCE_TIME 200
+#define PUSHBUTTON_DEBOUNCE_TIME 200U
+#define PUSHBUTTON_FIRST_REPETITION_TIME 1000U
 
 typedef void (*pushbutton_callback_t)(void);
 
