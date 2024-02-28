@@ -38,12 +38,12 @@ const pushbutton_driver_interface_t* pushbutton_2_GPIO_interface_get(void){
 
 static void pushbutton_1_gpio_init(void)
 {
-    PUSHBUTTON_1_STATE=UP;
+    PUSHBUTTON_1_STATE=RELEASED;
 }
 
 static void pushbutton_2_gpio_init(void)
 {
-    PUSHBUTTON_2_STATE=UP;
+    PUSHBUTTON_2_STATE=RELEASED;
 }
 
 static button_state_t get_pushbutton_1_state(void)

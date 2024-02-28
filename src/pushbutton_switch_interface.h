@@ -1,12 +1,10 @@
 /**
- * @file key_switch_interface.h
+ * @file pushbutton_switch_interface.h
+ * @brief Defines the interface for pushbutton drivers, including enumeration for button states and function pointers for initialization and state retrieval.
  * @author niwciu (niwciu@gmail.com)
- * @brief
  * @version 0.0.1
  * @date 2024-02-26
- *
  * @copyright Copyright (c) 2024
- *
  */
 #ifndef _PUSHBUTTON_SWITCH_INTERFACE_H_
 #define _PUSHBUTTON_SWITCH_INTERFACE_H_
@@ -21,9 +19,9 @@ extern "C"
  */
 typedef enum
 {
-    UP,      /**< Button in the UP state. */
-    PUSHED,  /**< Button in the PUSHED state. */
-    UNKNOWN  /**< Unknown state of the button. */
+    RELEASED,   /**< Button in the RELEASED state. */
+    PUSHED,     /**< Button in the PUSHED state. */
+    UNKNOWN     /**< Unknown state of the button. */
 } button_state_t;
 
 /**

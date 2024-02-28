@@ -1,7 +1,7 @@
 /**
- * @file key_switch.h
+ * @file pushbutton_switch.h
  * @author niwciu (niwciu@gmail.com)
- * @brief
+ * @brief Library providing an interface for pushbutton switches with debouncing and repetition functionality.
  * @version 0.0.1
  * @date 2024-02-26
  *
@@ -26,6 +26,7 @@ extern "C"
 
 /** @brief Time duration for continuous repetition of a pushbutton press in milliseconds. */
 #define PUSHBUTTON_CONTINUES_REPETITION_TIME 500U
+
 
 /**
  * @brief Callback function pointer type for pushbutton events.
@@ -58,6 +59,7 @@ typedef enum {
 void init_pushbuttons(void);
 
 void check_button_push(pushbutton_name_t button_name,pushbutton_repetition_t repetition);
+void check_button_release(pushbutton_name_t button_name);
 void register_button_push_or_release_callback(pushbutton_name_t button_name,pushbutton_callback_t callback_on_push);
 void dec_pushbutton_deb_rep_timer(pushbutton_name_t button_name);
 

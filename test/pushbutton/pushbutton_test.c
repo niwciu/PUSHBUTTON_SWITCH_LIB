@@ -23,13 +23,13 @@ TEST_TEAR_DOWN(pushbutton)
 TEST(pushbutton, WhenKey1InitThenKey1PinStateIsHigh)
 {
 
-    TEST_ASSERT_EQUAL(UP,PUSHBUTTON_1_STATE);
+    TEST_ASSERT_EQUAL(RELEASED,PUSHBUTTON_1_STATE);
 }
 
 TEST(pushbutton, WhenKey2InitThenKey2PinStateIsHigh)
 {
 
-    TEST_ASSERT_EQUAL(UP,PUSHBUTTON_2_STATE);
+    TEST_ASSERT_EQUAL(RELEASED,PUSHBUTTON_2_STATE);
 }
 
 TEST(pushbutton, GivenKey1InitAndIncTimerFunctionRegisteredWhenKey1PushAndPinStateIsStableForDebounceTimeThenChangeIncTestTimer)
@@ -69,7 +69,7 @@ TEST(pushbutton,GivenKey1InitAndIncTimerFunctionRegisteredWhenKey1PushAndSignali
     generate_pushbutton_deb_rep_timer_delay(5,BUTTON_1);
     check_button_push(BUTTON_1,REPETITION_OFF);
 
-    PUSHBUTTON_1_STATE=UP;
+    PUSHBUTTON_1_STATE=RELEASED;
     check_button_push(BUTTON_1,REPETITION_OFF);
     generate_pushbutton_deb_rep_timer_delay(120,BUTTON_1);
     check_button_push(BUTTON_1,REPETITION_OFF);
@@ -79,7 +79,7 @@ TEST(pushbutton,GivenKey1InitAndIncTimerFunctionRegisteredWhenKey1PushAndSignali
     generate_pushbutton_deb_rep_timer_delay(150,BUTTON_1);
     check_button_push(BUTTON_1,REPETITION_OFF);
 
-    PUSHBUTTON_1_STATE=UP;
+    PUSHBUTTON_1_STATE=RELEASED;
     check_button_push(BUTTON_1,REPETITION_OFF);
     generate_pushbutton_deb_rep_timer_delay(35,BUTTON_1);
     check_button_push(BUTTON_1,REPETITION_OFF);
@@ -106,7 +106,7 @@ TEST(pushbutton,GivenKey1InitAndIncTimerFunctionRegisteredWhenKey1PushAndSignali
     generate_pushbutton_deb_rep_timer_delay(5,BUTTON_1);
     check_button_push(BUTTON_1,REPETITION_OFF);
 
-    PUSHBUTTON_1_STATE=UP;
+    PUSHBUTTON_1_STATE=RELEASED;
     check_button_push(BUTTON_1,REPETITION_OFF);
     generate_pushbutton_deb_rep_timer_delay(120,BUTTON_1);
     check_button_push(BUTTON_1,REPETITION_OFF);
@@ -116,7 +116,7 @@ TEST(pushbutton,GivenKey1InitAndIncTimerFunctionRegisteredWhenKey1PushAndSignali
     generate_pushbutton_deb_rep_timer_delay(150,BUTTON_1);
     check_button_push(BUTTON_1,REPETITION_OFF);
 
-    PUSHBUTTON_1_STATE=UP;
+    PUSHBUTTON_1_STATE=RELEASED;
     check_button_push(BUTTON_1,REPETITION_OFF);
     generate_pushbutton_deb_rep_timer_delay(35,BUTTON_1);
     check_button_push(BUTTON_1,REPETITION_OFF);
@@ -144,7 +144,7 @@ TEST(pushbutton, GivenKey1InitAndIncTimerFunctionRegisteredWhenKey1PushAndSignal
     generate_pushbutton_deb_rep_timer_delay(5,BUTTON_1);
     check_button_push(BUTTON_1,REPETITION_OFF);
 
-    PUSHBUTTON_1_STATE=UP;
+    PUSHBUTTON_1_STATE=RELEASED;
     check_button_push(BUTTON_1,REPETITION_OFF);
     generate_pushbutton_deb_rep_timer_delay(120,BUTTON_1);
     check_button_push(BUTTON_1,REPETITION_OFF);
@@ -154,7 +154,7 @@ TEST(pushbutton, GivenKey1InitAndIncTimerFunctionRegisteredWhenKey1PushAndSignal
     generate_pushbutton_deb_rep_timer_delay(150,BUTTON_1);
     check_button_push(BUTTON_1,REPETITION_OFF);
 
-    PUSHBUTTON_1_STATE=UP;
+    PUSHBUTTON_1_STATE=RELEASED;
     check_button_push(BUTTON_1,REPETITION_OFF);
     generate_pushbutton_deb_rep_timer_delay(35,BUTTON_1);
     check_button_push(BUTTON_1,REPETITION_OFF);
@@ -181,7 +181,7 @@ TEST(pushbutton, GivenKey1InitAndIncTimerFunctionRegisteredWhenKey1PushAndTestTi
     generate_pushbutton_deb_rep_timer_delay(5,BUTTON_1);
     check_button_push(BUTTON_1,REPETITION_ON);
 
-    PUSHBUTTON_1_STATE=UP;
+    PUSHBUTTON_1_STATE=RELEASED;
     check_button_push(BUTTON_1,REPETITION_ON);
     generate_pushbutton_deb_rep_timer_delay(120,BUTTON_1);
     check_button_push(BUTTON_1,REPETITION_ON);
@@ -191,7 +191,7 @@ TEST(pushbutton, GivenKey1InitAndIncTimerFunctionRegisteredWhenKey1PushAndTestTi
     generate_pushbutton_deb_rep_timer_delay(150,BUTTON_1);
     check_button_push(BUTTON_1,REPETITION_ON);
 
-    PUSHBUTTON_1_STATE=UP;
+    PUSHBUTTON_1_STATE=RELEASED;
     check_button_push(BUTTON_1,REPETITION_ON);
     generate_pushbutton_deb_rep_timer_delay(35,BUTTON_1);
     check_button_push(BUTTON_1,REPETITION_ON);
@@ -223,7 +223,7 @@ TEST(pushbutton, GivenKey1InitAndIncTimerFunctionRegisteredWhenKey1PushAndTestTi
     generate_pushbutton_deb_rep_timer_delay(5,BUTTON_1);
     check_button_push(BUTTON_1,REPETITION_ON);
 
-    PUSHBUTTON_1_STATE=UP;
+    PUSHBUTTON_1_STATE=RELEASED;
     check_button_push(BUTTON_1,REPETITION_ON);
     generate_pushbutton_deb_rep_timer_delay(120,BUTTON_1);
     check_button_push(BUTTON_1,REPETITION_ON);
@@ -233,7 +233,7 @@ TEST(pushbutton, GivenKey1InitAndIncTimerFunctionRegisteredWhenKey1PushAndTestTi
     generate_pushbutton_deb_rep_timer_delay(150,BUTTON_1);
     check_button_push(BUTTON_1,REPETITION_ON);
 
-    PUSHBUTTON_1_STATE=UP;
+    PUSHBUTTON_1_STATE=RELEASED;
     check_button_push(BUTTON_1,REPETITION_ON);
     generate_pushbutton_deb_rep_timer_delay(35,BUTTON_1);
     check_button_push(BUTTON_1,REPETITION_ON);
@@ -265,7 +265,7 @@ TEST(pushbutton, GivenKey1InitAndIncTimerFunctionRegisteredWhenKey1PushAndTestTi
     generate_pushbutton_deb_rep_timer_delay(5,BUTTON_1);
     check_button_push(BUTTON_1,REPETITION_ON);
 
-    PUSHBUTTON_1_STATE=UP;
+    PUSHBUTTON_1_STATE=RELEASED;
     check_button_push(BUTTON_1,REPETITION_ON);
     generate_pushbutton_deb_rep_timer_delay(120,BUTTON_1);
     check_button_push(BUTTON_1,REPETITION_ON);
@@ -275,7 +275,7 @@ TEST(pushbutton, GivenKey1InitAndIncTimerFunctionRegisteredWhenKey1PushAndTestTi
     generate_pushbutton_deb_rep_timer_delay(150,BUTTON_1);
     check_button_push(BUTTON_1,REPETITION_ON);
 
-    PUSHBUTTON_1_STATE=UP;
+    PUSHBUTTON_1_STATE=RELEASED;
     check_button_push(BUTTON_1,REPETITION_ON);
     generate_pushbutton_deb_rep_timer_delay(35,BUTTON_1);
     check_button_push(BUTTON_1,REPETITION_ON);
@@ -308,7 +308,7 @@ TEST(pushbutton, GivenKey1InitAndIncTimerFunctionRegisteredWhenKey1PushForTimeEq
     generate_pushbutton_deb_rep_timer_delay(5,BUTTON_1);
     check_button_push(BUTTON_1,REPETITION_ON);
 
-    PUSHBUTTON_1_STATE=UP;
+    PUSHBUTTON_1_STATE=RELEASED;
     check_button_push(BUTTON_1,REPETITION_ON);
     generate_pushbutton_deb_rep_timer_delay(120,BUTTON_1);
     check_button_push(BUTTON_1,REPETITION_ON);
@@ -318,7 +318,7 @@ TEST(pushbutton, GivenKey1InitAndIncTimerFunctionRegisteredWhenKey1PushForTimeEq
     generate_pushbutton_deb_rep_timer_delay(150,BUTTON_1);
     check_button_push(BUTTON_1,REPETITION_ON);
 
-    PUSHBUTTON_1_STATE=UP;
+    PUSHBUTTON_1_STATE=RELEASED;
     check_button_push(BUTTON_1,REPETITION_ON);
     generate_pushbutton_deb_rep_timer_delay(35,BUTTON_1);
     check_button_push(BUTTON_1,REPETITION_ON);
@@ -351,7 +351,7 @@ TEST(pushbutton, GivenKey1InitAndIncTimerFunctionRegisteredWhenKey1PushForTimeLe
     generate_pushbutton_deb_rep_timer_delay(5,BUTTON_1);
     check_button_push(BUTTON_1,REPETITION_ON);
 
-    PUSHBUTTON_1_STATE=UP;
+    PUSHBUTTON_1_STATE=RELEASED;
     check_button_push(BUTTON_1,REPETITION_ON);
     generate_pushbutton_deb_rep_timer_delay(120,BUTTON_1);
     check_button_push(BUTTON_1,REPETITION_ON);
@@ -361,7 +361,7 @@ TEST(pushbutton, GivenKey1InitAndIncTimerFunctionRegisteredWhenKey1PushForTimeLe
     generate_pushbutton_deb_rep_timer_delay(150,BUTTON_1);
     check_button_push(BUTTON_1,REPETITION_ON);
 
-    PUSHBUTTON_1_STATE=UP;
+    PUSHBUTTON_1_STATE=RELEASED;
     check_button_push(BUTTON_1,REPETITION_ON);
     generate_pushbutton_deb_rep_timer_delay(35,BUTTON_1);
     check_button_push(BUTTON_1,REPETITION_ON);
@@ -393,7 +393,7 @@ TEST(pushbutton, GivenKey1InitAndIncTimerFunctionRegisteredWhenKey1PushForTimeLo
     generate_pushbutton_deb_rep_timer_delay(5,BUTTON_1);
     check_button_push(BUTTON_1,REPETITION_ON);
 
-    PUSHBUTTON_1_STATE=UP;
+    PUSHBUTTON_1_STATE=RELEASED;
     check_button_push(BUTTON_1,REPETITION_ON);
     generate_pushbutton_deb_rep_timer_delay(120,BUTTON_1);
     check_button_push(BUTTON_1,REPETITION_ON);
@@ -403,7 +403,7 @@ TEST(pushbutton, GivenKey1InitAndIncTimerFunctionRegisteredWhenKey1PushForTimeLo
     generate_pushbutton_deb_rep_timer_delay(150,BUTTON_1);
     check_button_push(BUTTON_1,REPETITION_ON);
 
-    PUSHBUTTON_1_STATE=UP;
+    PUSHBUTTON_1_STATE=RELEASED;
     check_button_push(BUTTON_1,REPETITION_ON);
     generate_pushbutton_deb_rep_timer_delay(35,BUTTON_1);
     check_button_push(BUTTON_1,REPETITION_ON);
@@ -430,11 +430,22 @@ TEST(pushbutton, GivenKey1InitAndIncTimerFunctionRegisteredWhenKey1PushForTimeLo
     TEST_ASSERT_EQUAL(3,TEST_TIMER);
 }
 
-// TEST(pushbutton, )
-// {
-
-//     TEST_FAIL_MESSAGE("added new test")
-// }
+TEST(pushbutton, GivenKey1InitAndIncTimerFunctionRegisteredWhenKey1PushAndUpPinStateIsStableForDebounceTimeThenChangeIncTestTimer)
+{
+    register_button_push_or_release_callback(BUTTON_1,inc_test_timer);
+    check_button_release(BUTTON_1);
+    PUSHBUTTON_1_STATE=PUSHED;
+    check_button_release(BUTTON_1);
+    PUSHBUTTON_1_STATE=RELEASED;
+    check_button_release(BUTTON_1);
+    generate_pushbutton_deb_rep_timer_delay(PUSHBUTTON_DEBOUNCE_TIME-2,BUTTON_1);
+    check_button_release(BUTTON_1);
+    dec_pushbutton_deb_rep_timer(BUTTON_1);
+    check_button_release(BUTTON_1);
+    check_button_release(BUTTON_1);
+    check_button_release(BUTTON_1);
+    TEST_ASSERT_EQUAL(1,TEST_TIMER);
+}
 
 // TEST(pushbutton, )
 // {
