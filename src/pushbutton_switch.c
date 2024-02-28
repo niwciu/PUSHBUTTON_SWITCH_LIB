@@ -180,7 +180,7 @@ void init_pushbuttons(void)
  * @param button_name The name of the pushbutton to check. Use values from #pushbutton_name_t enumeration.
  * @param repetition The type of repetition for the pushbutton. Use values from #pushbutton_repetition_t enumeration.
  *
- * @note Make sure to register the pushbutton with the system before using this function.
+ * @note Before using this function, ensure that the pushbutton is registered with the system using get_pushbutton_struct_adres.
  * The pushbutton state will be updated based on the specified repetition type.
  * If the pushbutton is not registered, this function has no effect.
  */
@@ -194,6 +194,18 @@ void check_button_push(pushbutton_name_t button_name,pushbutton_repetition_t rep
     }
 }
 
+/**
+ * @brief Checks the state of a specific pushbutton and performs debounce for release events.
+ *
+ * This function checks the state of the specified pushbutton and performs debounce
+ * for release events if the pushbutton is valid and registered in the system.
+ *
+ * @param button_name The name of the pushbutton to check. Use values from #pushbutton_name_t enumeration.
+ *
+ * @note Before using this function, ensure that the pushbutton is registered with the system using get_pushbutton_struct_adres.
+ * The pushbutton state will be updated based on the release event.
+ * If the pushbutton is not registered, this function has no effect.
+ */
 void check_button_release(pushbutton_name_t button_name)
 {
     pushbutton_t *BUTTON = get_pushbutton_struct_adres(button_name);
@@ -228,6 +240,22 @@ void register_button_push_callback(pushbutton_name_t button_name, pushbutton_cal
     }
 }
 
+/**
+ * @brief Registers a callback function to be called on pushbutton release.
+ *
+ * This function associates a callback function with the specified pushbutton,
+ * to be executed when the pushbutton is released. The callback is triggered by
+ * changes in the pushbutton state from pressed to released.
+ *
+ * @param button_name The name of the pushbutton to register the release callback for. Use values from #pushbutton_name_t enumeration.
+ * @param callback_on_button_release The callback function to be executed on pushbutton release.
+ *
+ * @note Before using this function, ensure that the pushbutton is registered with the system using get_pushbutton_struct_adres.
+ * The pushbutton state will be monitored for changes, and the release callback will be triggered accordingly.
+ * If the pushbutton is not registered, this function has no effect.
+ *
+ * @warning Avoid lengthy operations or blocking code in the release callback function, as it may impact the responsiveness of the system.
+ */
 void register_button_release_callback(pushbutton_name_t button_name, pushbutton_callback_t callback_on_button_release)
 {
     pushbutton_t *BUTTON = get_pushbutton_struct_adres(button_name);
