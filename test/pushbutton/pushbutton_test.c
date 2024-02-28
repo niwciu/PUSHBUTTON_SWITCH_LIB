@@ -34,7 +34,7 @@ TEST(pushbutton, WhenKey2InitThenKey2PinStateIsHigh)
 
 TEST(pushbutton, GivenKey1InitAndIncTimerFunctionRegisteredWhenKey1PushAndPinStateIsStableForDebounceTimeThenChangeIncTestTimer)
 {
-    register_button_push_or_release_callback(BUTTON_1,inc_test_timer);
+    register_button_push_callback(BUTTON_1,inc_test_timer);
     check_button_push(BUTTON_1,REPETITION_OFF);
     PUSHBUTTON_1_STATE=PUSHED;
     check_button_push(BUTTON_1,REPETITION_OFF);
@@ -48,7 +48,7 @@ TEST(pushbutton, GivenKey1InitAndIncTimerFunctionRegisteredWhenKey1PushAndPinSta
 
 TEST(pushbutton, GivenKey2InitAndIncTimerFunctionRegisteredWhenKey2PushAndPinStateIsStableForDebounceTimeThenChangeIncTestTimer)
 {
-    register_button_push_or_release_callback(BUTTON_2,inc_test_timer);
+    register_button_push_callback(BUTTON_2,inc_test_timer);
     check_button_push(BUTTON_2,REPETITION_OFF);
     PUSHBUTTON_2_STATE=PUSHED;
     check_button_push(BUTTON_2,REPETITION_OFF);
@@ -61,7 +61,7 @@ TEST(pushbutton, GivenKey2InitAndIncTimerFunctionRegisteredWhenKey2PushAndPinSta
 
 TEST(pushbutton,GivenKey1InitAndIncTimerFunctionRegisteredWhenKey1PushAndSignalisBouncingWhenSignalIsStableExactlyDefinedTimeThenTestTimerIsIncOnlyOnce)
 {
-    register_button_push_or_release_callback(BUTTON_1,inc_test_timer);
+    register_button_push_callback(BUTTON_1,inc_test_timer);
     check_button_push(BUTTON_1,REPETITION_OFF);
 
     PUSHBUTTON_1_STATE=PUSHED;
@@ -98,7 +98,7 @@ TEST(pushbutton,GivenKey1InitAndIncTimerFunctionRegisteredWhenKey1PushAndSignali
 
 TEST(pushbutton,GivenKey1InitAndIncTimerFunctionRegisteredWhenKey1PushAndSignalisBouncingWhenSignalIsStableLongerThenDefinedTimeThenTestTimerIsIncOnlyOnce)
 {
-    register_button_push_or_release_callback(BUTTON_1,inc_test_timer);
+    register_button_push_callback(BUTTON_1,inc_test_timer);
     check_button_push(BUTTON_1,REPETITION_OFF);
 
     PUSHBUTTON_1_STATE=PUSHED;
@@ -136,7 +136,7 @@ TEST(pushbutton,GivenKey1InitAndIncTimerFunctionRegisteredWhenKey1PushAndSignali
 }
 TEST(pushbutton, GivenKey1InitAndIncTimerFunctionRegisteredWhenKey1PushAndSignalisBouncingWhenSignalIsStableLessByOneThenDefinedTimeThenTestTimerIsNotInc)
 {
-    register_button_push_or_release_callback(BUTTON_1,inc_test_timer);
+    register_button_push_callback(BUTTON_1,inc_test_timer);
     check_button_push(BUTTON_1,REPETITION_OFF);
 
     PUSHBUTTON_1_STATE=PUSHED;
@@ -173,7 +173,7 @@ TEST(pushbutton, GivenKey1InitAndIncTimerFunctionRegisteredWhenKey1PushAndSignal
 
 TEST(pushbutton, GivenKey1InitAndIncTimerFunctionRegisteredWhenKey1PushAndTestTimerIncrementedOnceWhenKey1ContinueslyPushedAndFirstRepetitionDelayPassThenTestTimerValueIs2)
 {
-    register_button_push_or_release_callback(BUTTON_1,inc_test_timer);
+    register_button_push_callback(BUTTON_1,inc_test_timer);
     check_button_push(BUTTON_1,REPETITION_ON);
 
     PUSHBUTTON_1_STATE=PUSHED;
@@ -215,7 +215,7 @@ TEST(pushbutton, GivenKey1InitAndIncTimerFunctionRegisteredWhenKey1PushAndTestTi
 TEST(pushbutton, GivenKey1InitAndIncTimerFunctionRegisteredWhenKey1PushAndTestTimerIncrementedOnceWhenKey1ContinueslyPushedForTimeLessThenFirstRepetitionTimeThenTestTimerValueIs1)
 {
 
-    register_button_push_or_release_callback(BUTTON_1,inc_test_timer);
+    register_button_push_callback(BUTTON_1,inc_test_timer);
     check_button_push(BUTTON_1,REPETITION_ON);
 
     PUSHBUTTON_1_STATE=PUSHED;
@@ -257,7 +257,7 @@ TEST(pushbutton, GivenKey1InitAndIncTimerFunctionRegisteredWhenKey1PushAndTestTi
 TEST(pushbutton, GivenKey1InitAndIncTimerFunctionRegisteredWhenKey1PushAndTestTimerIncrementedOnceWhenKey1ContinueslyPushedForTimeLongerThenFirstRepetitionDelayButShorterThenSecondRepetitionShouldAccourThenTestTimerValueIs2)
 {
 
-    register_button_push_or_release_callback(BUTTON_1,inc_test_timer);
+    register_button_push_callback(BUTTON_1,inc_test_timer);
     check_button_push(BUTTON_1,REPETITION_ON);
 
     PUSHBUTTON_1_STATE=PUSHED;
@@ -300,7 +300,7 @@ TEST(pushbutton, GivenKey1InitAndIncTimerFunctionRegisteredWhenKey1PushAndTestTi
 TEST(pushbutton, GivenKey1InitAndIncTimerFunctionRegisteredWhenKey1PushForTimeEqualToReachDoubleRepetitionThenTestTimerValueIs3)
 {
 
-    register_button_push_or_release_callback(BUTTON_1,inc_test_timer);
+    register_button_push_callback(BUTTON_1,inc_test_timer);
     check_button_push(BUTTON_1,REPETITION_ON);
 
     PUSHBUTTON_1_STATE=PUSHED;
@@ -343,7 +343,7 @@ TEST(pushbutton, GivenKey1InitAndIncTimerFunctionRegisteredWhenKey1PushForTimeEq
 TEST(pushbutton, GivenKey1InitAndIncTimerFunctionRegisteredWhenKey1PushForTimeLessToReachDoubleRepetitionThenTestTimerValueIs2)
 {
 
-    register_button_push_or_release_callback(BUTTON_1,inc_test_timer);
+    register_button_push_callback(BUTTON_1,inc_test_timer);
     check_button_push(BUTTON_1,REPETITION_ON);
 
     PUSHBUTTON_1_STATE=PUSHED;
@@ -385,7 +385,7 @@ TEST(pushbutton, GivenKey1InitAndIncTimerFunctionRegisteredWhenKey1PushForTimeLe
 
 TEST(pushbutton, GivenKey1InitAndIncTimerFunctionRegisteredWhenKey1PushForTimeLongerToReachDoubleRepetitionThenTestTimerValueIs3)
 {
-    register_button_push_or_release_callback(BUTTON_1,inc_test_timer);
+    register_button_push_callback(BUTTON_1,inc_test_timer);
     check_button_push(BUTTON_1,REPETITION_ON);
 
     PUSHBUTTON_1_STATE=PUSHED;

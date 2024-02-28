@@ -25,7 +25,7 @@ typedef struct
     pushbutton_driver_interface_t *GPIO_interface; /**< GPIO interface for the pushbutton. */
     debounce_repetition_timer_t deb_rep_timer;     /**< Debounce and repetition timer. */
     uint8_t REPETITION_FLAG;                       /**< Repetition flag indicating the current state. */
-    pushbutton_callback_t push_or_release_callback;/**< Callback function on push action. */
+    pushbutton_callback_t push_callback;/**< Callback function on push action. */
     pushbutton_callback_t release_callback;        /**< Callback function on release action. */
     //
 } pushbutton_t;
@@ -89,9 +89,9 @@ static void debounce_pushbutton_push_state(pushbutton_t *BUTTON, pushbutton_repe
     {
         if ((BUTTON->deb_rep_timer) == 1)
         {
-            if (BUTTON->push_or_release_callback != NULL)
+            if (BUTTON->push_callback != NULL)
             {
-                BUTTON->push_or_release_callback();
+                BUTTON->push_callback();
             }
             update_button_deb_rep_counter(BUTTON, repetition);
         }
@@ -118,9 +118,9 @@ static void debounce_pushbutton_release_state(pushbutton_t *BUTTON)
     {
         if ((BUTTON->deb_rep_timer) == 1)
         {
-            if (BUTTON->push_or_release_callback != NULL)
+            if (BUTTON->release_callback != NULL)
             {
-                BUTTON->push_or_release_callback();
+                BUTTON->release_callback();
             }
             BUTTON->deb_rep_timer = 0;
         }
@@ -219,12 +219,12 @@ void check_button_release(pushbutton_name_t button_name)
  *
  * @warning Avoid lengthy operations or blocking code in the callback function, as it may impact the responsiveness of the system.
  */
-void register_button_push_or_release_callback(pushbutton_name_t button_name, pushbutton_callback_t callback_on_push)
+void register_button_push_callback(pushbutton_name_t button_name, pushbutton_callback_t callback_on_push)
 {
     pushbutton_t *BUTTON = get_pushbutton_struct_adres(button_name);
     if (BUTTON != NULL)
     {
-        BUTTON->push_or_release_callback = callback_on_push;
+        BUTTON->push_callback = callback_on_push;
     }
 }
 

@@ -23,7 +23,7 @@ TEST_TEAR_DOWN(pushbutton_release)
 
 TEST(pushbutton_release, GivenKey1InitAndIncTimerFunctionRegisteredWhenKey1PushAndReleaseAndPinStateIsStableForDebounceTimeThenTestTimerEqual1)
 {
-    register_button_push_or_release_callback(BUTTON_1,inc_test_timer);
+    register_button_release_callback(BUTTON_1,inc_test_timer);
     check_button_release(BUTTON_1);
     PUSHBUTTON_1_STATE=PUSHED;
     check_button_release(BUTTON_1);
@@ -40,7 +40,7 @@ TEST(pushbutton_release, GivenKey1InitAndIncTimerFunctionRegisteredWhenKey1PushA
 
 TEST(pushbutton_release, GivenKey1InitAndIncTimerFunctionRegisteredWhenKey1PushAndReleasePinStateIsStableForLessThanDebounceTimeThenTestTimerEqual0)
 {
-    register_button_push_or_release_callback(BUTTON_1,inc_test_timer);
+    register_button_release_callback(BUTTON_1,inc_test_timer);
     check_button_release(BUTTON_1);
     PUSHBUTTON_1_STATE=PUSHED;
     check_button_release(BUTTON_1);
@@ -55,7 +55,7 @@ TEST(pushbutton_release, GivenKey1InitAndIncTimerFunctionRegisteredWhenKey1PushA
 
 TEST(pushbutton_release, GivenKey1InitAndIncTimerFunctionRegisteredWhenKey1PushAndReleaseAndPinBounceInTimeShorterThanDebounceTimeThenTestTimerEqual0)
 {
-    register_button_push_or_release_callback(BUTTON_1,inc_test_timer);
+    register_button_release_callback(BUTTON_1,inc_test_timer);
     check_button_release(BUTTON_1);
     PUSHBUTTON_1_STATE=PUSHED;
     check_button_release(BUTTON_1);
@@ -98,7 +98,7 @@ TEST(pushbutton_release, GivenKey1InitAndIncTimerFunctionRegisteredWhenKey1PushA
 
 TEST(pushbutton_release, GivenKey1InitAndIncTimerFunctionRegisteredWhenKey1PushAndReleaseAndPinBounceAndNextStayReleasedForPushButtonDebounceThenTestTimerEqual1)
 {
-    register_button_push_or_release_callback(BUTTON_1,inc_test_timer);
+    register_button_release_callback(BUTTON_1,inc_test_timer);
     check_button_release(BUTTON_1);
     PUSHBUTTON_1_STATE=PUSHED;
     check_button_release(BUTTON_1);
@@ -141,7 +141,7 @@ TEST(pushbutton_release, GivenKey1InitAndIncTimerFunctionRegisteredWhenKey1PushA
 
 TEST(pushbutton_release, GivenKey1InitAndIncTimerFunctionRegisteredWhenKey1PushAndReleaseAndPinBouncAndNextStayReleasedForlongerPushButtonDebounceThenTestTimerEqual1)
 {
-    register_button_push_or_release_callback(BUTTON_1,inc_test_timer);
+    register_button_release_callback(BUTTON_1,inc_test_timer);
     check_button_release(BUTTON_1);
     PUSHBUTTON_1_STATE=PUSHED;
     check_button_release(BUTTON_1);
