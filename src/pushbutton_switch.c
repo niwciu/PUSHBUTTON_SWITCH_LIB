@@ -25,8 +25,8 @@ typedef struct
     pushbutton_driver_interface_t *GPIO_interface; /**< GPIO interface for the pushbutton. */
     debounce_repetition_timer_t deb_rep_timer;     /**< Debounce and repetition timer. */
     uint8_t REPETITION_FLAG;                       /**< Repetition flag indicating the current state. */
-    pushbutton_callback_t push_or_release_callback;           /**< Callback function on push action. */
-    pushbutton_callback_t up_callback;             /**< Callback function on release action. */
+    pushbutton_callback_t push_or_release_callback;/**< Callback function on push action. */
+    pushbutton_callback_t release_callback;        /**< Callback function on release action. */
     //
 } pushbutton_t;
 
@@ -40,6 +40,7 @@ static pushbutton_t *get_pushbutton_struct_adres(pushbutton_name_t button_name);
 static void update_button_deb_rep_counter(pushbutton_t *BUTTON, pushbutton_repetition_t repetition);
 static void debounce_pushbutton_push_state(pushbutton_t *BUTTON, pushbutton_repetition_t repetition);
 static void debounce_pushbutton_release_state(pushbutton_t *BUTTON);
+static void debounce_pushbutton_push_release_state(pushbutton_t *BUTTON);
 
 static pushbutton_t *get_pushbutton_struct_adres(pushbutton_name_t button_name)
 {
@@ -131,6 +132,31 @@ static void debounce_pushbutton_release_state(pushbutton_t *BUTTON)
     }
 }
 
+void debounce_pushbutton_push_release_state(pushbutton_t *BUTTON)
+{
+    button_state_t pushbutton_input_state = BUTTON->GPIO_interface->get_button_state();
+    if (pushbutton_input_state == PUSHED)
+    {
+        BUTTON->deb_rep_timer = PUSHBUTTON_DEBOUNCE_TIME;
+    }
+    else
+    {
+        if ((BUTTON->deb_rep_timer) == 1)
+        {
+            if (BUTTON->release_callback != NULL)
+            {
+                BUTTON->release_callback();
+            }
+            BUTTON->deb_rep_timer = 0;
+        }
+        else
+        {
+            // Empty else statement for case when deb_rep_timer is different then 1
+        }
+
+    }
+}
+
 /**
  * @brief Initializes pushbuttons.
  *
@@ -202,6 +228,15 @@ void register_button_push_or_release_callback(pushbutton_name_t button_name, pus
     }
 }
 
+void register_button_release_callback(pushbutton_name_t button_name, pushbutton_callback_t callback_on_button_release)
+{
+    pushbutton_t *BUTTON = get_pushbutton_struct_adres(button_name);
+    if (BUTTON != NULL)
+    {
+        BUTTON->release_callback = callback_on_button_release;
+    }
+}
+
 /**
  * @brief Decrements the debounce and repetition timer of a pushbutton.
  *
@@ -225,5 +260,14 @@ void dec_pushbutton_deb_rep_timer(pushbutton_name_t button_name)
         {
             BUTTON->deb_rep_timer--;
         }
+    }
+}
+
+void check_button_long_push_short_release(pushbutton_name_t button_name,pushbutton_repetition_t long_push_repetition)
+{
+    pushbutton_t *BUTTON = get_pushbutton_struct_adres(button_name);
+    if (BUTTON != NULL)
+    {
+        debounce_pushbutton_push_release_state(BUTTON);
     }
 }

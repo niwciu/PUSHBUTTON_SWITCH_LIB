@@ -61,14 +61,10 @@ void init_pushbuttons(void);
 void check_button_push(pushbutton_name_t button_name,pushbutton_repetition_t repetition);
 void check_button_release(pushbutton_name_t button_name);
 void register_button_push_or_release_callback(pushbutton_name_t button_name,pushbutton_callback_t callback_on_push);
+void register_button_release_callback(pushbutton_name_t button_name,pushbutton_callback_t callback_on_button_release);
 void dec_pushbutton_deb_rep_timer(pushbutton_name_t button_name);
+void check_button_long_push_short_release(pushbutton_name_t button_name,pushbutton_repetition_t long_push_repetition);
 
-/*
- * functionality to be implemented in the future for pushbutton
- * void check_button_up(pushbutton_name_t button_name);
- * void register_button_up_callback(pushbutton_name_t button_name,pushbutton_callback_t callback_on_push);
- * void check_button_long_push_short_up(pushbutton_name_t button_name,pushbutton_repetition_t push_repetition); 
- */
 
 /*
  * functionality to be implemented in the future for singals

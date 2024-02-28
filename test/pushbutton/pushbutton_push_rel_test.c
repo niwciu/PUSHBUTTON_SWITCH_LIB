@@ -26,9 +26,13 @@ TEST(pushbutton_push_rel, GivenKey1InitAndIncTimerFunctionRegisteredOnButtonRele
     check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
     PUSHBUTTON_1_STATE=PUSHED;
     check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
+    PUSHBUTTON_1_STATE=RELEASED;
+    check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
     generate_pushbutton_deb_rep_timer_delay(PUSHBUTTON_DEBOUNCE_TIME-2,BUTTON_1);
     check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
     dec_pushbutton_deb_rep_timer(BUTTON_1);
+    check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
+    check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
     check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
     TEST_ASSERT_EQUAL(1,TEST_TIMER);
 }
