@@ -27,7 +27,8 @@ extern "C"
 /** @brief Time duration for continuous repetition of a pushbutton press in milliseconds. */
 #define PUSHBUTTON_CONTINUES_REPETITION_TIME 500U
 
-#define PUSBUTTON_SHORT_PUSH_TIME_MAX 1000U
+/** @brief Time duration for splitting short push and long push in milliseconds. */
+#define PUSHBUTTON_SHORT_PUSH_TIME_MAX 1000U
 
 
 /**
@@ -62,10 +63,14 @@ void init_pushbuttons(void);
 
 void check_button_push(pushbutton_name_t button_name,pushbutton_repetition_t repetition);
 void check_button_release(pushbutton_name_t button_name);
+void check_button_short_push_long_push(pushbutton_name_t button_name,pushbutton_repetition_t long_push_repetition);
+
 void register_button_push_callback(pushbutton_name_t button_name,pushbutton_callback_t callback_on_push);
 void register_button_release_callback(pushbutton_name_t button_name,pushbutton_callback_t callback_on_button_release);
+void register_button_short_push_long_push_callbacks(pushbutton_name_t button_name,pushbutton_callback_t callback_on_short_push,pushbutton_callback_t callback_on_long_push);
+
 void dec_pushbutton_deb_rep_timer(pushbutton_name_t button_name);
-void check_button_short_push_long_push(pushbutton_name_t button_name,pushbutton_repetition_t long_push_repetition);
+
 
 /**
  * ToDo funkcja do ustawiania parametru repetycji tak by oddzielić sprawdzanie stanu klaisza od ustawienia tego czy ma być repetycja czy nie  

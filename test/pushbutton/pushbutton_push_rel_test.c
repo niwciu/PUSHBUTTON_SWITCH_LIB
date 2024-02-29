@@ -63,7 +63,7 @@ TEST(pushbutton_push_rel, GivenTestTimerEqual10AndKey1InitAndNoRepetitionAndDecT
     ckeck_button_state_5_times(BUTTON_1,REPETITION_OFF);
     generate_pushbutton_deb_rep_timer_delay(PUSHBUTTON_DEBOUNCE_TIME,BUTTON_1);
     ckeck_button_state_5_times(BUTTON_1,REPETITION_OFF);
-    generate_pushbutton_deb_rep_timer_delay(PUSBUTTON_SHORT_PUSH_TIME_MAX-1,BUTTON_1);
+    generate_pushbutton_deb_rep_timer_delay(PUSHBUTTON_SHORT_PUSH_TIME_MAX-1,BUTTON_1);
     ckeck_button_state_5_times(BUTTON_1,REPETITION_OFF);
     //When
     PUSHBUTTON_1_STATE=RELEASED;
@@ -86,7 +86,7 @@ TEST(pushbutton_push_rel, GivenTestTimerEqual10AndKey1InitAndNoRepetitionAndDecT
     ckeck_button_state_5_times(BUTTON_1,REPETITION_OFF);
     generate_pushbutton_deb_rep_timer_delay(PUSHBUTTON_DEBOUNCE_TIME,BUTTON_1);
     ckeck_button_state_5_times(BUTTON_1,REPETITION_OFF);
-    generate_pushbutton_deb_rep_timer_delay(PUSBUTTON_SHORT_PUSH_TIME_MAX-1,BUTTON_1);
+    generate_pushbutton_deb_rep_timer_delay(PUSHBUTTON_SHORT_PUSH_TIME_MAX-1,BUTTON_1);
     ckeck_button_state_5_times(BUTTON_1,REPETITION_OFF);
     //When
     PUSHBUTTON_1_STATE=RELEASED;
@@ -111,7 +111,7 @@ TEST(pushbutton_push_rel, GivenTestTimerEqual10AndKey1InitAndNoRepetitionAndDecT
     ckeck_button_state_5_times(BUTTON_1,REPETITION_OFF);
     generate_pushbutton_deb_rep_timer_delay(PUSHBUTTON_DEBOUNCE_TIME,BUTTON_1);
     ckeck_button_state_5_times(BUTTON_1,REPETITION_OFF);
-    generate_pushbutton_deb_rep_timer_delay((PUSBUTTON_SHORT_PUSH_TIME_MAX-10),BUTTON_1);
+    generate_pushbutton_deb_rep_timer_delay((PUSHBUTTON_SHORT_PUSH_TIME_MAX-10),BUTTON_1);
     ckeck_button_state_5_times(BUTTON_1,REPETITION_OFF);
     //When
     PUSHBUTTON_1_STATE=RELEASED;
@@ -133,7 +133,7 @@ TEST(pushbutton_push_rel, GivenTestTimerEqual10AndKey1InitAndNoRepetitionAndDecT
     ckeck_button_state_5_times(BUTTON_1,REPETITION_OFF);
     generate_pushbutton_deb_rep_timer_delay(PUSHBUTTON_DEBOUNCE_TIME,BUTTON_1);
     ckeck_button_state_5_times(BUTTON_1,REPETITION_OFF);
-    generate_pushbutton_deb_rep_timer_delay((PUSBUTTON_SHORT_PUSH_TIME_MAX-10),BUTTON_1);
+    generate_pushbutton_deb_rep_timer_delay((PUSHBUTTON_SHORT_PUSH_TIME_MAX-10),BUTTON_1);
     ckeck_button_state_5_times(BUTTON_1,REPETITION_OFF);
     //When
     PUSHBUTTON_1_STATE=RELEASED;
@@ -157,7 +157,7 @@ TEST(pushbutton_push_rel, GivenTestTimerEqual10AndKey1InitAndNoRepetitionAndDecT
     ckeck_button_state_5_times(BUTTON_1,REPETITION_OFF);
     generate_pushbutton_deb_rep_timer_delay(PUSHBUTTON_DEBOUNCE_TIME,BUTTON_1);
     ckeck_button_state_5_times(BUTTON_1,REPETITION_OFF);
-    generate_pushbutton_deb_rep_timer_delay((PUSBUTTON_SHORT_PUSH_TIME_MAX-10),BUTTON_1);
+    generate_pushbutton_deb_rep_timer_delay((PUSHBUTTON_SHORT_PUSH_TIME_MAX-10),BUTTON_1);
     ckeck_button_state_5_times(BUTTON_1,REPETITION_OFF);
     //When
     PUSHBUTTON_1_STATE=RELEASED;
@@ -307,7 +307,7 @@ TEST(pushbutton_push_rel, GivenTestTimerEqual10AndKey1InitAndNoRepetitionAndDecT
     ckeck_button_state_5_times(BUTTON_1,REPETITION_OFF);
     generate_pushbutton_deb_rep_timer_delay(PUSHBUTTON_DEBOUNCE_TIME,BUTTON_1);
     ckeck_button_state_5_times(BUTTON_1,REPETITION_OFF);
-    generate_pushbutton_deb_rep_timer_delay(PUSBUTTON_SHORT_PUSH_TIME_MAX,BUTTON_1); // PUSBUTTON_SHORT_PUSH_TIME_MAX - from this delay it push starting to be long push
+    generate_pushbutton_deb_rep_timer_delay(PUSHBUTTON_SHORT_PUSH_TIME_MAX,BUTTON_1); // PUSHBUTTON_SHORT_PUSH_TIME_MAX - from this delay it push starting to be long push
     ckeck_button_state_5_times(BUTTON_1,REPETITION_OFF);
     //When
     PUSHBUTTON_1_STATE=RELEASED;
@@ -327,9 +327,9 @@ TEST(pushbutton_push_rel, GivenTestTimerEqual10AndKey1InitAndNoRepetitionAndDecT
     ckeck_button_state_5_times(BUTTON_1,REPETITION_OFF);
     generate_pushbutton_deb_rep_timer_delay(PUSHBUTTON_DEBOUNCE_TIME,BUTTON_1);
     ckeck_button_state_5_times(BUTTON_1,REPETITION_OFF);
-    generate_pushbutton_deb_rep_timer_delay(PUSBUTTON_SHORT_PUSH_TIME_MAX,BUTTON_1); // PUSBUTTON_SHORT_PUSH_TIME_MAX - from this delay it push starting to be long push
+    generate_pushbutton_deb_rep_timer_delay(PUSHBUTTON_SHORT_PUSH_TIME_MAX,BUTTON_1); // PUSHBUTTON_SHORT_PUSH_TIME_MAX - from this delay it push starting to be long push
     ckeck_button_state_5_times(BUTTON_1,REPETITION_OFF);
-    generate_pushbutton_deb_rep_timer_delay(PUSHBUTTON_FIRST_REPETITION_TIME,BUTTON_1); // PUSBUTTON_SHORT_PUSH_TIME_MAX - from this delay it push starting to be long push
+    generate_pushbutton_deb_rep_timer_delay(PUSHBUTTON_FIRST_REPETITION_TIME,BUTTON_1); // PUSHBUTTON_SHORT_PUSH_TIME_MAX - from this delay it push starting to be long push
     ckeck_button_state_5_times(BUTTON_1,REPETITION_OFF);
     //When
     PUSHBUTTON_1_STATE=RELEASED;
@@ -349,7 +349,7 @@ TEST(pushbutton_push_rel, GivenTestTimerEqual10AndKey1InitAndNoRepetitionAndDecT
     ckeck_button_state_5_times(BUTTON_1,REPETITION_OFF);
     generate_pushbutton_deb_rep_timer_delay(PUSHBUTTON_DEBOUNCE_TIME,BUTTON_1);
     ckeck_button_state_5_times(BUTTON_1,REPETITION_OFF);
-    generate_pushbutton_deb_rep_timer_delay(PUSBUTTON_SHORT_PUSH_TIME_MAX,BUTTON_1); 
+    generate_pushbutton_deb_rep_timer_delay(PUSHBUTTON_SHORT_PUSH_TIME_MAX,BUTTON_1); 
     ckeck_button_state_5_times(BUTTON_1,REPETITION_OFF);
     generate_pushbutton_deb_rep_timer_delay(PUSHBUTTON_FIRST_REPETITION_TIME,BUTTON_1); 
     ckeck_button_state_5_times(BUTTON_1,REPETITION_OFF);
@@ -373,7 +373,7 @@ TEST(pushbutton_push_rel, GivenTestTimerEqual10AndKey1InitrAndNoRepetitionAndDec
     ckeck_button_state_5_times(BUTTON_1,REPETITION_ON);
     generate_pushbutton_deb_rep_timer_delay(PUSHBUTTON_DEBOUNCE_TIME,BUTTON_1);
     ckeck_button_state_5_times(BUTTON_1,REPETITION_ON);
-    generate_pushbutton_deb_rep_timer_delay(PUSBUTTON_SHORT_PUSH_TIME_MAX,BUTTON_1); 
+    generate_pushbutton_deb_rep_timer_delay(PUSHBUTTON_SHORT_PUSH_TIME_MAX,BUTTON_1); 
     ckeck_button_state_5_times(BUTTON_1,REPETITION_ON);
     //When
     PUSHBUTTON_1_STATE=RELEASED;
@@ -393,7 +393,7 @@ TEST(pushbutton_push_rel, GivenTestTimerEqual10AndKey1InitrAndNoRepetitionAndDec
     ckeck_button_state_5_times(BUTTON_1,REPETITION_ON);
     generate_pushbutton_deb_rep_timer_delay(PUSHBUTTON_DEBOUNCE_TIME,BUTTON_1);
     ckeck_button_state_5_times(BUTTON_1,REPETITION_ON);
-    generate_pushbutton_deb_rep_timer_delay(PUSBUTTON_SHORT_PUSH_TIME_MAX,BUTTON_1); 
+    generate_pushbutton_deb_rep_timer_delay(PUSHBUTTON_SHORT_PUSH_TIME_MAX,BUTTON_1); 
     ckeck_button_state_5_times(BUTTON_1,REPETITION_ON);
     generate_pushbutton_deb_rep_timer_delay(PUSHBUTTON_FIRST_REPETITION_TIME,BUTTON_1); 
     ckeck_button_state_5_times(BUTTON_1,REPETITION_ON);
@@ -415,7 +415,7 @@ TEST(pushbutton_push_rel, GivenTestTimerEqual10AndKey1InitrAndNoRepetitionAndDec
     ckeck_button_state_5_times(BUTTON_1,REPETITION_ON);
     generate_pushbutton_deb_rep_timer_delay(PUSHBUTTON_DEBOUNCE_TIME,BUTTON_1);
     ckeck_button_state_5_times(BUTTON_1,REPETITION_ON);
-    generate_pushbutton_deb_rep_timer_delay(PUSBUTTON_SHORT_PUSH_TIME_MAX,BUTTON_1); 
+    generate_pushbutton_deb_rep_timer_delay(PUSHBUTTON_SHORT_PUSH_TIME_MAX,BUTTON_1); 
     ckeck_button_state_5_times(BUTTON_1,REPETITION_ON);
     generate_pushbutton_deb_rep_timer_delay(PUSHBUTTON_FIRST_REPETITION_TIME,BUTTON_1); 
     ckeck_button_state_5_times(BUTTON_1,REPETITION_ON);
