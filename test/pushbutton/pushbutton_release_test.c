@@ -115,6 +115,8 @@ TEST(pushbutton_release, GivenKey1InitAndIncTimerFunctionRegisteredAndKey1PushAn
     //Then
     TEST_ASSERT_EQUAL(1,TEST_TIMER);
 }
+
+// ToDo dopisać testy na odporność na tzw push przez zakłócenie. Obecna implementacja raczej nie przejdzie tego testu
 // TEST(pushbutton_release, )
 // {
 
