@@ -1,7 +1,8 @@
 /**
  * @file pushbutton_switch.c
  * @author niwciu (niwciu@gmail.com)
- * @brief This file contains the implementation of a pushbutton switch interface with debouncing and repetition functionality.
+ * @brief This file contains the implementation of a pushbutton switch interface with debouncing and repetition
+ * functionality.
  * @version 0.0.1
  * @date 2024-02-26
  *
@@ -11,9 +12,19 @@
 #include "pushbutton_switch.h"
 #include <stddef.h>
 #include <stdio.h>
+#include <stdbool.h>
 
 typedef uint8_t input_state_t;
 typedef uint16_t debounce_repetition_timer_t;
+
+typedef enum
+{
+    BUTTON_RELEASED,
+    PUSH_DEBOUNCING,  
+    SHORT_PUSH_PHASE, 
+    LONG_PUSH_PHASE,
+    LONG_PUSH_NO_REPETITION_PHASE       
+} push_button_action_phase_t;
 /**
  * @brief Structure representing a pushbutton.
  *
@@ -25,7 +36,7 @@ typedef struct
     pushbutton_driver_interface_t *GPIO_interface; /**< GPIO interface for the pushbutton. */
     debounce_repetition_timer_t deb_rep_timer;     /**< Debounce and repetition timer. */
     uint8_t REPETITION_FLAG;                       /**< Repetition flag indicating the current state. */
-    pushbutton_callback_t push_callback;/**< Callback function on push action. */
+    pushbutton_callback_t push_callback;           /**< Callback function on push action. */
     pushbutton_callback_t release_callback;        /**< Callback function on release action. */
     //
 } pushbutton_t;
@@ -40,7 +51,7 @@ static pushbutton_t *get_pushbutton_struct_adres(pushbutton_name_t button_name);
 static void update_button_deb_rep_counter(pushbutton_t *BUTTON, pushbutton_repetition_t repetition);
 static void debounce_pushbutton_push_state(pushbutton_t *BUTTON, pushbutton_repetition_t repetition);
 static void debounce_pushbutton_release_state(pushbutton_t *BUTTON);
-static void debounce_pushbutton_push_release_state(pushbutton_t *BUTTON);
+static void debounce_pushbutton_push_release_state(pushbutton_t *BUTTON,pushbutton_repetition_t long_push_repetition);
 
 static pushbutton_t *get_pushbutton_struct_adres(pushbutton_name_t button_name)
 {
@@ -128,32 +139,90 @@ static void debounce_pushbutton_release_state(pushbutton_t *BUTTON)
         {
             // Empty else statement for case when deb_rep_timer is different then 1
         }
-
     }
 }
 
-void debounce_pushbutton_push_release_state(pushbutton_t *BUTTON)
+void debounce_pushbutton_push_release_state(pushbutton_t *BUTTON,pushbutton_repetition_t long_push_repetition)
 {
-    button_state_t pushbutton_input_state = BUTTON->GPIO_interface->get_button_state();
-    if (pushbutton_input_state == PUSHED)
+    static push_button_action_phase_t pushbutton_state_machine = BUTTON_RELEASED;
+    static button_state_t pushbutton_input_state = UNKNOWN;
+    pushbutton_input_state = BUTTON->GPIO_interface->get_button_state();
+
+    switch (pushbutton_state_machine)
     {
-        BUTTON->deb_rep_timer = PUSHBUTTON_DEBOUNCE_TIME;
-    }
-    else
-    {
-        if ((BUTTON->deb_rep_timer) == 1)
+    case BUTTON_RELEASED:
+        if (pushbutton_input_state == PUSHED)
         {
-            if (BUTTON->release_callback != NULL)
+            pushbutton_state_machine = PUSH_DEBOUNCING;
+            BUTTON->deb_rep_timer = PUSHBUTTON_DEBOUNCE_TIME;
+        }
+        break;
+    case PUSH_DEBOUNCING:
+        if (pushbutton_input_state == PUSHED)
+        {
+            if ((BUTTON->deb_rep_timer) == 0)
             {
-                BUTTON->release_callback();
+                pushbutton_state_machine = SHORT_PUSH_PHASE;
+                BUTTON->deb_rep_timer = PUSBUTTON_SHORT_PUSH_TIME_MAX;
             }
-            BUTTON->deb_rep_timer = 0;
         }
         else
         {
-            // Empty else statement for case when deb_rep_timer is different then 1
+            pushbutton_state_machine = BUTTON_RELEASED;
         }
+        break;
+    case SHORT_PUSH_PHASE:
+        if (pushbutton_input_state == PUSHED)
+        {
+            // if ((BUTTON->deb_rep_timer) == 0)
+            // {
+            //         pushbutton_state_machine = LONG_PUSH_PHASE;
+            //         BUTTON->deb_rep_timer = PUSHBUTTON_FIRST_REPETITION_TIME;
+            // }
+        }
+        else
+        {
+                if(BUTTON->release_callback!=NULL)
+                {
+                    BUTTON->release_callback(); //push callback to instancja gdzie trzeba zaerejsrować long push
+                }
+            BUTTON->deb_rep_timer = PUSHBUTTON_DEBOUNCE_TIME;
+            pushbutton_state_machine = BUTTON_RELEASED;
+        }
+        break;
+    case LONG_PUSH_PHASE:
+        // if (pushbutton_input_state == PUSHED)
+        // {
+        //     if ((BUTTON->deb_rep_timer) == 0)
+        //     {
+        //         if(BUTTON->push_callback!=NULL)
+        //         {
+        //             BUTTON->push_callback(); //push callback to instancja gdzie trzeba zaerejsrować long push
+        //         }
+        //         BUTTON->deb_rep_timer = PUSHBUTTON_CONTINUES_REPETITION_TIME;
+        //     }
+        // }
+        // else
+        // {
+        //     if(BUTTON->push_callback!=NULL)
+        //     {
+        //         BUTTON->push_callback(); //push callback to instancja gdzie trzeba zaerejsrować long push
+        //     }
+        //      BUTTON->deb_rep_timer =PUSHBUTTON_DEBOUNCE_TIME;
+        //     pushbutton_state_machine = BUTTON_RELEASED;
+        // }
 
+        break;
+    case LONG_PUSH_NO_REPETITION_PHASE:
+        // if (pushbutton_input_state == RELEASED)
+        // {
+        //     pushbutton_state_machine = BUTTON_RELEASED;
+        // }
+        // else
+        // {
+        //     pushbutton_state_machine = LONG_PUSH_NO_REPETITION_PHASE;
+        // }
+        break;
     }
 }
 
@@ -180,11 +249,11 @@ void init_pushbuttons(void)
  * @param button_name The name of the pushbutton to check. Use values from #pushbutton_name_t enumeration.
  * @param repetition The type of repetition for the pushbutton. Use values from #pushbutton_repetition_t enumeration.
  *
- * @note Before using this function, ensure that the pushbutton is registered with the system using get_pushbutton_struct_adres.
- * The pushbutton state will be updated based on the specified repetition type.
- * If the pushbutton is not registered, this function has no effect.
+ * @note Before using this function, ensure that the pushbutton is registered with the system using
+ * get_pushbutton_struct_adres. The pushbutton state will be updated based on the specified repetition type. If the
+ * pushbutton is not registered, this function has no effect.
  */
-void check_button_push(pushbutton_name_t button_name,pushbutton_repetition_t repetition)
+void check_button_push(pushbutton_name_t button_name, pushbutton_repetition_t repetition)
 {
     pushbutton_t *BUTTON = get_pushbutton_struct_adres(button_name);
 
@@ -202,9 +271,9 @@ void check_button_push(pushbutton_name_t button_name,pushbutton_repetition_t rep
  *
  * @param button_name The name of the pushbutton to check. Use values from #pushbutton_name_t enumeration.
  *
- * @note Before using this function, ensure that the pushbutton is registered with the system using get_pushbutton_struct_adres.
- * The pushbutton state will be updated based on the release event.
- * If the pushbutton is not registered, this function has no effect.
+ * @note Before using this function, ensure that the pushbutton is registered with the system using
+ * get_pushbutton_struct_adres. The pushbutton state will be updated based on the release event. If the pushbutton is
+ * not registered, this function has no effect.
  */
 void check_button_release(pushbutton_name_t button_name)
 {
@@ -222,14 +291,16 @@ void check_button_release(pushbutton_name_t button_name)
  * to be executed when the pushbutton is either pressed or released. The callback
  * is triggered by changes in the pushbutton state.
  *
- * @param button_name The name of the pushbutton to register the callback for. Use values from #pushbutton_name_t enumeration.
+ * @param button_name The name of the pushbutton to register the callback for. Use values from #pushbutton_name_t
+ * enumeration.
  * @param callback_on_push The callback function to be executed on push or release.
  *
- * @note Before using this function, ensure that the pushbutton is registered with the system using get_pushbutton_struct_adres.
- * The pushbutton state will be monitored for changes, and the callback will be triggered accordingly.
- * If the pushbutton is not registered, this function has no effect.
+ * @note Before using this function, ensure that the pushbutton is registered with the system using
+ * get_pushbutton_struct_adres. The pushbutton state will be monitored for changes, and the callback will be triggered
+ * accordingly. If the pushbutton is not registered, this function has no effect.
  *
- * @warning Avoid lengthy operations or blocking code in the callback function, as it may impact the responsiveness of the system.
+ * @warning Avoid lengthy operations or blocking code in the callback function, as it may impact the responsiveness of
+ * the system.
  */
 void register_button_push_callback(pushbutton_name_t button_name, pushbutton_callback_t callback_on_push)
 {
@@ -247,14 +318,16 @@ void register_button_push_callback(pushbutton_name_t button_name, pushbutton_cal
  * to be executed when the pushbutton is released. The callback is triggered by
  * changes in the pushbutton state from pressed to released.
  *
- * @param button_name The name of the pushbutton to register the release callback for. Use values from #pushbutton_name_t enumeration.
+ * @param button_name The name of the pushbutton to register the release callback for. Use values from
+ * #pushbutton_name_t enumeration.
  * @param callback_on_button_release The callback function to be executed on pushbutton release.
  *
- * @note Before using this function, ensure that the pushbutton is registered with the system using get_pushbutton_struct_adres.
- * The pushbutton state will be monitored for changes, and the release callback will be triggered accordingly.
- * If the pushbutton is not registered, this function has no effect.
+ * @note Before using this function, ensure that the pushbutton is registered with the system using
+ * get_pushbutton_struct_adres. The pushbutton state will be monitored for changes, and the release callback will be
+ * triggered accordingly. If the pushbutton is not registered, this function has no effect.
  *
- * @warning Avoid lengthy operations or blocking code in the release callback function, as it may impact the responsiveness of the system.
+ * @warning Avoid lengthy operations or blocking code in the release callback function, as it may impact the
+ * responsiveness of the system.
  */
 void register_button_release_callback(pushbutton_name_t button_name, pushbutton_callback_t callback_on_button_release)
 {
@@ -272,7 +345,8 @@ void register_button_release_callback(pushbutton_name_t button_name, pushbutton_
  * if the pushbutton is valid and the timer is non-zero. This is typically used in the
  * context of pushbutton debouncing and repetition control.
  *
- * @param button_name The name of the pushbutton to decrement the timer for. Use values from #pushbutton_name_t enumeration.
+ * @param button_name The name of the pushbutton to decrement the timer for. Use values from #pushbutton_name_t
+ * enumeration.
  *
  * @note Make sure to register the pushbutton with the system before using this function.
  * The pushbutton state will be updated based on the specified repetition type.
@@ -291,11 +365,11 @@ void dec_pushbutton_deb_rep_timer(pushbutton_name_t button_name)
     }
 }
 
-void check_button_long_push_short_release(pushbutton_name_t button_name,pushbutton_repetition_t long_push_repetition)
+void check_button_long_push_short_release(pushbutton_name_t button_name, pushbutton_repetition_t long_push_repetition)
 {
     pushbutton_t *BUTTON = get_pushbutton_struct_adres(button_name);
     if (BUTTON != NULL)
     {
-        debounce_pushbutton_push_release_state(BUTTON);
+        debounce_pushbutton_push_release_state(BUTTON,long_push_repetition);
     }
 }

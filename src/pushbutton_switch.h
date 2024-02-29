@@ -27,9 +27,7 @@ extern "C"
 /** @brief Time duration for continuous repetition of a pushbutton press in milliseconds. */
 #define PUSHBUTTON_CONTINUES_REPETITION_TIME 500U
 
-#define PUSBUTTON_MAX_PUSH_TIME_TO_CALL_PUSH_FUNC 1000U
-
-#define PUSBUTTON_MIN_TIME_TO_CALL_RELEASE_FUNC (PUSBUTTON_MAX_PUSH_TIME_TO_CALL_PUSH_FUNC+1U)
+#define PUSBUTTON_SHORT_PUSH_TIME_MAX 1000U
 
 
 /**
