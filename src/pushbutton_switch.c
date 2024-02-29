@@ -176,17 +176,18 @@ void debounce_pushbutton_push_release_state(pushbutton_t *BUTTON,pushbutton_repe
         {
             if ((BUTTON->deb_rep_timer) == 0)
             {
+                if(BUTTON->push_callback!=NULL)
+                {
+                    BUTTON->push_callback(); //push callback to instancja gdzie trzeba zaerejsrować long push
+                }
+
                 if(long_push_repetition==REPETITION_ON)
                 {
-                    // pushbutton_state_machine = LONG_PUSH_PHASE;
-                    // BUTTON->deb_rep_timer = PUSHBUTTON_FIRST_REPETITION_TIME;
+                    pushbutton_state_machine = LONG_PUSH_PHASE;
+                    BUTTON->deb_rep_timer = PUSHBUTTON_FIRST_REPETITION_TIME;
                 }
                 else
                 {
-                    if(BUTTON->push_callback!=NULL)
-                    {
-                        BUTTON->push_callback(); //push callback to instancja gdzie trzeba zaerejsrować long push
-                    }
                     pushbutton_state_machine = LONG_PUSH_NO_REPETITION_PHASE;
 
                 }
@@ -216,11 +217,7 @@ void debounce_pushbutton_push_release_state(pushbutton_t *BUTTON,pushbutton_repe
         }
         else
         {
-            if(BUTTON->push_callback!=NULL)
-            {
-                BUTTON->push_callback(); //push callback to instancja gdzie trzeba zaerejsrować long push
-            }
-             BUTTON->deb_rep_timer =PUSHBUTTON_DEBOUNCE_TIME;
+            BUTTON->deb_rep_timer =PUSHBUTTON_DEBOUNCE_TIME;
             pushbutton_state_machine = BUTTON_RELEASED;
         }
 
