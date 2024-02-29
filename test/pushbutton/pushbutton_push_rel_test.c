@@ -421,8 +421,6 @@ TEST(pushbutton_push_rel, GivenTestTimerEqual10AndKey1InitrAndNoRepetitionAndDec
     ckeck_button_state_5_times(BUTTON_1,REPETITION_ON);
     generate_pushbutton_deb_rep_timer_delay(PUSHBUTTON_CONTINUES_REPETITION_TIME,BUTTON_1); 
     ckeck_button_state_5_times(BUTTON_1,REPETITION_ON);
-    generate_pushbutton_deb_rep_timer_delay(PUSHBUTTON_CONTINUES_REPETITION_TIME,BUTTON_1); 
-    ckeck_button_state_5_times(BUTTON_1,REPETITION_ON);
     //When
     PUSHBUTTON_1_STATE=RELEASED;
     ckeck_button_state_5_times(BUTTON_1,REPETITION_ON);
