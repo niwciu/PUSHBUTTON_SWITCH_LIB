@@ -7,6 +7,8 @@ typedef uint16_t debounce_repetition_timer_t;
 TEST_GROUP(pushbutton_push_rel);
 
 static void generate_pushbutton_deb_rep_timer_delay(debounce_repetition_timer_t delay, pushbutton_name_t button_name);
+static void generete_pin_bouncing_on_release(pushbutton_name_t button_name);
+static void generate_pin_bounce_on_release(pushbutton_name_t button_name);
 
 TEST_SETUP(pushbutton_push_rel)
 {
@@ -20,19 +22,19 @@ TEST_TEAR_DOWN(pushbutton_push_rel)
     /* Cleanup after every test */
 }
 
-TEST(pushbutton_push_rel, GivenKey1InitAndIncTimerFunctionRegisteredOnButtonReleaseWhenButton1PushedAndReleasedPinStateIsStableForDebounceTimeThenTestTimerEqual1)
+TEST(pushbutton_push_rel, GivenKey1InitAndIncTimerFunctionRegisteredOnButtonReleaseButton1PushedAndReleasedWhenPinStateIsStableForDebounceTimeThenTestTimerEqual1)
 {
+    //Given
     register_button_release_callback(BUTTON_1,inc_test_timer);
     check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
     PUSHBUTTON_1_STATE=PUSHED;
     check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
     PUSHBUTTON_1_STATE=RELEASED;
+    generete_pin_bouncing_on_release(BUTTON_1);
     check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
-    generate_pushbutton_deb_rep_timer_delay(PUSHBUTTON_DEBOUNCE_TIME-2,BUTTON_1);
-    check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
-    dec_pushbutton_deb_rep_timer(BUTTON_1);
-    check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
-    check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
+    //When
+    generate_pushbutton_deb_rep_timer_delay(PUSHBUTTON_DEBOUNCE_TIME-1,BUTTON_1);
+    //Then
     check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
     TEST_ASSERT_EQUAL(1,TEST_TIMER);
 }
@@ -48,37 +50,7 @@ TEST(pushbutton_push_rel, GivenKey1InitAndIncTimerFunctionRegisteredOnButtonRele
     check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
 
     //Wneh
-    generate_pushbutton_deb_rep_timer_delay(5,BUTTON_1);
-    check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
-    PUSHBUTTON_1_STATE=PUSHED;
-    check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
-    generate_pushbutton_deb_rep_timer_delay(10,BUTTON_1);
-    PUSHBUTTON_1_STATE=RELEASED;
-    check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
-
-    generate_pushbutton_deb_rep_timer_delay(5,BUTTON_1);
-    check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
-    PUSHBUTTON_1_STATE=PUSHED;
-    check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
-    generate_pushbutton_deb_rep_timer_delay(10,BUTTON_1);
-    PUSHBUTTON_1_STATE=RELEASED;
-    check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
-
-    generate_pushbutton_deb_rep_timer_delay(5,BUTTON_1);
-    check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
-    PUSHBUTTON_1_STATE=PUSHED;
-    check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
-    generate_pushbutton_deb_rep_timer_delay(10,BUTTON_1);
-    PUSHBUTTON_1_STATE=RELEASED;
-    check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
-
-    generate_pushbutton_deb_rep_timer_delay(5,BUTTON_1);
-    check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
-    PUSHBUTTON_1_STATE=PUSHED;
-    check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
-    generate_pushbutton_deb_rep_timer_delay(10,BUTTON_1);
-    PUSHBUTTON_1_STATE=RELEASED;
-    check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
+    generete_pin_bouncing_on_release(BUTTON_1);
     //Then
     check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
     check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
@@ -148,4 +120,25 @@ static void generate_pushbutton_deb_rep_timer_delay(debounce_repetition_timer_t 
     {
         dec_pushbutton_deb_rep_timer(button_name);
     }
+}
+
+static void generete_pin_bouncing_on_release(pushbutton_name_t button_name)
+{
+    generate_pin_bounce_on_release(button_name);
+    generate_pin_bounce_on_release(button_name);
+    generate_pin_bounce_on_release(button_name);
+    generate_pin_bounce_on_release(button_name);
+    generate_pin_bounce_on_release(button_name);
+}
+
+static void generate_pin_bounce_on_release(pushbutton_name_t button_name)
+{
+    generate_pushbutton_deb_rep_timer_delay(5,button_name);
+    check_button_long_push_short_release(button_name,REPETITION_OFF);
+    PUSHBUTTON_1_STATE=PUSHED;
+    check_button_long_push_short_release(button_name,REPETITION_OFF);
+    generate_pushbutton_deb_rep_timer_delay(10,button_name);
+    check_button_long_push_short_release(button_name,REPETITION_OFF);
+    PUSHBUTTON_1_STATE=RELEASED;
+    check_button_long_push_short_release(button_name,REPETITION_OFF);
 }
