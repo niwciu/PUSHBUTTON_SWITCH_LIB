@@ -23,8 +23,8 @@ TEST_GROUP_RUNNER(pushbutton)
    RUN_TEST_CASE(pushbutton_release, GivenKey1InitAndIncTimerFunctionRegisteredWhenKey1PushAndReleaseAndPinBounceAndNextStayReleasedForPushButtonDebounceThenTestTimerEqual1);
    RUN_TEST_CASE(pushbutton_release, GivenKey1InitAndIncTimerFunctionRegisteredWhenKey1PushAndReleaseAndPinBouncAndNextStayReleasedForlongerPushButtonDebounceThenTestTimerEqual1);
    
-   RUN_TEST_CASE(pushbutton_push_rel, GivenKey1InitAndIncTimerFunctionRegisteredOnButtonReleaseWhenKey1PushAndReleasePinStateIsStableForDebounceTimeThenTestTimerEqual1);
-   // RUN_TEST_CASE(pushbutton_push_rel, );   
+   RUN_TEST_CASE(pushbutton_push_rel, GivenKey1InitAndIncTimerFunctionRegisteredOnButtonReleaseAndButton1PushedAndReleasedWhenButtonStillBouncingThenThenTestTimerEqual0);
+   RUN_TEST_CASE(pushbutton_push_rel, GivenKey1InitAndIncTimerFunctionRegisteredOnButtonReleaseAndButton1PushedAndReleasedWhenButtonStillBouncingThenThenTestTimerEqual0);   
    // RUN_TEST_CASE(pushbutton_push_rel, );
    // RUN_TEST_CASE(pushbutton_push_rel, );   
    // RUN_TEST_CASE(pushbutton_push_rel, );

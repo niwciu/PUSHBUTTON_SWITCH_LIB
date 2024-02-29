@@ -20,7 +20,7 @@ TEST_TEAR_DOWN(pushbutton_push_rel)
     /* Cleanup after every test */
 }
 
-TEST(pushbutton_push_rel, GivenKey1InitAndIncTimerFunctionRegisteredOnButtonReleaseWhenKey1PushAndReleasePinStateIsStableForDebounceTimeThenTestTimerEqual1)
+TEST(pushbutton_push_rel, GivenKey1InitAndIncTimerFunctionRegisteredOnButtonReleaseWhenButton1PushedAndReleasedPinStateIsStableForDebounceTimeThenTestTimerEqual1)
 {
     register_button_release_callback(BUTTON_1,inc_test_timer);
     check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
@@ -37,11 +37,55 @@ TEST(pushbutton_push_rel, GivenKey1InitAndIncTimerFunctionRegisteredOnButtonRele
     TEST_ASSERT_EQUAL(1,TEST_TIMER);
 }
 
-// TEST(pushbutton_push_rel, )
-// {
+TEST(pushbutton_push_rel, GivenKey1InitAndIncTimerFunctionRegisteredOnButtonReleaseAndButton1PushedAndReleasedWhenButtonStillBouncingThenThenTestTimerEqual0)
+{
+    //Given
+    register_button_release_callback(BUTTON_1,inc_test_timer);
+    check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
+    PUSHBUTTON_1_STATE=PUSHED;
+    check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
+    PUSHBUTTON_1_STATE=RELEASED;
+    check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
 
-//     TEST_FAIL_MESSAGE("added new test")
-// }
+    //Wneh
+    generate_pushbutton_deb_rep_timer_delay(5,BUTTON_1);
+    check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
+    PUSHBUTTON_1_STATE=PUSHED;
+    check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
+    generate_pushbutton_deb_rep_timer_delay(10,BUTTON_1);
+    PUSHBUTTON_1_STATE=RELEASED;
+    check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
+
+    generate_pushbutton_deb_rep_timer_delay(5,BUTTON_1);
+    check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
+    PUSHBUTTON_1_STATE=PUSHED;
+    check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
+    generate_pushbutton_deb_rep_timer_delay(10,BUTTON_1);
+    PUSHBUTTON_1_STATE=RELEASED;
+    check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
+
+    generate_pushbutton_deb_rep_timer_delay(5,BUTTON_1);
+    check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
+    PUSHBUTTON_1_STATE=PUSHED;
+    check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
+    generate_pushbutton_deb_rep_timer_delay(10,BUTTON_1);
+    PUSHBUTTON_1_STATE=RELEASED;
+    check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
+
+    generate_pushbutton_deb_rep_timer_delay(5,BUTTON_1);
+    check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
+    PUSHBUTTON_1_STATE=PUSHED;
+    check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
+    generate_pushbutton_deb_rep_timer_delay(10,BUTTON_1);
+    PUSHBUTTON_1_STATE=RELEASED;
+    check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
+    //Then
+    check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
+    check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
+    check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
+    TEST_ASSERT_EQUAL(0,TEST_TIMER);
+}
+
 // TEST(pushbutton_push_rel, )
 // {
 
