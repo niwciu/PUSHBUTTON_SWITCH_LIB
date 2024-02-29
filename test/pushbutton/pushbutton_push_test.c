@@ -10,8 +10,8 @@ typedef uint16_t debounce_repetition_timer_t;
 TEST_GROUP(pushbutton_push);
 
 static void generate_pushbutton_deb_rep_timer_delay(debounce_repetition_timer_t delay, pushbutton_name_t button_name);
-static void generete_pin_bouncing_on_push(pushbutton_name_t button_name, pushbutton_repetition_t repetition_switch);
-static void generate_pin_bounce_on_push(pushbutton_name_t button_name, pushbutton_repetition_t repetition_switch);
+static void generete_pin_bouncing_on_push(pushbutton_name_t button_name);
+static void generate_pin_bounce_on_push(pushbutton_name_t button_name);
 
 TEST_SETUP(pushbutton_push)
 {
@@ -41,15 +41,16 @@ TEST(pushbutton_push, GivenKey1InitAndIncTimerFunctionRegisteredAndKey1PushedAnd
 {
     //Given
     register_button_push_callback(BUTTON_1,inc_test_timer);
-    check_button_push(BUTTON_1,REPETITION_OFF);
+    disable_pusbutton_repetition(BUTTON_1);
+    check_button_push(BUTTON_1);
     PUSHBUTTON_1_STATE=PUSHED;
-    check_button_push(BUTTON_1,REPETITION_OFF);
-    generete_pin_bouncing_on_push(BUTTON_1,REPETITION_OFF);
-    check_button_push(BUTTON_1,REPETITION_OFF);
+    check_button_push(BUTTON_1);
+    generete_pin_bouncing_on_push(BUTTON_1);
+    check_button_push(BUTTON_1);
     //When
     generate_pushbutton_deb_rep_timer_delay(DEBOUNCE_TIME_TO_STABLE_STATE,BUTTON_1);
-    check_button_push(BUTTON_1,REPETITION_OFF);
-    check_button_push(BUTTON_1,REPETITION_OFF);
+    check_button_push(BUTTON_1);
+    check_button_push(BUTTON_1);
     //Then
     TEST_ASSERT_EQUAL(1,TEST_TIMER);
 }
@@ -59,15 +60,16 @@ TEST(pushbutton_push, GivenKey2InitAndIncTimerFunctionRegisteredAndKey2PushedAnd
 {
     //Given
     register_button_push_callback(BUTTON_2,inc_test_timer);
-    check_button_push(BUTTON_2,REPETITION_OFF);
+    disable_pusbutton_repetition(BUTTON_1);
+    check_button_push(BUTTON_2);
     PUSHBUTTON_2_STATE=PUSHED;
-    check_button_push(BUTTON_2,REPETITION_OFF);
-    generete_pin_bouncing_on_push(BUTTON_2,REPETITION_OFF);
-    check_button_push(BUTTON_2,REPETITION_OFF);
+    check_button_push(BUTTON_2);
+    generete_pin_bouncing_on_push(BUTTON_2);
+    check_button_push(BUTTON_2);
     //When
     generate_pushbutton_deb_rep_timer_delay(DEBOUNCE_TIME_TO_STABLE_STATE,BUTTON_2);
-    check_button_push(BUTTON_2,REPETITION_OFF);
-    check_button_push(BUTTON_2,REPETITION_OFF);
+    check_button_push(BUTTON_2);
+    check_button_push(BUTTON_2);
     //Then
     TEST_ASSERT_EQUAL(1,TEST_TIMER);
 }
@@ -76,17 +78,18 @@ TEST(pushbutton_push,GivenKey1InitAndIncTimerFunctionRegisteredAndKey1PushedAndB
 {
     //Given
     register_button_push_callback(BUTTON_1,inc_test_timer);
-    check_button_push(BUTTON_1,REPETITION_OFF);
+    disable_pusbutton_repetition(BUTTON_1);
+    check_button_push(BUTTON_1);
     PUSHBUTTON_1_STATE=PUSHED;
-    check_button_push(BUTTON_1,REPETITION_OFF);
-    generete_pin_bouncing_on_push(BUTTON_1,REPETITION_OFF);
-    check_button_push(BUTTON_1,REPETITION_OFF);
+    check_button_push(BUTTON_1);
+    generete_pin_bouncing_on_push(BUTTON_1);
+    check_button_push(BUTTON_1);
     //When
     generate_pushbutton_deb_rep_timer_delay(DEBOUNCE_TIME_TO_STABLE_STATE,BUTTON_1);
-    check_button_push(BUTTON_1,REPETITION_OFF);
+    check_button_push(BUTTON_1);
     generate_pushbutton_deb_rep_timer_delay((DEBOUNCE_TIME_TO_STABLE_STATE*100),BUTTON_1);
-    check_button_push(BUTTON_1,REPETITION_OFF);
-    check_button_push(BUTTON_1,REPETITION_OFF);
+    check_button_push(BUTTON_1);
+    check_button_push(BUTTON_1);
     //Then
     TEST_ASSERT_EQUAL(1,TEST_TIMER);
 }
@@ -94,15 +97,16 @@ TEST(pushbutton_push, GivenKey1InitAndIncTimerFunctionRegisteredAndKey1PushedAnd
 {
     //Given
     register_button_push_callback(BUTTON_1,inc_test_timer);
-    check_button_push(BUTTON_1,REPETITION_OFF);
+    disable_pusbutton_repetition(BUTTON_1);
+    check_button_push(BUTTON_1);
     PUSHBUTTON_1_STATE=PUSHED;
-    check_button_push(BUTTON_1,REPETITION_OFF);
-    generete_pin_bouncing_on_push(BUTTON_1,REPETITION_OFF);
-    check_button_push(BUTTON_1,REPETITION_OFF);
+    check_button_push(BUTTON_1);
+    generete_pin_bouncing_on_push(BUTTON_1);
+    check_button_push(BUTTON_1);
     //When
     generate_pushbutton_deb_rep_timer_delay((DEBOUNCE_TIME_TO_STABLE_STATE-1),BUTTON_1);
-    check_button_push(BUTTON_1,REPETITION_OFF);
-    check_button_push(BUTTON_1,REPETITION_OFF);
+    check_button_push(BUTTON_1);
+    check_button_push(BUTTON_1);
     //Then
     TEST_ASSERT_EQUAL(0,TEST_TIMER);
 }
@@ -111,19 +115,20 @@ TEST(pushbutton_push, GivenKey1InitAndIncTimerFunctionRegisteredAndKey1PushAndBo
 {
    //Given
     register_button_push_callback(BUTTON_1,inc_test_timer);
-    check_button_push(BUTTON_1,REPETITION_OFF);
+    enable_pusbutton_repetition(BUTTON_1);
+    check_button_push(BUTTON_1);
     PUSHBUTTON_1_STATE=PUSHED;
-    check_button_push(BUTTON_1,REPETITION_OFF);
-    generete_pin_bouncing_on_push(BUTTON_1,REPETITION_OFF);
-    check_button_push(BUTTON_1,REPETITION_OFF); 
+    check_button_push(BUTTON_1);
+    generete_pin_bouncing_on_push(BUTTON_1);
+    check_button_push(BUTTON_1); 
     generate_pushbutton_deb_rep_timer_delay(DEBOUNCE_TIME_TO_STABLE_STATE,BUTTON_1);
-    check_button_push(BUTTON_1,REPETITION_ON);
-    check_button_push(BUTTON_1,REPETITION_ON);
+    check_button_push(BUTTON_1);
+    check_button_push(BUTTON_1);
     //When
     generate_pushbutton_deb_rep_timer_delay(TIME_TO_EXECUTE_FIRST_REPETITION,BUTTON_1);
-    check_button_push(BUTTON_1,REPETITION_ON);
-    check_button_push(BUTTON_1,REPETITION_ON);
-    check_button_push(BUTTON_1,REPETITION_ON);
+    check_button_push(BUTTON_1);
+    check_button_push(BUTTON_1);
+    check_button_push(BUTTON_1);
     //Then
     TEST_ASSERT_EQUAL(2,TEST_TIMER);
 }
@@ -133,19 +138,20 @@ TEST(pushbutton_push, GivenKey1InitAndIncTimerFunctionRegisteredAndKey1PushAndBo
 
     //Given
     register_button_push_callback(BUTTON_1,inc_test_timer);
-    check_button_push(BUTTON_1,REPETITION_OFF);
+    enable_pusbutton_repetition(BUTTON_1);
+    check_button_push(BUTTON_1);
     PUSHBUTTON_1_STATE=PUSHED;
-    check_button_push(BUTTON_1,REPETITION_OFF);
-    generete_pin_bouncing_on_push(BUTTON_1,REPETITION_OFF);
-    check_button_push(BUTTON_1,REPETITION_OFF); 
+    check_button_push(BUTTON_1);
+    generete_pin_bouncing_on_push(BUTTON_1);
+    check_button_push(BUTTON_1); 
     generate_pushbutton_deb_rep_timer_delay(DEBOUNCE_TIME_TO_STABLE_STATE,BUTTON_1);
-    check_button_push(BUTTON_1,REPETITION_ON);
-    check_button_push(BUTTON_1,REPETITION_ON);
+    check_button_push(BUTTON_1);
+    check_button_push(BUTTON_1);
     //When
     generate_pushbutton_deb_rep_timer_delay((TIME_TO_EXECUTE_FIRST_REPETITION-1),BUTTON_1);
-    check_button_push(BUTTON_1,REPETITION_ON);
-    check_button_push(BUTTON_1,REPETITION_ON);
-    check_button_push(BUTTON_1,REPETITION_ON);
+    check_button_push(BUTTON_1);
+    check_button_push(BUTTON_1);
+    check_button_push(BUTTON_1);
     //Then
     TEST_ASSERT_EQUAL(1,TEST_TIMER);
 }
@@ -154,20 +160,21 @@ TEST(pushbutton_push, GivenKey1InitAndIncTimerFunctionRegisteredAndKey1PushAndBo
 {
     //Given
     register_button_push_callback(BUTTON_1,inc_test_timer);
-    check_button_push(BUTTON_1,REPETITION_OFF);
+    enable_pusbutton_repetition(BUTTON_1);
+    check_button_push(BUTTON_1);
     PUSHBUTTON_1_STATE=PUSHED;
-    check_button_push(BUTTON_1,REPETITION_OFF);
-    generete_pin_bouncing_on_push(BUTTON_1,REPETITION_OFF);
-    check_button_push(BUTTON_1,REPETITION_OFF); 
+    check_button_push(BUTTON_1);
+    generete_pin_bouncing_on_push(BUTTON_1);
+    check_button_push(BUTTON_1); 
     generate_pushbutton_deb_rep_timer_delay(DEBOUNCE_TIME_TO_STABLE_STATE,BUTTON_1);
-    check_button_push(BUTTON_1,REPETITION_ON);
-    check_button_push(BUTTON_1,REPETITION_ON);
+    check_button_push(BUTTON_1);
+    check_button_push(BUTTON_1);
     //When
     generate_pushbutton_deb_rep_timer_delay(TIME_TO_EXECUTE_FIRST_REPETITION,BUTTON_1);
-    check_button_push(BUTTON_1,REPETITION_ON);
+    check_button_push(BUTTON_1);
      generate_pushbutton_deb_rep_timer_delay((TIME_TO_EXECUTE_N_REPETITION-1),BUTTON_1);
-    check_button_push(BUTTON_1,REPETITION_ON);
-    check_button_push(BUTTON_1,REPETITION_ON);
+    check_button_push(BUTTON_1);
+    check_button_push(BUTTON_1);
     //Then
     TEST_ASSERT_EQUAL(2,TEST_TIMER);
 }
@@ -176,20 +183,21 @@ TEST(pushbutton_push, GivenKey1InitAndIncTimerFunctionRegisteredWhenKey1PushForT
 {
     //Given
     register_button_push_callback(BUTTON_1,inc_test_timer);
-    check_button_push(BUTTON_1,REPETITION_OFF);
+    enable_pusbutton_repetition(BUTTON_1);
+    check_button_push(BUTTON_1);
     PUSHBUTTON_1_STATE=PUSHED;
-    check_button_push(BUTTON_1,REPETITION_OFF);
-    generete_pin_bouncing_on_push(BUTTON_1,REPETITION_OFF);
-    check_button_push(BUTTON_1,REPETITION_OFF); 
+    check_button_push(BUTTON_1);
+    generete_pin_bouncing_on_push(BUTTON_1);
+    check_button_push(BUTTON_1); 
     //When
     generate_pushbutton_deb_rep_timer_delay(DEBOUNCE_TIME_TO_STABLE_STATE,BUTTON_1);
-    check_button_push(BUTTON_1,REPETITION_ON);
-    check_button_push(BUTTON_1,REPETITION_ON);
+    check_button_push(BUTTON_1);
+    check_button_push(BUTTON_1);
     generate_pushbutton_deb_rep_timer_delay(TIME_TO_EXECUTE_FIRST_REPETITION,BUTTON_1);
-    check_button_push(BUTTON_1,REPETITION_ON);
+    check_button_push(BUTTON_1);
     generate_pushbutton_deb_rep_timer_delay(TIME_TO_EXECUTE_N_REPETITION,BUTTON_1);
-    check_button_push(BUTTON_1,REPETITION_ON);
-    check_button_push(BUTTON_1,REPETITION_ON);
+    check_button_push(BUTTON_1);
+    check_button_push(BUTTON_1);
     //Then
     TEST_ASSERT_EQUAL(3,TEST_TIMER);
 }
@@ -199,21 +207,22 @@ TEST(pushbutton_push, GivenKey1InitAndIncTimerFunctionRegisteredWhenKey1PushForT
 
     //Given
     register_button_push_callback(BUTTON_1,inc_test_timer);
-    check_button_push(BUTTON_1,REPETITION_OFF);
+    enable_pusbutton_repetition(BUTTON_1);
+    check_button_push(BUTTON_1);
     PUSHBUTTON_1_STATE=PUSHED;
-    check_button_push(BUTTON_1,REPETITION_OFF);
-    generete_pin_bouncing_on_push(BUTTON_1,REPETITION_OFF);
-    check_button_push(BUTTON_1,REPETITION_OFF); 
+    check_button_push(BUTTON_1);
+    generete_pin_bouncing_on_push(BUTTON_1);
+    check_button_push(BUTTON_1); 
     //When
     generate_pushbutton_deb_rep_timer_delay(DEBOUNCE_TIME_TO_STABLE_STATE,BUTTON_1);
-    check_button_push(BUTTON_1,REPETITION_ON);
-    check_button_push(BUTTON_1,REPETITION_ON);
+    check_button_push(BUTTON_1);
+    check_button_push(BUTTON_1);
     generate_pushbutton_deb_rep_timer_delay(TIME_TO_EXECUTE_FIRST_REPETITION,BUTTON_1);
-    check_button_push(BUTTON_1,REPETITION_ON);
+    check_button_push(BUTTON_1);
     generate_pushbutton_deb_rep_timer_delay(TIME_TO_EXECUTE_N_REPETITION,BUTTON_1);
-    check_button_push(BUTTON_1,REPETITION_ON);
+    check_button_push(BUTTON_1);
     generate_pushbutton_deb_rep_timer_delay((TIME_TO_EXECUTE_N_REPETITION-1),BUTTON_1);
-    check_button_push(BUTTON_1,REPETITION_ON);
+    check_button_push(BUTTON_1);
     //Then
     TEST_ASSERT_EQUAL(3,TEST_TIMER);
 }
@@ -222,23 +231,24 @@ TEST(pushbutton_push, GivenKey1InitAndIncTimerFunctionRegisteredWhenKey1PushForT
 {
     //Given
     register_button_push_callback(BUTTON_1,inc_test_timer);
-    check_button_push(BUTTON_1,REPETITION_OFF);
+    enable_pusbutton_repetition(BUTTON_1);
+    check_button_push(BUTTON_1);
     PUSHBUTTON_1_STATE=PUSHED;
-    check_button_push(BUTTON_1,REPETITION_OFF);
-    generete_pin_bouncing_on_push(BUTTON_1,REPETITION_OFF);
-    check_button_push(BUTTON_1,REPETITION_OFF); 
+    check_button_push(BUTTON_1);
+    generete_pin_bouncing_on_push(BUTTON_1);
+    check_button_push(BUTTON_1); 
     //When
     generate_pushbutton_deb_rep_timer_delay(DEBOUNCE_TIME_TO_STABLE_STATE,BUTTON_1);
-    check_button_push(BUTTON_1,REPETITION_ON);
-    check_button_push(BUTTON_1,REPETITION_ON);
+    check_button_push(BUTTON_1);
+    check_button_push(BUTTON_1);
     generate_pushbutton_deb_rep_timer_delay(TIME_TO_EXECUTE_FIRST_REPETITION,BUTTON_1);
-    check_button_push(BUTTON_1,REPETITION_ON);
+    check_button_push(BUTTON_1);
     generate_pushbutton_deb_rep_timer_delay(TIME_TO_EXECUTE_N_REPETITION,BUTTON_1);
-    check_button_push(BUTTON_1,REPETITION_ON);
+    check_button_push(BUTTON_1);
     generate_pushbutton_deb_rep_timer_delay(TIME_TO_EXECUTE_N_REPETITION,BUTTON_1);
-    check_button_push(BUTTON_1,REPETITION_ON);
+    check_button_push(BUTTON_1);
     generate_pushbutton_deb_rep_timer_delay((TIME_TO_EXECUTE_N_REPETITION-1),BUTTON_1);
-    check_button_push(BUTTON_1,REPETITION_ON);
+    check_button_push(BUTTON_1);
     //Then
     TEST_ASSERT_EQUAL(4,TEST_TIMER);
 }
@@ -262,16 +272,16 @@ static void generate_pushbutton_deb_rep_timer_delay(debounce_repetition_timer_t 
         dec_pushbutton_deb_rep_timer(button_name);
     }
 }
-static void generete_pin_bouncing_on_push(pushbutton_name_t button_name, pushbutton_repetition_t repetition_switch)
+static void generete_pin_bouncing_on_push(pushbutton_name_t button_name)
 {
-    generate_pin_bounce_on_push(button_name, repetition_switch);
-    generate_pin_bounce_on_push(button_name, repetition_switch);
-    generate_pin_bounce_on_push(button_name, repetition_switch);
-    generate_pin_bounce_on_push(button_name, repetition_switch);
-    generate_pin_bounce_on_push(button_name, repetition_switch);
+    generate_pin_bounce_on_push(button_name);
+    generate_pin_bounce_on_push(button_name);
+    generate_pin_bounce_on_push(button_name);
+    generate_pin_bounce_on_push(button_name);
+    generate_pin_bounce_on_push(button_name);
 }
 
-static void generate_pin_bounce_on_push(pushbutton_name_t button_name, pushbutton_repetition_t repetition_switch)
+static void generate_pin_bounce_on_push(pushbutton_name_t button_name)
 {
     button_state_t *PUSHBUTTON_STATE;
     switch(button_name)
@@ -284,11 +294,11 @@ static void generate_pin_bounce_on_push(pushbutton_name_t button_name, pushbutto
             break;
     }
     generate_pushbutton_deb_rep_timer_delay(5,button_name);
-    check_button_push(button_name,repetition_switch);
+    check_button_push(button_name);
     *PUSHBUTTON_STATE=RELEASED;
-    check_button_push(button_name,repetition_switch);
+    check_button_push(button_name);
     generate_pushbutton_deb_rep_timer_delay(10,button_name);
-    check_button_push(button_name,repetition_switch);
+    check_button_push(button_name);
     *PUSHBUTTON_STATE=PUSHED;
-    check_button_push(button_name,repetition_switch);
+    check_button_push(button_name);
 }

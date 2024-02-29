@@ -24,7 +24,23 @@ typedef enum
     SHORT_PUSH_PHASE,
     LONG_PUSH_PHASE,
     LONG_PUSH_NO_REPETITION_PHASE
-} push_button_action_phase_t;
+} pushbutton_action_phase_t;
+
+typedef enum
+{
+    REPETITION_INACTIVE,
+    REPETITION_ACTIVE
+} pushbutton_repetition_status_flag_t;
+
+/**
+ * @brief Enumeration for pushbutton repetition options.
+ *
+ * This enumeration defines options for controlling pushbutton repetition behavior.
+ */
+typedef enum {
+    REPETITION_ON,  /**< Enables pushbutton repetition. */
+    REPETITION_OFF, /**< Disables pushbutton repetition. */
+}pushbutton_repetition_t;
 /**
  * @brief Structure representing a pushbutton.
  *
@@ -33,12 +49,12 @@ typedef enum
  */
 typedef struct
 {
-    pushbutton_driver_interface_t *GPIO_interface; /**< GPIO interface for the pushbutton. */
-    debounce_repetition_timer_t deb_rep_timer;     /**< Debounce and repetition timer. */
-    uint8_t REPETITION_FLAG;                       /**< Repetition flag indicating the current state. */
-    pushbutton_callback_t push_callback;           /**< Callback function on push action. */
-    pushbutton_callback_t release_callback;        /**< Callback function on release action. */
-    //
+    pushbutton_driver_interface_t *GPIO_interface;          /**< GPIO interface for the pushbutton. */
+    debounce_repetition_timer_t deb_rep_timer;              /**< Debounce and repetition timer. */
+    pushbutton_repetition_status_flag_t REPETITION_STATUS_FLAG;    /**< Repetition flag indicating the current state. */
+    pushbutton_callback_t push_callback;                    /**< Callback function on push action. */
+    pushbutton_callback_t release_callback;                 /**< Callback function on release action. */
+    pushbutton_repetition_t repetition;
 } pushbutton_t;
 
 /** @brief Instance of pushbutton_t representing PUSHBUTTON_1. */
@@ -48,24 +64,23 @@ static pushbutton_t PUSHBUTTON_1;
 static pushbutton_t PUSHBUTTON_2;
 
 static pushbutton_t *get_pushbutton_struct_adres(pushbutton_name_t button_name);
-static void update_button_deb_rep_counter(pushbutton_t *BUTTON, pushbutton_repetition_t repetition);
-static void debounce_pushbutton_push_state(pushbutton_t *BUTTON, pushbutton_repetition_t repetition);
+static void update_button_deb_rep_counter(pushbutton_t *BUTTON);
+static void debounce_pushbutton_push_state(pushbutton_t *BUTTON);
 static void debounce_pushbutton_release_state(pushbutton_t *BUTTON);
-static void debounce_pushbutton_push_release_state(pushbutton_t *BUTTON, pushbutton_repetition_t long_push_repetition);
+static void debounce_pushbutton_push_release_state(pushbutton_t *BUTTON);
 
 static void handle_push_debouncing(pushbutton_t *BUTTON, const button_state_t *pushbutton_input_state,
-                                   push_button_action_phase_t *pushbutton_state_machine);
+                                   pushbutton_action_phase_t *pushbutton_state_machine);
 static void handle_long_push_no_repetition_phase(const button_state_t *pushbutton_input_state,
-                                                 push_button_action_phase_t *pushbutton_state_machine);
+                                                 pushbutton_action_phase_t *pushbutton_state_machine);
 static void handle_long_push_phase(pushbutton_t *BUTTON, const button_state_t *pushbutton_input_state,
-                                   push_button_action_phase_t *pushbutton_state_machine);
+                                   pushbutton_action_phase_t *pushbutton_state_machine);
 static void handle_short_push_phase(pushbutton_t *BUTTON, const button_state_t *pushbutton_input_state,
-                                    pushbutton_repetition_t long_push_repetition,
-                                    push_button_action_phase_t *pushbutton_state_machine);
-static void handle_short_pus_phase_pin_pushed(pushbutton_t *BUTTON, pushbutton_repetition_t long_push_repetition,
-                                              push_button_action_phase_t *pushbutton_state_machine);
+                                    pushbutton_action_phase_t *pushbutton_state_machine);
+static void handle_short_pus_phase_pin_pushed(pushbutton_t *BUTTON,
+                                              pushbutton_action_phase_t *pushbutton_state_machine);
 static void handle_short_pus_phase_pin_released(pushbutton_t *BUTTON,
-                                                push_button_action_phase_t *pushbutton_state_machine);
+                                                pushbutton_action_phase_t *pushbutton_state_machine);
 static pushbutton_t *get_pushbutton_struct_adres(pushbutton_name_t button_name)
 {
     pushbutton_t *BUTTON = NULL;
@@ -85,15 +100,15 @@ static pushbutton_t *get_pushbutton_struct_adres(pushbutton_name_t button_name)
     return BUTTON;
 }
 
-static void update_button_deb_rep_counter(pushbutton_t *BUTTON, pushbutton_repetition_t repetition)
+static void update_button_deb_rep_counter(pushbutton_t *BUTTON)
 {
 
-    if (repetition == REPETITION_ON)
+    if ((BUTTON->repetition) == REPETITION_ON)
     {
-        if ((BUTTON->REPETITION_FLAG) == 0)
+        if ((BUTTON->REPETITION_STATUS_FLAG) == REPETITION_INACTIVE)
         {
             BUTTON->deb_rep_timer = PUSHBUTTON_FIRST_REPETITION_TIME;
-            BUTTON->REPETITION_FLAG = 1;
+            BUTTON->REPETITION_STATUS_FLAG = REPETITION_ACTIVE;
         }
         else
         {
@@ -106,7 +121,7 @@ static void update_button_deb_rep_counter(pushbutton_t *BUTTON, pushbutton_repet
     }
 }
 
-static void debounce_pushbutton_push_state(pushbutton_t *BUTTON, pushbutton_repetition_t repetition)
+static void debounce_pushbutton_push_state(pushbutton_t *BUTTON)
 {
     button_state_t pushbutton_input_state = BUTTON->GPIO_interface->get_button_state();
     if (pushbutton_input_state == PUSHED)
@@ -117,7 +132,7 @@ static void debounce_pushbutton_push_state(pushbutton_t *BUTTON, pushbutton_repe
             {
                 BUTTON->push_callback();
             }
-            update_button_deb_rep_counter(BUTTON, repetition);
+            update_button_deb_rep_counter(BUTTON);
         }
         else
         {
@@ -127,7 +142,7 @@ static void debounce_pushbutton_push_state(pushbutton_t *BUTTON, pushbutton_repe
     else
     {
         BUTTON->deb_rep_timer = PUSHBUTTON_DEBOUNCE_TIME;
-        BUTTON->REPETITION_FLAG = 0;
+        BUTTON->REPETITION_STATUS_FLAG = REPETITION_INACTIVE;
     }
 }
 
@@ -155,9 +170,9 @@ static void debounce_pushbutton_release_state(pushbutton_t *BUTTON)
     }
 }
 
-void debounce_pushbutton_push_release_state(pushbutton_t *BUTTON, pushbutton_repetition_t long_push_repetition)
+void debounce_pushbutton_push_release_state(pushbutton_t *BUTTON)
 {
-    static push_button_action_phase_t pushbutton_state_machine = BUTTON_RELEASED;
+    static pushbutton_action_phase_t pushbutton_state_machine = BUTTON_RELEASED;
     static button_state_t pushbutton_input_state = UNKNOWN;
     pushbutton_input_state = BUTTON->GPIO_interface->get_button_state();
 
@@ -174,7 +189,7 @@ void debounce_pushbutton_push_release_state(pushbutton_t *BUTTON, pushbutton_rep
         handle_push_debouncing(BUTTON, &pushbutton_input_state, &pushbutton_state_machine);
         break;
     case SHORT_PUSH_PHASE:
-        handle_short_push_phase(BUTTON, &pushbutton_input_state, long_push_repetition, &pushbutton_state_machine);
+        handle_short_push_phase(BUTTON, &pushbutton_input_state, &pushbutton_state_machine);
         break;
     case LONG_PUSH_PHASE:
         handle_long_push_phase(BUTTON, &pushbutton_input_state, &pushbutton_state_machine);
@@ -185,7 +200,7 @@ void debounce_pushbutton_push_release_state(pushbutton_t *BUTTON, pushbutton_rep
     }
 }
 static void handle_push_debouncing(pushbutton_t *BUTTON, const button_state_t *pushbutton_input_state,
-                                   push_button_action_phase_t *pushbutton_state_machine)
+                                   pushbutton_action_phase_t *pushbutton_state_machine)
 {
     if (*pushbutton_input_state == PUSHED)
     {
@@ -201,7 +216,7 @@ static void handle_push_debouncing(pushbutton_t *BUTTON, const button_state_t *p
     }
 }
 static void handle_long_push_no_repetition_phase(const button_state_t *pushbutton_input_state,
-                                                 push_button_action_phase_t *pushbutton_state_machine)
+                                                 pushbutton_action_phase_t *pushbutton_state_machine)
 {
     if (*pushbutton_input_state == RELEASED)
     {
@@ -214,7 +229,7 @@ static void handle_long_push_no_repetition_phase(const button_state_t *pushbutto
 }
 
 static void handle_long_push_phase(pushbutton_t *BUTTON, const button_state_t *pushbutton_input_state,
-                                   push_button_action_phase_t *pushbutton_state_machine)
+                                   pushbutton_action_phase_t *pushbutton_state_machine)
 {
     if (*pushbutton_input_state == PUSHED)
     {
@@ -235,12 +250,11 @@ static void handle_long_push_phase(pushbutton_t *BUTTON, const button_state_t *p
 }
 
 static void handle_short_push_phase(pushbutton_t *BUTTON, const button_state_t *pushbutton_input_state,
-                                    pushbutton_repetition_t long_push_repetition,
-                                    push_button_action_phase_t *pushbutton_state_machine)
+                                    pushbutton_action_phase_t *pushbutton_state_machine)
 {
     if (*pushbutton_input_state == PUSHED)
     {
-        handle_short_pus_phase_pin_pushed(BUTTON, long_push_repetition, pushbutton_state_machine);
+        handle_short_pus_phase_pin_pushed(BUTTON, pushbutton_state_machine);
     }
     else
     {
@@ -248,8 +262,7 @@ static void handle_short_push_phase(pushbutton_t *BUTTON, const button_state_t *
     }
 }
 
-static void handle_short_pus_phase_pin_pushed(pushbutton_t *BUTTON, pushbutton_repetition_t long_push_repetition,
-                                              push_button_action_phase_t *pushbutton_state_machine)
+static void handle_short_pus_phase_pin_pushed(pushbutton_t *BUTTON,pushbutton_action_phase_t *pushbutton_state_machine)
 {
     if ((BUTTON->deb_rep_timer) == 0)
     {
@@ -258,7 +271,7 @@ static void handle_short_pus_phase_pin_pushed(pushbutton_t *BUTTON, pushbutton_r
             BUTTON->push_callback(); // push callback to instancja gdzie trzeba zaerejsrować long push
         }
 
-        if (long_push_repetition == REPETITION_ON)
+        if (BUTTON->repetition == REPETITION_ON)
         {
             *pushbutton_state_machine = LONG_PUSH_PHASE;
             BUTTON->deb_rep_timer = PUSHBUTTON_FIRST_REPETITION_TIME;
@@ -271,7 +284,7 @@ static void handle_short_pus_phase_pin_pushed(pushbutton_t *BUTTON, pushbutton_r
 }
 
 static void handle_short_pus_phase_pin_released(pushbutton_t *BUTTON,
-                                                push_button_action_phase_t *pushbutton_state_machine)
+                                                pushbutton_action_phase_t *pushbutton_state_machine)
 {
     if (BUTTON->release_callback != NULL)
     {
@@ -305,13 +318,13 @@ void init_pushbuttons(void)
  *
  * @note If the pushbutton is not registered, this function has no effect.
  */
-void check_button_push(pushbutton_name_t button_name, pushbutton_repetition_t repetition)
+void check_button_push(pushbutton_name_t button_name)
 {
     pushbutton_t *BUTTON = get_pushbutton_struct_adres(button_name);
 
     if (BUTTON != NULL)
     {
-        debounce_pushbutton_push_state(BUTTON, repetition);
+        debounce_pushbutton_push_state(BUTTON);
     }
 }
 
@@ -331,6 +344,31 @@ void check_button_release(pushbutton_name_t button_name)
     if (BUTTON != NULL)
     {
         debounce_pushbutton_release_state(BUTTON);
+    }
+}
+
+/**
+ * @brief Checks for short push and long push events on a pushbutton.
+ *
+ * This function checks the state of the specified pushbutton for short push and long push events.
+ * The short push event is detected when the pushbutton is released quickly, and the long push event
+ * is detected when the pushbutton is held down for an extended period.
+ *
+ * @param button_name The name of the pushbutton to check. Use values from #pushbutton_name_t enumeration.
+ * @param long_push_repetition The repetition type for long push detection, if any. Use values from
+ * #pushbutton_repetition_t enumeration.
+ *
+ * @note If the pushbutton is not registered, this function has no effect.
+ *
+ * @warning Ensure that the debounce_pushbutton_push_release_state function is correctly implemented
+ * to handle the pushbutton state and repetitions.
+ */
+void check_button_short_push_long_push(pushbutton_name_t button_name)
+{
+    pushbutton_t *BUTTON = get_pushbutton_struct_adres(button_name);
+    if (BUTTON != NULL)
+    {
+        debounce_pushbutton_push_release_state(BUTTON);
     }
 }
 
@@ -414,6 +452,23 @@ void register_button_short_push_long_push_callbacks(pushbutton_name_t button_nam
     }
 }
 
+void enable_pusbutton_repetition(pushbutton_name_t button_name)
+{
+    pushbutton_t *BUTTON = get_pushbutton_struct_adres(button_name);
+    if (BUTTON != NULL)
+    {
+        BUTTON->repetition=REPETITION_ON;
+    }
+}
+void disable_pusbutton_repetition(pushbutton_name_t button_name)
+{
+    pushbutton_t *BUTTON = get_pushbutton_struct_adres(button_name);
+    if (BUTTON != NULL)
+    {
+        BUTTON->repetition=REPETITION_OFF;
+    }
+}
+
 /**
  * @brief Decrements the debounce and repetition timer of a pushbutton.
  *
@@ -438,30 +493,5 @@ void dec_pushbutton_deb_rep_timer(pushbutton_name_t button_name)
         {
             BUTTON->deb_rep_timer--;
         }
-    }
-}
-
-/**
- * @brief Checks for short push and long push events on a pushbutton.
- *
- * This function checks the state of the specified pushbutton for short push and long push events.
- * The short push event is detected when the pushbutton is released quickly, and the long push event
- * is detected when the pushbutton is held down for an extended period.
- *
- * @param button_name The name of the pushbutton to check. Use values from #pushbutton_name_t enumeration.
- * @param long_push_repetition The repetition type for long push detection, if any. Use values from
- * #pushbutton_repetition_t enumeration.
- *
- * @note If the pushbutton is not registered, this function has no effect.
- *
- * @warning Ensure that the debounce_pushbutton_push_release_state function is correctly implemented
- * to handle the pushbutton state and repetitions.
- */
-void check_button_short_push_long_push(pushbutton_name_t button_name, pushbutton_repetition_t long_push_repetition)
-{
-    pushbutton_t *BUTTON = get_pushbutton_struct_adres(button_name);
-    if (BUTTON != NULL)
-    {
-        debounce_pushbutton_push_release_state(BUTTON, long_push_repetition);
     }
 }

@@ -48,26 +48,18 @@ typedef enum {
     BUTTON_2,   /**< Represents the second pushbutton. */
 }pushbutton_name_t;
 
-/**
- * @brief Enumeration for pushbutton repetition options.
- *
- * This enumeration defines options for controlling pushbutton repetition behavior.
- */
-typedef enum {
-    REPETITION_ON,  /**< Enables pushbutton repetition. */
-    REPETITION_OFF, /**< Disables pushbutton repetition. */
-}pushbutton_repetition_t;
-
-
 void init_pushbuttons(void);
 
-void check_button_push(pushbutton_name_t button_name,pushbutton_repetition_t repetition);
+void check_button_push(pushbutton_name_t button_name);
 void check_button_release(pushbutton_name_t button_name);
-void check_button_short_push_long_push(pushbutton_name_t button_name,pushbutton_repetition_t long_push_repetition);
+void check_button_short_push_long_push(pushbutton_name_t button_name);
 
 void register_button_push_callback(pushbutton_name_t button_name,pushbutton_callback_t callback_on_push);
 void register_button_release_callback(pushbutton_name_t button_name,pushbutton_callback_t callback_on_button_release);
 void register_button_short_push_long_push_callbacks(pushbutton_name_t button_name,pushbutton_callback_t callback_on_short_push,pushbutton_callback_t callback_on_long_push);
+
+void enable_pusbutton_repetition(pushbutton_name_t button_name);
+void disable_pusbutton_repetition(pushbutton_name_t button_name);
 
 void dec_pushbutton_deb_rep_timer(pushbutton_name_t button_name);
 
