@@ -14,3 +14,4 @@ extern button_state_t PUSHBUTTON_2_STATE;
 extern uint8_t TEST_TIMER;
 
 void inc_test_timer(void);
+void dec_test_timer(void);

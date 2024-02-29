@@ -60,3 +60,7 @@ void inc_test_timer(void)
 {
     TEST_TIMER++;
 }
+void dec_test_timer(void)
+{
+    TEST_TIMER--;
+}
