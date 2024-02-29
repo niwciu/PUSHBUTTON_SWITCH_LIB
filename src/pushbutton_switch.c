@@ -365,7 +365,7 @@ void dec_pushbutton_deb_rep_timer(pushbutton_name_t button_name)
     }
 }
 
-void check_button_long_push_short_release(pushbutton_name_t button_name, pushbutton_repetition_t long_push_repetition)
+void check_button_short_push_long_push(pushbutton_name_t button_name, pushbutton_repetition_t long_push_repetition)
 {
     pushbutton_t *BUTTON = get_pushbutton_struct_adres(button_name);
     if (BUTTON != NULL)
