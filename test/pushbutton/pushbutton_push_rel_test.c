@@ -3,6 +3,10 @@
 #include "mock_pushbutton_GPIO_driver.h"
 
 // #include "tested_module.h"
+
+#define DEBOUNCE_TIME_TO_STABLE_STATE (PUSHBUTTON_DEBOUNCE_TIME-1)
+// #define TIME_TO_EXECUTE_FIRST_REPETITION (PUSHBUTTON_FIRST_REPETITION_TIME-1)
+// #define TIME_TO_EXECUTE_N_REPETITION (PUSHBUTTON_CONTINUES_REPETITION_TIME-1)
 typedef uint16_t debounce_repetition_timer_t;
 TEST_GROUP(pushbutton_push_rel);
 
@@ -28,7 +32,7 @@ TEST_TEAR_DOWN(pushbutton_push_rel)
     /* Cleanup after every test */
 }
 
-TEST(pushbutton_push_rel, GivenTestTimerEqual10AndKey1InitAndNoRepetitionAndDecTimerFunctionRegisteredOnButtonReleaseAndIncFucnRegisteredOnButtonPushAndButton1PushedAndBouncingAndStablePushWhenReleasedAndBouncingThenTestTimerEqual10)
+TEST(pushbutton_push_rel, GivenTestTimerEqual10AndKey1InitAndNoRepetitionAndDecTimerFunctionRegisteredOnButtonReleaseAndIncFucnRegisteredOnButtonPushAndButton1PushedAndBouncingAndPushIsStableForTimeMaxPushTimeWhenPushbuttonReleasedAndBouncingThenTestTimerEqual10)
 {
     //... Given 
     check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
@@ -36,38 +40,43 @@ TEST(pushbutton_push_rel, GivenTestTimerEqual10AndKey1InitAndNoRepetitionAndDecT
     check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
     generete_pin_bouncing_on_push(BUTTON_1,REPETITION_OFF);
     check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
+    generate_pushbutton_deb_rep_timer_delay(DEBOUNCE_TIME_TO_STABLE_STATE,BUTTON_1);
+    check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
     generate_pushbutton_deb_rep_timer_delay(PUSBUTTON_MAX_PUSH_TIME_TO_CALL_PUSH_FUNC,BUTTON_1);
+    check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
     //When
     PUSHBUTTON_1_STATE=RELEASED;
     check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
     generete_pin_bouncing_on_release(BUTTON_1,REPETITION_OFF);
     check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
     //Then
-    check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
     TEST_ASSERT_EQUAL(10,TEST_TIMER);
 }
 
-TEST(pushbutton_push_rel, GivenTestTimerEqual10AndKey1InitAndNoRepetitionAndDecTimerFunctionRegisteredOnButtonReleaseAndIncFucnRegisteredOnButtonPushAndButton1PushedAndBouncingAndStablePushWhenReleasedBeforeMaxPushCallWindowThenTestTimerEqual11)
+TEST(pushbutton_push_rel, GivenTestTimerEqual10AndKey1InitAndNoRepetitionAndDecTimerFunctionRegisteredOnButtonReleaseAndIncFucnRegisteredOnButtonPushAndButton1PushedAndBouncingAndPushIsStableForTimeMaxPushTimeWhenPushbuttonReleasedAndBouncingAndStableForDebounceTimeThenTestTimerEqual11)
 {
     //... Given 
     check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
     PUSHBUTTON_1_STATE=PUSHED;
     check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
     generete_pin_bouncing_on_push(BUTTON_1,REPETITION_OFF);
+    check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
+    generate_pushbutton_deb_rep_timer_delay(DEBOUNCE_TIME_TO_STABLE_STATE,BUTTON_1);
     check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
     generate_pushbutton_deb_rep_timer_delay(PUSBUTTON_MAX_PUSH_TIME_TO_CALL_PUSH_FUNC,BUTTON_1);
+    check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
+    //When
     PUSHBUTTON_1_STATE=RELEASED;
     check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
     generete_pin_bouncing_on_release(BUTTON_1,REPETITION_OFF);
     check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
-    //When
-    generate_pushbutton_deb_rep_timer_delay(PUSHBUTTON_DEBOUNCE_TIME-1,BUTTON_1);
-    //Then
+    generate_pushbutton_deb_rep_timer_delay(DEBOUNCE_TIME_TO_STABLE_STATE,BUTTON_1);
     check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
+    //Then
     TEST_ASSERT_EQUAL(11,TEST_TIMER);
 }
 
-TEST(pushbutton_push_rel, GivenTestTimerEqual10AndKey1InitAndNoRepetitionAndDecTimerFunctionRegisteredOnButtonReleaseAndIncFucnRegisteredOnButtonPushAndButton1PushedAndBouncingAndStablePushWhenReleasedAtMaxPushCallWindowThenTestTimerEqual11)
+TEST(pushbutton_push_rel, GivenTestTimerEqual10AndKey1InitAndNoRepetitionAndDecTimerFunctionRegisteredOnButtonReleaseAndIncFucnRegisteredOnButtonPushAndButton1PushedAndBouncingAndPushIsStableForTimeMaxPushTimeWhenPushbuttonReleasedAndBouncingAndStableForTwiceDebounceTimeThenTestTimerEqual11)
 {
     //... Given 
     check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
@@ -75,57 +84,228 @@ TEST(pushbutton_push_rel, GivenTestTimerEqual10AndKey1InitAndNoRepetitionAndDecT
     check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
     generete_pin_bouncing_on_push(BUTTON_1,REPETITION_OFF);
     check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
-    generate_pushbutton_deb_rep_timer_delay((PUSBUTTON_MAX_PUSH_TIME_TO_CALL_PUSH_FUNC-1),BUTTON_1);
+    generate_pushbutton_deb_rep_timer_delay(DEBOUNCE_TIME_TO_STABLE_STATE,BUTTON_1);
+    check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
+    generate_pushbutton_deb_rep_timer_delay(PUSBUTTON_MAX_PUSH_TIME_TO_CALL_PUSH_FUNC,BUTTON_1);
+    check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
+    //When
     PUSHBUTTON_1_STATE=RELEASED;
     check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
     generete_pin_bouncing_on_release(BUTTON_1,REPETITION_OFF);
     check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
-    //When
-    generate_pushbutton_deb_rep_timer_delay(PUSHBUTTON_DEBOUNCE_TIME-1,BUTTON_1);
-    //Then
+    generate_pushbutton_deb_rep_timer_delay(DEBOUNCE_TIME_TO_STABLE_STATE,BUTTON_1);
     check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
+    generate_pushbutton_deb_rep_timer_delay(DEBOUNCE_TIME_TO_STABLE_STATE,BUTTON_1);
+    check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
+
     TEST_ASSERT_EQUAL(11,TEST_TIMER);
 }
 
-// TEST(pushbutton_push, GivenTestTimerEqual10AndKey1InitAndNoRepetitionAndDecTimerFunctionRegisteredOnButtonReleaseAndIncFucnRegisteredOnButtonPushAndButton1PushedAndBouncingAndStablePushWhenReleasedAndBouncingThenTestTimerEqual10)
-// {
+TEST(pushbutton_push_rel, GivenTestTimerEqual10AndKey1InitAndNoRepetitionAndDecTimerFunctionRegisteredOnButtonReleaseAndIncFucnRegisteredOnButtonPushAndButton1PushedAndBouncingAndPushIsStableForTimeLessThanMaxPushTimeWhenPushbuttonReleasedAndBouncingThenTestTimerEqual10)
+{
+    //... Given 
+    check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
+    PUSHBUTTON_1_STATE=PUSHED;
+    check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
+    generete_pin_bouncing_on_push(BUTTON_1,REPETITION_OFF);
+    check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
+    generate_pushbutton_deb_rep_timer_delay(DEBOUNCE_TIME_TO_STABLE_STATE,BUTTON_1);
+    check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
+    generate_pushbutton_deb_rep_timer_delay((PUSBUTTON_MAX_PUSH_TIME_TO_CALL_PUSH_FUNC-10),BUTTON_1);
+    check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
+    //When
+    PUSHBUTTON_1_STATE=RELEASED;
+    check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
+    generete_pin_bouncing_on_release(BUTTON_1,REPETITION_OFF);
+    check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
+    //Then
+    TEST_ASSERT_EQUAL(10,TEST_TIMER);
+
+}
+
+TEST(pushbutton_push_rel, GivenTestTimerEqual10AndKey1InitAndNoRepetitionAndDecTimerFunctionRegisteredOnButtonReleaseAndIncFucnRegisteredOnButtonPushAndButton1PushedAndBouncingAndPushIsStableForTimeLessThanMaxPushTimeWhenPushbuttonReleasedAndBouncingAndStableForDebounceTimeThenTestTimerEqual11)
+{    
+    //... Given 
+    check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
+    PUSHBUTTON_1_STATE=PUSHED;
+    check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
+    generete_pin_bouncing_on_push(BUTTON_1,REPETITION_OFF);
+    check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
+    generate_pushbutton_deb_rep_timer_delay(DEBOUNCE_TIME_TO_STABLE_STATE,BUTTON_1);
+    check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
+    generate_pushbutton_deb_rep_timer_delay((PUSBUTTON_MAX_PUSH_TIME_TO_CALL_PUSH_FUNC-10),BUTTON_1);
+    check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
+    //When
+    PUSHBUTTON_1_STATE=RELEASED;
+    check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
+    generete_pin_bouncing_on_release(BUTTON_1,REPETITION_OFF);
+    check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
+    generate_pushbutton_deb_rep_timer_delay(DEBOUNCE_TIME_TO_STABLE_STATE,BUTTON_1);
+    check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
+    //Then
+    TEST_ASSERT_EQUAL(11,TEST_TIMER);
+
+}
+
+TEST(pushbutton_push_rel, GivenTestTimerEqual10AndKey1InitAndNoRepetitionAndDecTimerFunctionRegisteredOnButtonReleaseAndIncFucnRegisteredOnButtonPushAndButton1PushedAndBouncingAndPushIsStableForTimeLessThanMaxPushTimeWhenPushbuttonReleasedAndBouncingAndStableForTwiceDebounceTimeThenTestTimerEqual11)
+{    
+    //... Given 
+    check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
+    PUSHBUTTON_1_STATE=PUSHED;
+    check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
+    generete_pin_bouncing_on_push(BUTTON_1,REPETITION_OFF);
+    check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
+    generate_pushbutton_deb_rep_timer_delay(DEBOUNCE_TIME_TO_STABLE_STATE,BUTTON_1);
+    check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
+    generate_pushbutton_deb_rep_timer_delay((PUSBUTTON_MAX_PUSH_TIME_TO_CALL_PUSH_FUNC-10),BUTTON_1);
+    check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
+    //When
+    PUSHBUTTON_1_STATE=RELEASED;
+    check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
+    generete_pin_bouncing_on_release(BUTTON_1,REPETITION_OFF);
+    check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
+    generate_pushbutton_deb_rep_timer_delay(DEBOUNCE_TIME_TO_STABLE_STATE,BUTTON_1);
+    check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
+    generate_pushbutton_deb_rep_timer_delay(DEBOUNCE_TIME_TO_STABLE_STATE,BUTTON_1);
+    check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
+
+    TEST_ASSERT_EQUAL(11,TEST_TIMER);
+
+}
+
+
+TEST(pushbutton_push_rel, GivenTestTimerEqual10AndKey1InitAndNoRepetitionAndDecTimerFunctionRegisteredOnButtonReleaseAndIncFucnRegisteredOnButtonPushAndButton1PushedAndBouncingAndPushBecomeStableWhenPushbuttonReleasedAndBouncingThenTestTimerEqual10)
+{
+    //... Given 
+    check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
+    PUSHBUTTON_1_STATE=PUSHED;
+    check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
+    generete_pin_bouncing_on_push(BUTTON_1,REPETITION_OFF);
+    check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
+    generate_pushbutton_deb_rep_timer_delay(DEBOUNCE_TIME_TO_STABLE_STATE,BUTTON_1);
+    check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
+    //When
+    PUSHBUTTON_1_STATE=RELEASED;
+    check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
+    generete_pin_bouncing_on_release(BUTTON_1,REPETITION_OFF);
+    check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
+    //Then
+    TEST_ASSERT_EQUAL(10,TEST_TIMER);
+
+}
+
+TEST(pushbutton_push_rel, GivenTestTimerEqual10AndKey1InitAndNoRepetitionAndDecTimerFunctionRegisteredOnButtonReleaseAndIncFucnRegisteredOnButtonPushAndButton1PushedAndBouncingAndPushBecomeStableWhenPushbuttonReleasedAndBouncingAndStableForDebounceTimeThenTestTimerEqual11)
+{    
+    //... Given 
+    check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
+    PUSHBUTTON_1_STATE=PUSHED;
+    check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
+    generete_pin_bouncing_on_push(BUTTON_1,REPETITION_OFF);
+    check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
+    generate_pushbutton_deb_rep_timer_delay(DEBOUNCE_TIME_TO_STABLE_STATE,BUTTON_1);
+    check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
+    //When
+    PUSHBUTTON_1_STATE=RELEASED;
+    check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
+    generete_pin_bouncing_on_release(BUTTON_1,REPETITION_OFF);
+    check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
+    generate_pushbutton_deb_rep_timer_delay(DEBOUNCE_TIME_TO_STABLE_STATE,BUTTON_1);
+    check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
+    //Then
+    TEST_ASSERT_EQUAL(11,TEST_TIMER);
+
+}
+
+TEST(pushbutton_push_rel, GivenTestTimerEqual10AndKey1InitAndNoRepetitionAndDecTimerFunctionRegisteredOnButtonReleaseAndIncFucnRegisteredOnButtonPushAndButton1PushedAndBouncingAndPushBecomeStableWhenPushbuttonReleasedAndBouncingAndStableForTwiceDebounceTimeThenTestTimerEqual11)
+{    
+    //... Given 
+    check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
+    PUSHBUTTON_1_STATE=PUSHED;
+    check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
+    generete_pin_bouncing_on_push(BUTTON_1,REPETITION_OFF);
+    check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
+    generate_pushbutton_deb_rep_timer_delay(DEBOUNCE_TIME_TO_STABLE_STATE,BUTTON_1);
+    check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
+    //When
+    PUSHBUTTON_1_STATE=RELEASED;
+    check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
+    generete_pin_bouncing_on_release(BUTTON_1,REPETITION_OFF);
+    check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
+    generate_pushbutton_deb_rep_timer_delay(DEBOUNCE_TIME_TO_STABLE_STATE,BUTTON_1);
+    check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
+    generate_pushbutton_deb_rep_timer_delay(DEBOUNCE_TIME_TO_STABLE_STATE,BUTTON_1);
+    check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
+    TEST_ASSERT_EQUAL(11,TEST_TIMER);
+
+}
+
+TEST(pushbutton_push_rel, GivenTestTimerEqual10AndKey1InitAndNoRepetitionAndDecTimerFunctionRegisteredOnButtonReleaseAndIncFucnRegisteredOnButtonPushAndButton1PushedAndBouncingAndNotStableWhenPushbuttonReleasedAndBouncingThenTestTimerEqual10)
+{
+    //... Given 
+    check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
+    PUSHBUTTON_1_STATE=PUSHED;
+    check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
+    generete_pin_bouncing_on_push(BUTTON_1,REPETITION_OFF);
+    check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
+    // generate_pushbutton_deb_rep_timer_delay(DEBOUNCE_TIME_TO_STABLE_STATE,BUTTON_1);
+    // check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
+    //When
+    PUSHBUTTON_1_STATE=RELEASED;
+    check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
+    generete_pin_bouncing_on_release(BUTTON_1,REPETITION_OFF);
+    check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
+    //Then
+    TEST_ASSERT_EQUAL(10,TEST_TIMER);
+
+}
+
+// TEST(pushbutton_push_rel, GivenTestTimerEqual10AndKey1InitAndNoRepetitionAndDecTimerFunctionRegisteredOnButtonReleaseAndIncFucnRegisteredOnButtonPushAndButton1PushedAndBouncingAndNotStableWhenPushbuttonReleasedAndBouncingAndStableForDebounceTimeThenTestTimerEqual10)
+// {    
 //     //... Given 
 //     check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
 //     PUSHBUTTON_1_STATE=PUSHED;
 //     check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
 //     generete_pin_bouncing_on_push(BUTTON_1,REPETITION_OFF);
 //     check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
-//     generate_pushbutton_deb_rep_timer_delay((PUSBUTTON_MAX_PUSH_TIME_TO_CALL_PUSH_FUNC+1),BUTTON_1);
+//     // generate_pushbutton_deb_rep_timer_delay(DEBOUNCE_TIME_TO_STABLE_STATE,BUTTON_1);
+//     // check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
+//     //When
 //     PUSHBUTTON_1_STATE=RELEASED;
 //     check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
 //     generete_pin_bouncing_on_release(BUTTON_1,REPETITION_OFF);
 //     check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
-//     //When
-//     generate_pushbutton_deb_rep_timer_delay(PUSHBUTTON_DEBOUNCE_TIME-1,BUTTON_1);
-//     //Then
+//     generate_pushbutton_deb_rep_timer_delay(DEBOUNCE_TIME_TO_STABLE_STATE,BUTTON_1);
 //     check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
-//     TEST_ASSERT_EQUAL(11,TEST_TIMER);
+//     //Then
+//     TEST_ASSERT_EQUAL(10,TEST_TIMER);
+
 // }
 
-// TEST(pushbutton_push, GivenTestTimerEqual10AndKey1InitAndNoRepetitionAndDecTimerFunctionRegisteredOnButtonReleaseAndIncFucnRegisteredOnButtonPushAndButton1PushedAndBouncingAndStablePushWhenReleasedAfterMaxPushCallWindowThenTestTimerEqual9)
-// {
+// TEST(pushbutton_push_rel, GivenTestTimerEqual10AndKey1InitAndNoRepetitionAndDecTimerFunctionRegisteredOnButtonReleaseAndIncFucnRegisteredOnButtonPushAndButton1PushedAndBouncingAndNotStableWhenPushbuttonReleasedAndBouncingAndStableForTwiceDebounceTimeThenTestTimerEqual10)
+// {    
 //     //... Given 
 //     check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
 //     PUSHBUTTON_1_STATE=PUSHED;
 //     check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
 //     generete_pin_bouncing_on_push(BUTTON_1,REPETITION_OFF);
 //     check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
-//     generate_pushbutton_deb_rep_timer_delay((PUSBUTTON_MAX_PUSH_TIME_TO_CALL_PUSH_FUNC+1),BUTTON_1);
+//     // generate_pushbutton_deb_rep_timer_delay(DEBOUNCE_TIME_TO_STABLE_STATE,BUTTON_1);
+//     // check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
+//     //When
 //     PUSHBUTTON_1_STATE=RELEASED;
 //     check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
 //     generete_pin_bouncing_on_release(BUTTON_1,REPETITION_OFF);
 //     check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
-//     //When
-//     generate_pushbutton_deb_rep_timer_delay(PUSHBUTTON_DEBOUNCE_TIME-1,BUTTON_1);
-//     //Then
+//     generate_pushbutton_deb_rep_timer_delay(DEBOUNCE_TIME_TO_STABLE_STATE,BUTTON_1);
 //     check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
-//     TEST_ASSERT_EQUAL(11,TEST_TIMER);
+//     generate_pushbutton_deb_rep_timer_delay(DEBOUNCE_TIME_TO_STABLE_STATE,BUTTON_1);
+//     check_button_long_push_short_release(BUTTON_1,REPETITION_OFF);
+//     TEST_ASSERT_EQUAL(10,TEST_TIMER);
+
 // }
+
+
+
 
 //co jak po pushu i execucie z pusha w czasie debouncu wejdzie znowu do pusha
 
@@ -136,6 +316,7 @@ TEST(pushbutton_push_rel, GivenTestTimerEqual10AndKey1InitAndNoRepetitionAndDecT
 
 //     TEST_FAIL_MESSAGE("added new test")
 // }
+
 // TEST(pushbutton_push_rel, )
 // {
 
