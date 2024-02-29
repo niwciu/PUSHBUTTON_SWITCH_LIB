@@ -363,15 +363,31 @@ TEST(pushbutton_push_rel, GivenTestTimerEqual10AndKey1InitAndNoRepetitionAndDecT
     TEST_ASSERT_EQUAL(9,TEST_TIMER);
 }
 
+TEST(pushbutton_push_rel, GivenTestTimerEqual10AndKey1InitrAndNoRepetitionAndDecTimerFunctionRegisteredOnButtonReleaseAndIncFucnRegisteredOnButtonPushAndButton1PushedAndBouncingAndPushIsStableForLongerThanTimeMaxPushTimeAndLongerThanTwiceFirstRepetitionTimeWhenPushbuttonReleasedAndBouncingThenTestTimerEqual9)
+{
+    //... Given 
+    ckeck_button_state_5_times(BUTTON_1,REPETITION_ON);
+    PUSHBUTTON_1_STATE=PUSHED;
+    ckeck_button_state_5_times(BUTTON_1,REPETITION_ON);
+    generete_pin_bouncing_on_push(BUTTON_1,REPETITION_ON);
+    ckeck_button_state_5_times(BUTTON_1,REPETITION_ON);
+    generate_pushbutton_deb_rep_timer_delay(PUSHBUTTON_DEBOUNCE_TIME,BUTTON_1);
+    ckeck_button_state_5_times(BUTTON_1,REPETITION_ON);
+    generate_pushbutton_deb_rep_timer_delay(PUSBUTTON_SHORT_PUSH_TIME_MAX,BUTTON_1); 
+    ckeck_button_state_5_times(BUTTON_1,REPETITION_ON);
+    //When
+    PUSHBUTTON_1_STATE=RELEASED;
+    ckeck_button_state_5_times(BUTTON_1,REPETITION_ON);
+    generete_pin_bouncing_on_release(BUTTON_1,REPETITION_ON);
+    ckeck_button_state_5_times(BUTTON_1,REPETITION_ON);
+    TEST_ASSERT_EQUAL(9,TEST_TIMER);
+}
+
 //co jak po pushu i execucie z pusha w czasie debouncu wejdzie znowu do pusha
 
 
 
-// TEST(pushbutton_push_rel, )
-// {
 
-//     TEST_FAIL_MESSAGE("added new test")
-// }
 
 // TEST(pushbutton_push_rel, )
 // {
