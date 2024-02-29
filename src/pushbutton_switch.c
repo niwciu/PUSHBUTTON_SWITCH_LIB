@@ -174,11 +174,23 @@ void debounce_pushbutton_push_release_state(pushbutton_t *BUTTON,pushbutton_repe
     case SHORT_PUSH_PHASE:
         if (pushbutton_input_state == PUSHED)
         {
-            // if ((BUTTON->deb_rep_timer) == 0)
-            // {
-            //         pushbutton_state_machine = LONG_PUSH_PHASE;
-            //         BUTTON->deb_rep_timer = PUSHBUTTON_FIRST_REPETITION_TIME;
-            // }
+            if ((BUTTON->deb_rep_timer) == 0)
+            {
+                if(long_push_repetition==REPETITION_ON)
+                {
+                    // pushbutton_state_machine = LONG_PUSH_PHASE;
+                    // BUTTON->deb_rep_timer = PUSHBUTTON_FIRST_REPETITION_TIME;
+                }
+                else
+                {
+                    if(BUTTON->push_callback!=NULL)
+                    {
+                        BUTTON->push_callback(); //push callback to instancja gdzie trzeba zaerejsrować long push
+                    }
+                    pushbutton_state_machine = LONG_PUSH_NO_REPETITION_PHASE;
+
+                }
+            }
         }
         else
         {
@@ -191,37 +203,37 @@ void debounce_pushbutton_push_release_state(pushbutton_t *BUTTON,pushbutton_repe
         }
         break;
     case LONG_PUSH_PHASE:
-        // if (pushbutton_input_state == PUSHED)
-        // {
-        //     if ((BUTTON->deb_rep_timer) == 0)
-        //     {
-        //         if(BUTTON->push_callback!=NULL)
-        //         {
-        //             BUTTON->push_callback(); //push callback to instancja gdzie trzeba zaerejsrować long push
-        //         }
-        //         BUTTON->deb_rep_timer = PUSHBUTTON_CONTINUES_REPETITION_TIME;
-        //     }
-        // }
-        // else
-        // {
-        //     if(BUTTON->push_callback!=NULL)
-        //     {
-        //         BUTTON->push_callback(); //push callback to instancja gdzie trzeba zaerejsrować long push
-        //     }
-        //      BUTTON->deb_rep_timer =PUSHBUTTON_DEBOUNCE_TIME;
-        //     pushbutton_state_machine = BUTTON_RELEASED;
-        // }
+        if (pushbutton_input_state == PUSHED)
+        {
+            if ((BUTTON->deb_rep_timer) == 0)
+            {
+                if(BUTTON->push_callback!=NULL)
+                {
+                    BUTTON->push_callback(); //push callback to instancja gdzie trzeba zaerejsrować long push
+                }
+                BUTTON->deb_rep_timer = PUSHBUTTON_CONTINUES_REPETITION_TIME;
+            }
+        }
+        else
+        {
+            if(BUTTON->push_callback!=NULL)
+            {
+                BUTTON->push_callback(); //push callback to instancja gdzie trzeba zaerejsrować long push
+            }
+             BUTTON->deb_rep_timer =PUSHBUTTON_DEBOUNCE_TIME;
+            pushbutton_state_machine = BUTTON_RELEASED;
+        }
 
         break;
     case LONG_PUSH_NO_REPETITION_PHASE:
-        // if (pushbutton_input_state == RELEASED)
-        // {
-        //     pushbutton_state_machine = BUTTON_RELEASED;
-        // }
-        // else
-        // {
-        //     pushbutton_state_machine = LONG_PUSH_NO_REPETITION_PHASE;
-        // }
+        if (pushbutton_input_state == RELEASED)
+        {
+            pushbutton_state_machine = BUTTON_RELEASED;
+        }
+        else
+        {
+            pushbutton_state_machine = LONG_PUSH_NO_REPETITION_PHASE;
+        }
         break;
     }
 }
