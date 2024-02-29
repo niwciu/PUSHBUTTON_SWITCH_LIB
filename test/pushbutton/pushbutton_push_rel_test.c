@@ -363,7 +363,7 @@ TEST(pushbutton_push_rel, GivenTestTimerEqual10AndKey1InitAndNoRepetitionAndDecT
     TEST_ASSERT_EQUAL(9,TEST_TIMER);
 }
 
-TEST(pushbutton_push_rel, GivenTestTimerEqual10AndKey1InitrAndNoRepetitionAndDecTimerFunctionRegisteredOnButtonReleaseAndIncFucnRegisteredOnButtonPushAndButton1PushedAndBouncingAndPushIsStableForLongerThanTimeMaxPushTimeAndLongerThanTwiceFirstRepetitionTimeWhenPushbuttonReleasedAndBouncingThenTestTimerEqual9)
+TEST(pushbutton_push_rel, GivenTestTimerEqual10AndKey1InitrAndNoRepetitionAndDecTimerFunctionRegisteredOnButtonReleaseAndIncFucnRegisteredOnButtonPushAndButton1PushedAndBouncingAndPushIsStableForLongerThanTimeMaxPushTimeAndShortenThanFirstRepetitionTimeWhenPushbuttonReleasedAndBouncingThenTestTimerEqual9)
 {
     //... Given 
     ckeck_button_state_5_times(BUTTON_1,REPETITION_ON);
@@ -381,6 +381,28 @@ TEST(pushbutton_push_rel, GivenTestTimerEqual10AndKey1InitrAndNoRepetitionAndDec
     generete_pin_bouncing_on_release(BUTTON_1,REPETITION_ON);
     ckeck_button_state_5_times(BUTTON_1,REPETITION_ON);
     TEST_ASSERT_EQUAL(9,TEST_TIMER);
+}
+
+TEST(pushbutton_push_rel, GivenTestTimerEqual10AndKey1InitrAndNoRepetitionAndDecTimerFunctionRegisteredOnButtonReleaseAndIncFucnRegisteredOnButtonPushAndButton1PushedAndBouncingAndPushIsStableForLongerThanTimeMaxPushTimeAndLongerThanFirstRepetitionTimeWhenPushbuttonReleasedAndBouncingThenTestTimerEqual8)
+{
+    //... Given 
+    ckeck_button_state_5_times(BUTTON_1,REPETITION_ON);
+    PUSHBUTTON_1_STATE=PUSHED;
+    ckeck_button_state_5_times(BUTTON_1,REPETITION_ON);
+    generete_pin_bouncing_on_push(BUTTON_1,REPETITION_ON);
+    ckeck_button_state_5_times(BUTTON_1,REPETITION_ON);
+    generate_pushbutton_deb_rep_timer_delay(PUSHBUTTON_DEBOUNCE_TIME,BUTTON_1);
+    ckeck_button_state_5_times(BUTTON_1,REPETITION_ON);
+    generate_pushbutton_deb_rep_timer_delay(PUSBUTTON_SHORT_PUSH_TIME_MAX,BUTTON_1); 
+    ckeck_button_state_5_times(BUTTON_1,REPETITION_ON);
+    generate_pushbutton_deb_rep_timer_delay(PUSHBUTTON_FIRST_REPETITION_TIME,BUTTON_1); 
+    ckeck_button_state_5_times(BUTTON_1,REPETITION_ON);
+    //When
+    PUSHBUTTON_1_STATE=RELEASED;
+    ckeck_button_state_5_times(BUTTON_1,REPETITION_ON);
+    generete_pin_bouncing_on_release(BUTTON_1,REPETITION_ON);
+    ckeck_button_state_5_times(BUTTON_1,REPETITION_ON);
+    TEST_ASSERT_EQUAL(8,TEST_TIMER);
 }
 
 //co jak po pushu i execucie z pusha w czasie debouncu wejdzie znowu do pusha
