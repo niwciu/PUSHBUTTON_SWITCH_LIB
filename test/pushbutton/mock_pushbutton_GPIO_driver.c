@@ -1,50 +1,48 @@
 /**
- * @brief 
- * 
+ * @brief
+ *
  */
 #include "pushbutton_switch_interface.h"
 #include <stddef.h>
 #include "mock_pushbutton_GPIO_driver.h"
 
-PB_input_state_t mock_PUSHBUTTON_1_STATE=UNKNOWN;
-PB_input_state_t mock_PUSHBUTTON_2_STATE=UNKNOWN;
+PB_input_state_t mock_PUSHBUTTON_1_STATE = UNKNOWN;
+PB_input_state_t mock_PUSHBUTTON_2_STATE = UNKNOWN;
 
-
-uint8_t TEST_TIMER=0;
+uint8_t TEST_TIMER = 0;
 
 static void pushbutton_1_gpio_init(void);
 static void pushbutton_2_gpio_init(void);
 static PB_input_state_t get_pushbutton_1_state(void);
 static PB_input_state_t get_pushbutton_2_state(void);
 
-
-PB_driver_interface_t PUSHBUTTON_1_GPIO_interface_struct={
+PB_driver_interface_t PUSHBUTTON_1_GPIO_interface_struct = {
     pushbutton_1_gpio_init,
     get_pushbutton_1_state,
 };
 
-PB_driver_interface_t PUSHBUTTON_2_GPIO_interface_struct={
+PB_driver_interface_t PUSHBUTTON_2_GPIO_interface_struct = {
     pushbutton_2_gpio_init,
     get_pushbutton_2_state,
 };
 
-
-PB_driver_interface_t* pushbutton_1_GPIO_interface_get(void)
+PB_driver_interface_t *pushbutton_1_GPIO_interface_get(void)
 {
     return &PUSHBUTTON_1_GPIO_interface_struct;
 }
-PB_driver_interface_t* pushbutton_2_GPIO_interface_get(void){
+PB_driver_interface_t *pushbutton_2_GPIO_interface_get(void)
+{
     return &PUSHBUTTON_2_GPIO_interface_struct;
 }
 
 static void pushbutton_1_gpio_init(void)
 {
-    mock_PUSHBUTTON_1_STATE=RELEASED;
+    mock_PUSHBUTTON_1_STATE = RELEASED;
 }
 
 static void pushbutton_2_gpio_init(void)
 {
-    mock_PUSHBUTTON_2_STATE=RELEASED;
+    mock_PUSHBUTTON_2_STATE = RELEASED;
 }
 
 static PB_input_state_t get_pushbutton_1_state(void)
