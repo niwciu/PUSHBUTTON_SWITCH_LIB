@@ -56,6 +56,7 @@ set(TEST_SRCS
     pushbutton_push_test.c
 	pushbutton_release_test.c
 	pushbutton_push_rel_test.c
+	pushbutton_common_test.c
 	mock_pushbutton_GPIO_driver.c
 )
 

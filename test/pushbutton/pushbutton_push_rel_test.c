@@ -1,21 +1,14 @@
 #include "unity/fixture/unity_fixture.h"
 #include "pushbutton_switch.h"
 #include "mock_pushbutton_GPIO_driver.h"
+#include "pushbutton_common_test.h"
 
 // #include "tested_module.h"
 /** @brief Instance of PUSHBUTTON_TypDef representing PUSHBUTTON_1. */
 static PUSHBUTTON_TypDef PUSHBUTTON_1;
 
 
-typedef uint16_t debounce_repetition_delay_t;
 TEST_GROUP(pushbutton_push_rel);
-
-static void generate_pushbutton_deb_rep_timer_delay(debounce_repetition_delay_t delay, PUSHBUTTON_TypDef *BUTTON);
-static void generete_pin_bouncing_on_push(PUSHBUTTON_TypDef *BUTTON, PB_input_state_t *mock_PUSHBUTTON_STATE);
-static void generate_pin_bounce_on_push(PUSHBUTTON_TypDef *BUTTON, PB_input_state_t *mock_PUSHBUTTON_STATE);
-static void generete_pin_bouncing_on_release(PUSHBUTTON_TypDef *BUTTON,PB_input_state_t *mock_PUSHBUTTON_STATE);
-static void generate_pin_bounce_on_release(PUSHBUTTON_TypDef *BUTTON,PB_input_state_t *mock_PUSHBUTTON_STATE);
-static void ckeck_button_state_5_times(PUSHBUTTON_TypDef *BUTTON);
 
 TEST_SETUP(pushbutton_push_rel)
 {
@@ -493,59 +486,5 @@ TEST(pushbutton_push_rel, GivenTestTimerEqual10AndKey1InitrAndNoRepetitionAndDec
 //     TEST_FAIL_MESSAGE("added new test")
 // }
 
-static void generate_pushbutton_deb_rep_timer_delay(debounce_repetition_delay_t delay,PUSHBUTTON_TypDef *BUTTON)
-{
-    for(debounce_repetition_delay_t i=delay; i>0;i--)
-    {
-        dec_pushbutton_deb_rep_timer(BUTTON);
-    }
-}
-static void generete_pin_bouncing_on_push(PUSHBUTTON_TypDef *BUTTON,PB_input_state_t *mock_PUSHBUTTON_STATE)
-{
-    generate_pin_bounce_on_push(BUTTON,mock_PUSHBUTTON_STATE);
-    generate_pin_bounce_on_push(BUTTON,mock_PUSHBUTTON_STATE);
-    generate_pin_bounce_on_push(BUTTON,mock_PUSHBUTTON_STATE);
-    generate_pin_bounce_on_push(BUTTON,mock_PUSHBUTTON_STATE);
-    generate_pin_bounce_on_push(BUTTON,mock_PUSHBUTTON_STATE);
-}
-static void generate_pin_bounce_on_push(PUSHBUTTON_TypDef *BUTTON,PB_input_state_t *mock_PUSHBUTTON_STATE)
-{
 
-    generate_pushbutton_deb_rep_timer_delay(5,BUTTON);
-    ckeck_button_state_5_times(BUTTON);
-    *mock_PUSHBUTTON_STATE=RELEASED;
-    ckeck_button_state_5_times(BUTTON);
-    generate_pushbutton_deb_rep_timer_delay(10,BUTTON);
-    ckeck_button_state_5_times(BUTTON);
-    *mock_PUSHBUTTON_STATE=PUSHED;
-    ckeck_button_state_5_times(BUTTON);
-}
 
-static void generete_pin_bouncing_on_release(PUSHBUTTON_TypDef *BUTTON, PB_input_state_t *mock_PUSHBUTTON_STATE)
-{
-    generate_pin_bounce_on_release(BUTTON, mock_PUSHBUTTON_STATE);
-    generate_pin_bounce_on_release(BUTTON, mock_PUSHBUTTON_STATE);
-    generate_pin_bounce_on_release(BUTTON, mock_PUSHBUTTON_STATE);
-    generate_pin_bounce_on_release(BUTTON, mock_PUSHBUTTON_STATE);
-}
-
-static void generate_pin_bounce_on_release(PUSHBUTTON_TypDef *BUTTON, PB_input_state_t *mock_PUSHBUTTON_STATE)
-{
-
-    generate_pushbutton_deb_rep_timer_delay(5,BUTTON);
-    ckeck_button_state_5_times(BUTTON);
-    *mock_PUSHBUTTON_STATE=PUSHED;
-    ckeck_button_state_5_times(BUTTON);
-    generate_pushbutton_deb_rep_timer_delay(10,BUTTON);
-    ckeck_button_state_5_times(BUTTON);
-    *mock_PUSHBUTTON_STATE=RELEASED;
-    ckeck_button_state_5_times(BUTTON);
-}
-
-static void ckeck_button_state_5_times(PUSHBUTTON_TypDef *BUTTON)
-{
-    check_button_short_push_long_push(BUTTON);
-    check_button_short_push_long_push(BUTTON);
-    check_button_short_push_long_push(BUTTON);
-    check_button_short_push_long_push(BUTTON);
-}

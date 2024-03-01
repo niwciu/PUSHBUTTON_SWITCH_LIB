@@ -1,10 +1,11 @@
 #include "unity/fixture/unity_fixture.h"
 #include "pushbutton_switch.h"
 #include "mock_pushbutton_GPIO_driver.h"
+#include "pushbutton_common_test.h"
 
-#define DEBOUNCE_TIME_TO_STABLE_STATE (PUSHBUTTON_DEBOUNCE_TIME - 1)
-#define TIME_TO_EXECUTE_FIRST_REPETITION (PUSHBUTTON_FIRST_REPETITION_TIME - 1)
-#define TIME_TO_EXECUTE_N_REPETITION (PUSHBUTTON_CONTINUOUS_REPETITION_TIME - 1)
+#define DEBOUNCE_TIME_TO_STABLE_STATE (PUSHBUTTON_DEBOUNCE_TIME)
+#define TIME_TO_EXECUTE_FIRST_REPETITION (PUSHBUTTON_FIRST_REPETITION_TIME -1)
+#define TIME_TO_EXECUTE_N_REPETITION (PUSHBUTTON_CONTINUOUS_REPETITION_TIME -1)
 
 /** @brief Instance of PUSHBUTTON_TypDef representing PUSHBUTTON_1. */
 static PUSHBUTTON_TypDef PUSHBUTTON_1;
@@ -12,12 +13,7 @@ static PUSHBUTTON_TypDef PUSHBUTTON_1;
 /** @brief Instance of PUSHBUTTON_TypDef representing PUSHBUTTON_2. */
 static PUSHBUTTON_TypDef PUSHBUTTON_2;
 
-typedef uint16_t debounce_repetition_delay_t;
 TEST_GROUP(pushbutton_push);
-
-static void generate_pushbutton_deb_rep_timer_delay(debounce_repetition_delay_t delay, PUSHBUTTON_TypDef *BUTTON);
-static void generete_pin_bouncing_on_push(PUSHBUTTON_TypDef *BUTTON, PB_input_state_t *mock_PUSHBUTTON_STATE);
-static void generate_pin_bounce_on_push(PUSHBUTTON_TypDef *BUTTON, PB_input_state_t *mock_PUSHBUTTON_STATE);
 
 TEST_SETUP(pushbutton_push)
 {
@@ -271,30 +267,5 @@ TEST(pushbutton_push, GivenKey1InitAndIncTimerFunctionRegisteredWhenKey1PushForT
 //     TEST_FAIL_MESSAGE("added new test")
 // }
 
-static void generate_pushbutton_deb_rep_timer_delay(debounce_repetition_delay_t delay, PUSHBUTTON_TypDef *BUTTON)
-{
-    for (debounce_repetition_delay_t i = delay; i > 0; i--)
-    {
-        dec_pushbutton_deb_rep_timer(BUTTON);
-    }
-}
-static void generete_pin_bouncing_on_push(PUSHBUTTON_TypDef *BUTTON, PB_input_state_t *mock_PUSHBUTTON_STATE)
-{
-    generate_pin_bounce_on_push(BUTTON, mock_PUSHBUTTON_STATE);
-    generate_pin_bounce_on_push(BUTTON, mock_PUSHBUTTON_STATE);
-    generate_pin_bounce_on_push(BUTTON, mock_PUSHBUTTON_STATE);
-    generate_pin_bounce_on_push(BUTTON, mock_PUSHBUTTON_STATE);
-    generate_pin_bounce_on_push(BUTTON, mock_PUSHBUTTON_STATE);
-}
 
-static void generate_pin_bounce_on_push(PUSHBUTTON_TypDef *BUTTON, PB_input_state_t *mock_PUSHBUTTON_STATE)
-{
-    generate_pushbutton_deb_rep_timer_delay(5, BUTTON);
-    check_button_push(BUTTON);
-    *mock_PUSHBUTTON_STATE = RELEASED;
-    check_button_push(BUTTON);
-    generate_pushbutton_deb_rep_timer_delay(10, BUTTON);
-    check_button_push(BUTTON);
-    *mock_PUSHBUTTON_STATE = PUSHED;
-    check_button_push(BUTTON);
-}
+
