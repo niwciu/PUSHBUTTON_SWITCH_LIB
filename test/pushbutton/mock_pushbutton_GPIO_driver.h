@@ -9,8 +9,8 @@
  * 
  */
 #include <stdint.h>
-extern button_state_t PUSHBUTTON_1_STATE;
-extern button_state_t PUSHBUTTON_2_STATE;
+extern PB_input_state_t mock_PUSHBUTTON_1_STATE;
+extern PB_input_state_t mock_PUSHBUTTON_2_STATE;
 extern uint8_t TEST_TIMER;
 
 void inc_test_timer(void);
