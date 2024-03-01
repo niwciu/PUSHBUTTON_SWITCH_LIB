@@ -5,7 +5,7 @@
 // #include "tested_module.h"
 
 // #define TIME_TO_EXECUTE_FIRST_REPETITION (PUSHBUTTON_FIRST_REPETITION_TIME-1)
-// #define TIME_TO_EXECUTE_N_REPETITION (PUSHBUTTON_CONTINUES_REPETITION_TIME-1)
+// #define TIME_TO_EXECUTE_N_REPETITION (PUSHBUTTON_CONTINUOUS_REPETITION_TIME-1)
 typedef uint16_t debounce_repetition_timer_t;
 TEST_GROUP(pushbutton_push_rel);
 
@@ -437,7 +437,7 @@ TEST(pushbutton_push_rel, GivenTestTimerEqual10AndKey1InitrAndNoRepetitionAndDec
     ckeck_button_state_5_times(BUTTON_1);
     generate_pushbutton_deb_rep_timer_delay(PUSHBUTTON_FIRST_REPETITION_TIME,BUTTON_1); 
     ckeck_button_state_5_times(BUTTON_1);
-    generate_pushbutton_deb_rep_timer_delay(PUSHBUTTON_CONTINUES_REPETITION_TIME,BUTTON_1); 
+    generate_pushbutton_deb_rep_timer_delay(PUSHBUTTON_CONTINUOUS_REPETITION_TIME,BUTTON_1); 
     ckeck_button_state_5_times(BUTTON_1);
     //When
     PUSHBUTTON_1_STATE=RELEASED;

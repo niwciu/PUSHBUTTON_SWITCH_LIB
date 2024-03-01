@@ -25,11 +25,10 @@ extern "C"
 #define PUSHBUTTON_FIRST_REPETITION_TIME 1000U
 
 /** @brief Time duration for continuous repetition of a pushbutton press in milliseconds. */
-#define PUSHBUTTON_CONTINUES_REPETITION_TIME 500U
+#define PUSHBUTTON_CONTINUOUS_REPETITION_TIME 500U
 
 /** @brief Time duration for splitting short push and long push in milliseconds. */
 #define PUSHBUTTON_SHORT_PUSH_TIME_MAX 1000U
-
 
 /**
  * @brief Callback function pointer type for pushbutton events.
@@ -38,6 +37,7 @@ extern "C"
  * with pushbutton events.
  */
 typedef void (*pushbutton_callback_t)(void);
+
 /**
  * @brief Enumeration of pushbutton names.
  *
@@ -46,7 +46,7 @@ typedef void (*pushbutton_callback_t)(void);
 typedef enum {
     BUTTON_1,   /**< Represents the first pushbutton. */
     BUTTON_2,   /**< Represents the second pushbutton. */
-}pushbutton_name_t;
+} pushbutton_name_t;
 
 void init_pushbuttons(void);
 
@@ -63,11 +63,6 @@ void disable_pusbutton_repetition(pushbutton_name_t button_name);
 
 void dec_pushbutton_deb_rep_timer(pushbutton_name_t button_name);
 
-
-/**
- * ToDo funkcja do ustawiania parametru repetycji tak by oddzielić sprawdzanie stanu klaisza od ustawienia tego czy ma być repetycja czy nie  
- * 
- */
 
 /*
  * functionality to be implemented in the future for singals
