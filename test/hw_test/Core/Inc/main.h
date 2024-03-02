@@ -43,7 +43,7 @@ extern "C" {
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "pushbutton_switch.h"
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
@@ -71,6 +71,8 @@ void Error_Handler(void);
 /* Private defines -----------------------------------------------------------*/
 #define user_button_Pin LL_GPIO_PIN_13
 #define user_button_GPIO_Port GPIOC
+#define LED_Pin LL_GPIO_PIN_5
+#define LED_GPIO_Port GPIOA
 
 /* USER CODE BEGIN Private defines */
 
