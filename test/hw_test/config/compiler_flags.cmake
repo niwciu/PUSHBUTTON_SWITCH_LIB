@@ -34,7 +34,7 @@ set(CXX_FLAGS "-std=gnu++14 -Os -g3 -fno-rtti -fno-exceptions -fverbose-asm -MMD
 # -MMD - create dependency files
 #  -fstack-usage - enable stack usage analysis
 #  -fcyclomatic-complexity ->TBC
-set(C_FLAGS "-std=gnu11 -O0 -ffunction-sections -fdata-sections -fverbose-asm -MMD -fstack-usage --specs=nano.specs ")
+set(C_FLAGS "-std=gnu11 -Os -ffunction-sections -fdata-sections -fverbose-asm -MMD -fstack-usage --specs=nano.specs ")
 
 set(ASM_FLAGS "-c -x assembler-with-cpp --specs=nano.specs")
 

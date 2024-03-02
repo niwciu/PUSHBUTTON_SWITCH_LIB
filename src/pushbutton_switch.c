@@ -23,6 +23,7 @@ static void debounce_pushbutton_short_push_long_push_state(PUSHBUTTON_TypDef *BU
 static void handle_push_debouncing(PUSHBUTTON_TypDef *BUTTON);
 static void handle_long_push_no_repetition_phase(PUSHBUTTON_TypDef *BUTTON);
 static void handle_long_push_phase(PUSHBUTTON_TypDef *BUTTON);
+static void execute_push_callback(PUSHBUTTON_TypDef *BUTTON);
 static void handle_short_push_phase(PUSHBUTTON_TypDef *BUTTON);
 static void handle_short_pus_phase_pin_pushed(PUSHBUTTON_TypDef *BUTTON);
 static void handle_short_pus_phase_pin_released(PUSHBUTTON_TypDef *BUTTON);
@@ -59,10 +60,7 @@ static void debounce_pushbutton_push_state(PUSHBUTTON_TypDef *BUTTON)
     {
         if ((BUTTON->deb_rep_timer) == 1)
         {
-            if (BUTTON->push_callback != NULL)
-            {
-                BUTTON->push_callback();
-            }
+            execute_push_callback(BUTTON);
             update_button_deb_rep_counter(BUTTON);
         }
         else
@@ -158,10 +156,7 @@ static void handle_long_push_phase(PUSHBUTTON_TypDef *BUTTON)
     {
         if ((BUTTON->deb_rep_timer) == 0)
         {
-            if (BUTTON->push_callback != NULL)
-            {
-                BUTTON->push_callback(); // push callback to instancja gdzie trzeba zaerejsrować long push
-            }
+            execute_push_callback(BUTTON);
             BUTTON->deb_rep_timer = PUSHBUTTON_CONTINUOUS_REPETITION_TIME;
         }
     }
@@ -169,6 +164,14 @@ static void handle_long_push_phase(PUSHBUTTON_TypDef *BUTTON)
     {
         BUTTON->deb_rep_timer = PUSHBUTTON_DEBOUNCE_TIME;
         BUTTON->pushbutton_state_machine = BUTTON_RELEASED;
+    }
+}
+
+void execute_push_callback(PUSHBUTTON_TypDef *BUTTON)
+{
+    if (BUTTON->push_callback != NULL)
+    {
+        BUTTON->push_callback(); // push callback to instancja gdzie trzeba zaerejsrować long push
     }
 }
 
@@ -188,10 +191,7 @@ static void handle_short_pus_phase_pin_pushed(PUSHBUTTON_TypDef *BUTTON)
 {
     if ((BUTTON->deb_rep_timer) == 0)
     {
-        if (BUTTON->push_callback != NULL)
-        {
-            BUTTON->push_callback(); // push callback to instancja gdzie trzeba zaerejsrować long push
-        }
+        execute_push_callback(BUTTON);
 
         if (BUTTON->repetition == REPETITION_ON)
         {
