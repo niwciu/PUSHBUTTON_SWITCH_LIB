@@ -11,7 +11,7 @@ PB_driver_interface_t KEY_1_GPIO_interface_struct = {
     get_key_1_state,
 };
 
-PB_driver_interface_t *key_1_GPIO_interface_get(void)
+PB_driver_interface_t *pushbutton_1_GPIO_interface_get(void)
 {
     return &KEY_1_GPIO_interface_struct;
 }

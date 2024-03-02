@@ -3,7 +3,7 @@
 #include "mock_pushbutton_GPIO_driver.h"
 #include "pushbutton_common_test.h"
 
-#define DEBOUNCE_TIME_TO_STABLE_STATE (PUSHBUTTON_DEBOUNCE_TIME)
+#define DEBOUNCE_TIME_TO_STABLE_STATE (PUSHBUTTON_DEBOUNCE_TIME-1)
 #define TIME_TO_EXECUTE_FIRST_REPETITION (PUSHBUTTON_FIRST_REPETITION_TIME -1)
 #define TIME_TO_EXECUTE_N_REPETITION (PUSHBUTTON_CONTINUOUS_REPETITION_TIME -1)
 
@@ -45,15 +45,15 @@ TEST(pushbutton_push, GivenKey1InitAndIncTimerFunctionRegisteredAndKey1PushedAnd
     // Given
     register_button_push_callback(&PUSHBUTTON_1, inc_test_timer);
     disable_pusbutton_repetition(&PUSHBUTTON_1);
-    check_button_push(&PUSHBUTTON_1);
+    check_pushbutton(&PUSHBUTTON_1);
     mock_PUSHBUTTON_1_STATE = PUSHED;
-    check_button_push(&PUSHBUTTON_1);
+    check_pushbutton(&PUSHBUTTON_1);
     generete_pin_bouncing_on_push(&PUSHBUTTON_1, &mock_PUSHBUTTON_1_STATE);
-    check_button_push(&PUSHBUTTON_1);
+    check_pushbutton(&PUSHBUTTON_1);
     // When
     generate_pushbutton_deb_rep_timer_delay(DEBOUNCE_TIME_TO_STABLE_STATE, &PUSHBUTTON_1);
-    check_button_push(&PUSHBUTTON_1);
-    check_button_push(&PUSHBUTTON_1);
+    check_pushbutton(&PUSHBUTTON_1);
+    check_pushbutton(&PUSHBUTTON_1);
     // Then
     TEST_ASSERT_EQUAL(1, TEST_TIMER);
 }
@@ -63,15 +63,15 @@ TEST(pushbutton_push, GivenKey2InitAndIncTimerFunctionRegisteredAndKey2PushedAnd
     // Given
     register_button_push_callback(&PUSHBUTTON_2, inc_test_timer);
     disable_pusbutton_repetition(&PUSHBUTTON_1);
-    check_button_push(&PUSHBUTTON_2);
+    check_pushbutton(&PUSHBUTTON_2);
     mock_PUSHBUTTON_2_STATE = PUSHED;
-    check_button_push(&PUSHBUTTON_2);
+    check_pushbutton(&PUSHBUTTON_2);
     generete_pin_bouncing_on_push(&PUSHBUTTON_2, &mock_PUSHBUTTON_2_STATE);
-    check_button_push(&PUSHBUTTON_2);
+    check_pushbutton(&PUSHBUTTON_2);
     // When
     generate_pushbutton_deb_rep_timer_delay(DEBOUNCE_TIME_TO_STABLE_STATE, &PUSHBUTTON_2);
-    check_button_push(&PUSHBUTTON_2);
-    check_button_push(&PUSHBUTTON_2);
+    check_pushbutton(&PUSHBUTTON_2);
+    check_pushbutton(&PUSHBUTTON_2);
     // Then
     TEST_ASSERT_EQUAL(1, TEST_TIMER);
 }
@@ -81,17 +81,17 @@ TEST(pushbutton_push, GivenKey1InitAndIncTimerFunctionRegisteredAndKey1PushedAnd
     // Given
     register_button_push_callback(&PUSHBUTTON_1, inc_test_timer);
     disable_pusbutton_repetition(&PUSHBUTTON_1);
-    check_button_push(&PUSHBUTTON_1);
+    check_pushbutton(&PUSHBUTTON_1);
     mock_PUSHBUTTON_1_STATE = PUSHED;
-    check_button_push(&PUSHBUTTON_1);
+    check_pushbutton(&PUSHBUTTON_1);
     generete_pin_bouncing_on_push(&PUSHBUTTON_1, &mock_PUSHBUTTON_1_STATE);
-    check_button_push(&PUSHBUTTON_1);
+    check_pushbutton(&PUSHBUTTON_1);
     // When
     generate_pushbutton_deb_rep_timer_delay(DEBOUNCE_TIME_TO_STABLE_STATE, &PUSHBUTTON_1);
-    check_button_push(&PUSHBUTTON_1);
+    check_pushbutton(&PUSHBUTTON_1);
     generate_pushbutton_deb_rep_timer_delay((DEBOUNCE_TIME_TO_STABLE_STATE * 100), &PUSHBUTTON_1);
-    check_button_push(&PUSHBUTTON_1);
-    check_button_push(&PUSHBUTTON_1);
+    check_pushbutton(&PUSHBUTTON_1);
+    check_pushbutton(&PUSHBUTTON_1);
     // Then
     TEST_ASSERT_EQUAL(1, TEST_TIMER);
 }
@@ -100,15 +100,15 @@ TEST(pushbutton_push, GivenKey1InitAndIncTimerFunctionRegisteredAndKey1PushedAnd
     // Given
     register_button_push_callback(&PUSHBUTTON_1, inc_test_timer);
     disable_pusbutton_repetition(&PUSHBUTTON_1);
-    check_button_push(&PUSHBUTTON_1);
+    check_pushbutton(&PUSHBUTTON_1);
     mock_PUSHBUTTON_1_STATE = PUSHED;
-    check_button_push(&PUSHBUTTON_1);
+    check_pushbutton(&PUSHBUTTON_1);
     generete_pin_bouncing_on_push(&PUSHBUTTON_1, &mock_PUSHBUTTON_1_STATE);
-    check_button_push(&PUSHBUTTON_1);
+    check_pushbutton(&PUSHBUTTON_1);
     // When
     generate_pushbutton_deb_rep_timer_delay((DEBOUNCE_TIME_TO_STABLE_STATE - 1), &PUSHBUTTON_1);
-    check_button_push(&PUSHBUTTON_1);
-    check_button_push(&PUSHBUTTON_1);
+    check_pushbutton(&PUSHBUTTON_1);
+    check_pushbutton(&PUSHBUTTON_1);
     // Then
     TEST_ASSERT_EQUAL(0, TEST_TIMER);
 }
@@ -118,19 +118,19 @@ TEST(pushbutton_push, GivenKey1InitAndIncTimerFunctionRegisteredAndKey1PushAndBo
     // Given
     register_button_push_callback(&PUSHBUTTON_1, inc_test_timer);
     enable_pusbutton_repetition(&PUSHBUTTON_1);
-    check_button_push(&PUSHBUTTON_1);
+    check_pushbutton(&PUSHBUTTON_1);
     mock_PUSHBUTTON_1_STATE = PUSHED;
-    check_button_push(&PUSHBUTTON_1);
+    check_pushbutton(&PUSHBUTTON_1);
     generete_pin_bouncing_on_push(&PUSHBUTTON_1, &mock_PUSHBUTTON_1_STATE);
-    check_button_push(&PUSHBUTTON_1);
+    check_pushbutton(&PUSHBUTTON_1);
     generate_pushbutton_deb_rep_timer_delay(DEBOUNCE_TIME_TO_STABLE_STATE, &PUSHBUTTON_1);
-    check_button_push(&PUSHBUTTON_1);
-    check_button_push(&PUSHBUTTON_1);
+    check_pushbutton(&PUSHBUTTON_1);
+    check_pushbutton(&PUSHBUTTON_1);
     // When
     generate_pushbutton_deb_rep_timer_delay(TIME_TO_EXECUTE_FIRST_REPETITION, &PUSHBUTTON_1);
-    check_button_push(&PUSHBUTTON_1);
-    check_button_push(&PUSHBUTTON_1);
-    check_button_push(&PUSHBUTTON_1);
+    check_pushbutton(&PUSHBUTTON_1);
+    check_pushbutton(&PUSHBUTTON_1);
+    check_pushbutton(&PUSHBUTTON_1);
     // Then
     TEST_ASSERT_EQUAL(2, TEST_TIMER);
 }
@@ -141,19 +141,19 @@ TEST(pushbutton_push, GivenKey1InitAndIncTimerFunctionRegisteredAndKey1PushAndBo
     // Given
     register_button_push_callback(&PUSHBUTTON_1, inc_test_timer);
     enable_pusbutton_repetition(&PUSHBUTTON_1);
-    check_button_push(&PUSHBUTTON_1);
+    check_pushbutton(&PUSHBUTTON_1);
     mock_PUSHBUTTON_1_STATE = PUSHED;
-    check_button_push(&PUSHBUTTON_1);
+    check_pushbutton(&PUSHBUTTON_1);
     generete_pin_bouncing_on_push(&PUSHBUTTON_1, &mock_PUSHBUTTON_1_STATE);
-    check_button_push(&PUSHBUTTON_1);
+    check_pushbutton(&PUSHBUTTON_1);
     generate_pushbutton_deb_rep_timer_delay(DEBOUNCE_TIME_TO_STABLE_STATE, &PUSHBUTTON_1);
-    check_button_push(&PUSHBUTTON_1);
-    check_button_push(&PUSHBUTTON_1);
+    check_pushbutton(&PUSHBUTTON_1);
+    check_pushbutton(&PUSHBUTTON_1);
     // When
     generate_pushbutton_deb_rep_timer_delay((TIME_TO_EXECUTE_FIRST_REPETITION - 1), &PUSHBUTTON_1);
-    check_button_push(&PUSHBUTTON_1);
-    check_button_push(&PUSHBUTTON_1);
-    check_button_push(&PUSHBUTTON_1);
+    check_pushbutton(&PUSHBUTTON_1);
+    check_pushbutton(&PUSHBUTTON_1);
+    check_pushbutton(&PUSHBUTTON_1);
     // Then
     TEST_ASSERT_EQUAL(1, TEST_TIMER);
 }
@@ -163,20 +163,20 @@ TEST(pushbutton_push, GivenKey1InitAndIncTimerFunctionRegisteredAndKey1PushAndBo
     // Given
     register_button_push_callback(&PUSHBUTTON_1, inc_test_timer);
     enable_pusbutton_repetition(&PUSHBUTTON_1);
-    check_button_push(&PUSHBUTTON_1);
+    check_pushbutton(&PUSHBUTTON_1);
     mock_PUSHBUTTON_1_STATE = PUSHED;
-    check_button_push(&PUSHBUTTON_1);
+    check_pushbutton(&PUSHBUTTON_1);
     generete_pin_bouncing_on_push(&PUSHBUTTON_1, &mock_PUSHBUTTON_1_STATE);
-    check_button_push(&PUSHBUTTON_1);
+    check_pushbutton(&PUSHBUTTON_1);
     generate_pushbutton_deb_rep_timer_delay(DEBOUNCE_TIME_TO_STABLE_STATE, &PUSHBUTTON_1);
-    check_button_push(&PUSHBUTTON_1);
-    check_button_push(&PUSHBUTTON_1);
+    check_pushbutton(&PUSHBUTTON_1);
+    check_pushbutton(&PUSHBUTTON_1);
     // When
     generate_pushbutton_deb_rep_timer_delay(TIME_TO_EXECUTE_FIRST_REPETITION, &PUSHBUTTON_1);
-    check_button_push(&PUSHBUTTON_1);
+    check_pushbutton(&PUSHBUTTON_1);
     generate_pushbutton_deb_rep_timer_delay((TIME_TO_EXECUTE_N_REPETITION - 1), &PUSHBUTTON_1);
-    check_button_push(&PUSHBUTTON_1);
-    check_button_push(&PUSHBUTTON_1);
+    check_pushbutton(&PUSHBUTTON_1);
+    check_pushbutton(&PUSHBUTTON_1);
     // Then
     TEST_ASSERT_EQUAL(2, TEST_TIMER);
 }
@@ -186,20 +186,20 @@ TEST(pushbutton_push, GivenKey1InitAndIncTimerFunctionRegisteredWhenKey1PushForT
     // Given
     register_button_push_callback(&PUSHBUTTON_1, inc_test_timer);
     enable_pusbutton_repetition(&PUSHBUTTON_1);
-    check_button_push(&PUSHBUTTON_1);
+    check_pushbutton(&PUSHBUTTON_1);
     mock_PUSHBUTTON_1_STATE = PUSHED;
-    check_button_push(&PUSHBUTTON_1);
+    check_pushbutton(&PUSHBUTTON_1);
     generete_pin_bouncing_on_push(&PUSHBUTTON_1, &mock_PUSHBUTTON_1_STATE);
-    check_button_push(&PUSHBUTTON_1);
+    check_pushbutton(&PUSHBUTTON_1);
     // When
     generate_pushbutton_deb_rep_timer_delay(DEBOUNCE_TIME_TO_STABLE_STATE, &PUSHBUTTON_1);
-    check_button_push(&PUSHBUTTON_1);
-    check_button_push(&PUSHBUTTON_1);
+    check_pushbutton(&PUSHBUTTON_1);
+    check_pushbutton(&PUSHBUTTON_1);
     generate_pushbutton_deb_rep_timer_delay(TIME_TO_EXECUTE_FIRST_REPETITION, &PUSHBUTTON_1);
-    check_button_push(&PUSHBUTTON_1);
+    check_pushbutton(&PUSHBUTTON_1);
     generate_pushbutton_deb_rep_timer_delay(TIME_TO_EXECUTE_N_REPETITION, &PUSHBUTTON_1);
-    check_button_push(&PUSHBUTTON_1);
-    check_button_push(&PUSHBUTTON_1);
+    check_pushbutton(&PUSHBUTTON_1);
+    check_pushbutton(&PUSHBUTTON_1);
     // Then
     TEST_ASSERT_EQUAL(3, TEST_TIMER);
 }
@@ -210,21 +210,21 @@ TEST(pushbutton_push, GivenKey1InitAndIncTimerFunctionRegisteredWhenKey1PushForT
     // Given
     register_button_push_callback(&PUSHBUTTON_1, inc_test_timer);
     enable_pusbutton_repetition(&PUSHBUTTON_1);
-    check_button_push(&PUSHBUTTON_1);
+    check_pushbutton(&PUSHBUTTON_1);
     mock_PUSHBUTTON_1_STATE = PUSHED;
-    check_button_push(&PUSHBUTTON_1);
+    check_pushbutton(&PUSHBUTTON_1);
     generete_pin_bouncing_on_push(&PUSHBUTTON_1, &mock_PUSHBUTTON_1_STATE);
-    check_button_push(&PUSHBUTTON_1);
+    check_pushbutton(&PUSHBUTTON_1);
     // When
     generate_pushbutton_deb_rep_timer_delay(DEBOUNCE_TIME_TO_STABLE_STATE, &PUSHBUTTON_1);
-    check_button_push(&PUSHBUTTON_1);
-    check_button_push(&PUSHBUTTON_1);
+    check_pushbutton(&PUSHBUTTON_1);
+    check_pushbutton(&PUSHBUTTON_1);
     generate_pushbutton_deb_rep_timer_delay(TIME_TO_EXECUTE_FIRST_REPETITION, &PUSHBUTTON_1);
-    check_button_push(&PUSHBUTTON_1);
+    check_pushbutton(&PUSHBUTTON_1);
     generate_pushbutton_deb_rep_timer_delay(TIME_TO_EXECUTE_N_REPETITION, &PUSHBUTTON_1);
-    check_button_push(&PUSHBUTTON_1);
+    check_pushbutton(&PUSHBUTTON_1);
     generate_pushbutton_deb_rep_timer_delay((TIME_TO_EXECUTE_N_REPETITION - 1), &PUSHBUTTON_1);
-    check_button_push(&PUSHBUTTON_1);
+    check_pushbutton(&PUSHBUTTON_1);
     // Then
     TEST_ASSERT_EQUAL(3, TEST_TIMER);
 }
@@ -234,23 +234,23 @@ TEST(pushbutton_push, GivenKey1InitAndIncTimerFunctionRegisteredWhenKey1PushForT
     // Given
     register_button_push_callback(&PUSHBUTTON_1, inc_test_timer);
     enable_pusbutton_repetition(&PUSHBUTTON_1);
-    check_button_push(&PUSHBUTTON_1);
+    check_pushbutton(&PUSHBUTTON_1);
     mock_PUSHBUTTON_1_STATE = PUSHED;
-    check_button_push(&PUSHBUTTON_1);
+    check_pushbutton(&PUSHBUTTON_1);
     generete_pin_bouncing_on_push(&PUSHBUTTON_1, &mock_PUSHBUTTON_1_STATE);
-    check_button_push(&PUSHBUTTON_1);
+    check_pushbutton(&PUSHBUTTON_1);
     // When
     generate_pushbutton_deb_rep_timer_delay(DEBOUNCE_TIME_TO_STABLE_STATE, &PUSHBUTTON_1);
-    check_button_push(&PUSHBUTTON_1);
-    check_button_push(&PUSHBUTTON_1);
+    check_pushbutton(&PUSHBUTTON_1);
+    check_pushbutton(&PUSHBUTTON_1);
     generate_pushbutton_deb_rep_timer_delay(TIME_TO_EXECUTE_FIRST_REPETITION, &PUSHBUTTON_1);
-    check_button_push(&PUSHBUTTON_1);
+    check_pushbutton(&PUSHBUTTON_1);
     generate_pushbutton_deb_rep_timer_delay(TIME_TO_EXECUTE_N_REPETITION, &PUSHBUTTON_1);
-    check_button_push(&PUSHBUTTON_1);
+    check_pushbutton(&PUSHBUTTON_1);
     generate_pushbutton_deb_rep_timer_delay(TIME_TO_EXECUTE_N_REPETITION, &PUSHBUTTON_1);
-    check_button_push(&PUSHBUTTON_1);
+    check_pushbutton(&PUSHBUTTON_1);
     generate_pushbutton_deb_rep_timer_delay((TIME_TO_EXECUTE_N_REPETITION - 1), &PUSHBUTTON_1);
-    check_button_push(&PUSHBUTTON_1);
+    check_pushbutton(&PUSHBUTTON_1);
     // Then
     TEST_ASSERT_EQUAL(4, TEST_TIMER);
 }

@@ -237,72 +237,31 @@ void init_pushbutton(PUSHBUTTON_TypDef *BUTTON,
     BUTTON->triger_mode = PB_triger_mode;
 
     // init other parameters to default init value
-    BUTTON->deb_rep_timer=0;
+    BUTTON->deb_rep_timer = 0;
     BUTTON->pushbutton_state_machine = BUTTON_RELEASED;
     BUTTON->input_state = UNKNOWN;
-    BUTTON->REPETITION_STATUS_FLAG=REPETITION_INACTIVE;
-    BUTTON->push_callback=NULL;
-    BUTTON->release_callback=NULL;
+    BUTTON->REPETITION_STATUS_FLAG = REPETITION_INACTIVE;
+    BUTTON->push_callback = NULL;
+    BUTTON->release_callback = NULL;
 }
 
-/**
- * @brief Checks the state of a specific pushbutton and performs debounce for press events if needed.
- *
- * This function checks the state of the specified pushbutton and performs debounce
- * for press events if the pushbutton is valid and registered in the system.
- *
- * @param button_name The name of the pushbutton to check. Use values from #pushbutton_name_t enumeration.
- *
- * @note If the pushbutton is not registered, this function has no effect.
- */
-void check_button_push(PUSHBUTTON_TypDef *BUTTON)
+void check_pushbutton(PUSHBUTTON_TypDef *BUTTON)
 {
     if (BUTTON != NULL)
     {
         update_pushbutton_input_state(BUTTON);
-        debounce_pushbutton_push_state(BUTTON);
-    }
-}
-
-/**
- * @brief Checks the state of a specific pushbutton and performs debounce for release events if needed.
- *
- * This function checks the state of the specified pushbutton and performs debounce
- * for release events if the pushbutton is valid and registered in the system.
- *
- * @param button_name The name of the pushbutton to check. Use values from #pushbutton_name_t enumeration.
- *
- * @note If the pushbutton is not registered, this function has no effect.
- */
-void check_button_release(PUSHBUTTON_TypDef *BUTTON)
-{
-    if (BUTTON != NULL)
-    {
-        update_pushbutton_input_state(BUTTON);
-        debounce_pushbutton_release_state(BUTTON);
-    }
-}
-
-/**
- * @brief Checks for short push and long push events on a pushbutton.
- *
- * This function checks the state of the specified pushbutton for short push and long push events.
- * The short push event is detected when the pushbutton is released quickly, and the long push event
- * is detected when the pushbutton is held down for an extended period.
- *
- * @param button_name The name of the pushbutton to check. Use values from #pushbutton_name_t enumeration.
- *
- * @note If the pushbutton is not registered, this function has no effect.
- *
- * @warning Ensure that the debounce_pushbutton_short_push_long_push_state function is correctly implemented
- * to handle the pushbutton state and repetitions.
- */
-void check_button_short_push_long_push(PUSHBUTTON_TypDef *BUTTON)
-{
-    if (BUTTON != NULL)
-    {
-        update_pushbutton_input_state(BUTTON);
-        debounce_pushbutton_short_push_long_push_state(BUTTON);
+        switch (BUTTON->triger_mode)
+        {
+        case TRIGER_ON_PUSH:
+            debounce_pushbutton_push_state(BUTTON); 
+            break;
+        case TRIGER_ON_RELEASE:
+            debounce_pushbutton_release_state(BUTTON);
+            break;
+        default:
+            debounce_pushbutton_short_push_long_push_state(BUTTON);
+            break;
+        }
     }
 }
 

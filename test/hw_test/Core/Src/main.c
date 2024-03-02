@@ -93,14 +93,15 @@ int main(void)
   /* USER CODE BEGIN 2 */
   PUSHBUTTON_TypDef KEY_1;
 
-  init_pushbutton(&KEY_1,REPETITION_ON,TRIGER_ON_PUSH,key_1_GPIO_interface_get);
+  init_pushbutton(&KEY_1,REPETITION_ON,TRIGER_ON_PUSH,pushbutton_1_GPIO_interface_get);
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-    check_button_release(&KEY_1);
+    // check_button_release(&KEY_1);
+    check_pushbutton(&KEY_1);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */

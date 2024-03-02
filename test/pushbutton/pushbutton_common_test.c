@@ -20,13 +20,13 @@ void generete_pin_bouncing_on_release(PUSHBUTTON_TypDef *BUTTON,PB_input_state_t
 void generate_pin_bounce_on_release(PUSHBUTTON_TypDef *BUTTON,PB_input_state_t *mock_PUSHBUTTON_STATE)
 {
     generate_pushbutton_deb_rep_timer_delay(5,BUTTON);
-    check_button_release(BUTTON);
+    check_pushbutton(BUTTON);
     *mock_PUSHBUTTON_STATE=PUSHED;
-    check_button_release(BUTTON);
+    check_pushbutton(BUTTON);
     generate_pushbutton_deb_rep_timer_delay(10,BUTTON);
-    check_button_release(BUTTON);
+    check_pushbutton(BUTTON);
     *mock_PUSHBUTTON_STATE=RELEASED;
-    check_button_release(BUTTON);
+    check_pushbutton(BUTTON);
 }
 
 void generete_pin_bouncing_on_push(PUSHBUTTON_TypDef *BUTTON, PB_input_state_t *mock_PUSHBUTTON_STATE)
@@ -41,19 +41,19 @@ void generete_pin_bouncing_on_push(PUSHBUTTON_TypDef *BUTTON, PB_input_state_t *
 void generate_pin_bounce_on_push(PUSHBUTTON_TypDef *BUTTON, PB_input_state_t *mock_PUSHBUTTON_STATE)
 {
     generate_pushbutton_deb_rep_timer_delay(5, BUTTON);
-    check_button_push(BUTTON);
+    check_pushbutton(BUTTON);
     *mock_PUSHBUTTON_STATE = RELEASED;
-    check_button_push(BUTTON);
+    check_pushbutton(BUTTON);
     generate_pushbutton_deb_rep_timer_delay(10, BUTTON);
-    check_button_push(BUTTON);
+    check_pushbutton(BUTTON);
     *mock_PUSHBUTTON_STATE = PUSHED;
-    check_button_push(BUTTON);
+    check_pushbutton(BUTTON);
 }
 
 void ckeck_button_state_5_times(PUSHBUTTON_TypDef *BUTTON)
 {
-    check_button_short_push_long_push(BUTTON);
-    check_button_short_push_long_push(BUTTON);
-    check_button_short_push_long_push(BUTTON);
-    check_button_short_push_long_push(BUTTON);
+    check_pushbutton(BUTTON);
+    check_pushbutton(BUTTON);
+    check_pushbutton(BUTTON);
+    check_pushbutton(BUTTON);
 }

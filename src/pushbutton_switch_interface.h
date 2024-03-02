@@ -57,8 +57,8 @@ extern "C"
      *
      * @return Pointer to the pushbutton 1 GPIO interface.
      */
-    const PB_driver_interface_t *key_1_GPIO_interface_get(void);
-    // const PB_driver_interface_t *pushbutton_2_GPIO_interface_get(void);
+    const PB_driver_interface_t *pushbutton_1_GPIO_interface_get(void);
+    const PB_driver_interface_t *pushbutton_2_GPIO_interface_get(void);
 
 
 

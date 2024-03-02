@@ -33,22 +33,22 @@ TEST(pushbutton_release, GivenKey1InitAndIncTimerFunctionRegisteredAndKey1PushAn
 {
     //Given
     register_button_release_callback(&PUSHBUTTON_1,inc_test_timer);
-    check_button_release(&PUSHBUTTON_1);
+    check_pushbutton(&PUSHBUTTON_1);
     mock_PUSHBUTTON_1_STATE=PUSHED;
-    check_button_release(&PUSHBUTTON_1);
+    check_pushbutton(&PUSHBUTTON_1);
     generete_pin_bouncing_on_push(&PUSHBUTTON_1,&mock_PUSHBUTTON_1_STATE);
-    check_button_release(&PUSHBUTTON_1);
+    check_pushbutton(&PUSHBUTTON_1);
     generate_pushbutton_deb_rep_timer_delay(PUSHBUTTON_DEBOUNCE_TIME,&PUSHBUTTON_1);
-    check_button_release(&PUSHBUTTON_1);
+    check_pushbutton(&PUSHBUTTON_1);
     mock_PUSHBUTTON_1_STATE=RELEASED;
-    check_button_release(&PUSHBUTTON_1);
+    check_pushbutton(&PUSHBUTTON_1);
     generete_pin_bouncing_on_release(&PUSHBUTTON_1,&mock_PUSHBUTTON_1_STATE);
-    check_button_release(&PUSHBUTTON_1);
+    check_pushbutton(&PUSHBUTTON_1);
     //When
     generate_pushbutton_deb_rep_timer_delay(DEBOUNCE_TIME_TO_STABLE_STATE,&PUSHBUTTON_1);
-    check_button_release(&PUSHBUTTON_1);
-    check_button_release(&PUSHBUTTON_1);
-    check_button_release(&PUSHBUTTON_1);
+    check_pushbutton(&PUSHBUTTON_1);
+    check_pushbutton(&PUSHBUTTON_1);
+    check_pushbutton(&PUSHBUTTON_1);
     //Then
     TEST_ASSERT_EQUAL(1,TEST_TIMER);
 }
@@ -57,20 +57,20 @@ TEST(pushbutton_release, GivenKey1InitAndIncTimerFunctionRegisteredAndKey1PushAn
 {
     //Given
     register_button_release_callback(&PUSHBUTTON_1,inc_test_timer);
-    check_button_release(&PUSHBUTTON_1);
+    check_pushbutton(&PUSHBUTTON_1);
     mock_PUSHBUTTON_1_STATE=PUSHED;
-    check_button_release(&PUSHBUTTON_1);
+    check_pushbutton(&PUSHBUTTON_1);
     generete_pin_bouncing_on_push(&PUSHBUTTON_1,&mock_PUSHBUTTON_1_STATE);
-    check_button_release(&PUSHBUTTON_1);
+    check_pushbutton(&PUSHBUTTON_1);
     generate_pushbutton_deb_rep_timer_delay(PUSHBUTTON_DEBOUNCE_TIME,&PUSHBUTTON_1);
-    check_button_release(&PUSHBUTTON_1);
+    check_pushbutton(&PUSHBUTTON_1);
     mock_PUSHBUTTON_1_STATE=RELEASED;
-    check_button_release(&PUSHBUTTON_1);
+    check_pushbutton(&PUSHBUTTON_1);
     generete_pin_bouncing_on_release(&PUSHBUTTON_1,&mock_PUSHBUTTON_1_STATE);
-    check_button_release(&PUSHBUTTON_1);
+    check_pushbutton(&PUSHBUTTON_1);
     //When
     generate_pushbutton_deb_rep_timer_delay(DEBOUNCE_TIME_TO_STABLE_STATE-1,&PUSHBUTTON_1);
-    check_button_release(&PUSHBUTTON_1);
+    check_pushbutton(&PUSHBUTTON_1);
     //Then
     TEST_ASSERT_EQUAL(0,TEST_TIMER);
 }
@@ -79,18 +79,18 @@ TEST(pushbutton_release, GivenKey1InitAndIncTimerFunctionRegisteredWhenKey1PushA
 {
     //Given
     register_button_release_callback(&PUSHBUTTON_1,inc_test_timer);
-    check_button_release(&PUSHBUTTON_1);
+    check_pushbutton(&PUSHBUTTON_1);
     //When
     mock_PUSHBUTTON_1_STATE=PUSHED;
-    check_button_release(&PUSHBUTTON_1);
+    check_pushbutton(&PUSHBUTTON_1);
     generete_pin_bouncing_on_push(&PUSHBUTTON_1,&mock_PUSHBUTTON_1_STATE);
-    check_button_release(&PUSHBUTTON_1);
+    check_pushbutton(&PUSHBUTTON_1);
     generate_pushbutton_deb_rep_timer_delay(PUSHBUTTON_DEBOUNCE_TIME,&PUSHBUTTON_1);
-    check_button_release(&PUSHBUTTON_1);
+    check_pushbutton(&PUSHBUTTON_1);
     mock_PUSHBUTTON_1_STATE=RELEASED;
-    check_button_release(&PUSHBUTTON_1);
+    check_pushbutton(&PUSHBUTTON_1);
     generete_pin_bouncing_on_release(&PUSHBUTTON_1,&mock_PUSHBUTTON_1_STATE);
-    check_button_release(&PUSHBUTTON_1);
+    check_pushbutton(&PUSHBUTTON_1);
     //Then
     TEST_ASSERT_EQUAL(0,TEST_TIMER);
 }
@@ -99,20 +99,20 @@ TEST(pushbutton_release, GivenKey1InitAndIncTimerFunctionRegisteredAndKey1PushAn
 {
     //Given
     register_button_release_callback(&PUSHBUTTON_1,inc_test_timer);
-    check_button_release(&PUSHBUTTON_1);
+    check_pushbutton(&PUSHBUTTON_1);
     mock_PUSHBUTTON_1_STATE=PUSHED;
-    check_button_release(&PUSHBUTTON_1);
+    check_pushbutton(&PUSHBUTTON_1);
     generete_pin_bouncing_on_push(&PUSHBUTTON_1,&mock_PUSHBUTTON_1_STATE);
-    check_button_release(&PUSHBUTTON_1);
+    check_pushbutton(&PUSHBUTTON_1);
     generate_pushbutton_deb_rep_timer_delay(PUSHBUTTON_DEBOUNCE_TIME,&PUSHBUTTON_1);
-    check_button_release(&PUSHBUTTON_1);
+    check_pushbutton(&PUSHBUTTON_1);
     mock_PUSHBUTTON_1_STATE=RELEASED;
-    check_button_release(&PUSHBUTTON_1);
+    check_pushbutton(&PUSHBUTTON_1);
     generete_pin_bouncing_on_release(&PUSHBUTTON_1,&mock_PUSHBUTTON_1_STATE);
-    check_button_release(&PUSHBUTTON_1);
+    check_pushbutton(&PUSHBUTTON_1);
     //When
     generate_pushbutton_deb_rep_timer_delay(DEBOUNCE_TIME_TO_STABLE_STATE,&PUSHBUTTON_1);
-    check_button_release(&PUSHBUTTON_1);
+    check_pushbutton(&PUSHBUTTON_1);
     //Then
     TEST_ASSERT_EQUAL(1,TEST_TIMER);
 }
@@ -121,22 +121,22 @@ TEST(pushbutton_release, GivenKey1InitAndIncTimerFunctionRegisteredAndKey1PushAn
 {
     //Given
     register_button_release_callback(&PUSHBUTTON_1,inc_test_timer);
-    check_button_release(&PUSHBUTTON_1);
+    check_pushbutton(&PUSHBUTTON_1);
     mock_PUSHBUTTON_1_STATE=PUSHED;
-    check_button_release(&PUSHBUTTON_1);
+    check_pushbutton(&PUSHBUTTON_1);
     generete_pin_bouncing_on_push(&PUSHBUTTON_1,&mock_PUSHBUTTON_1_STATE);
-    check_button_release(&PUSHBUTTON_1);
+    check_pushbutton(&PUSHBUTTON_1);
     generate_pushbutton_deb_rep_timer_delay(PUSHBUTTON_DEBOUNCE_TIME,&PUSHBUTTON_1);
-    check_button_release(&PUSHBUTTON_1);
+    check_pushbutton(&PUSHBUTTON_1);
     mock_PUSHBUTTON_1_STATE=RELEASED;
-    check_button_release(&PUSHBUTTON_1);
+    check_pushbutton(&PUSHBUTTON_1);
     generete_pin_bouncing_on_release(&PUSHBUTTON_1,&mock_PUSHBUTTON_1_STATE);
-    check_button_release(&PUSHBUTTON_1);
+    check_pushbutton(&PUSHBUTTON_1);
     //When
     generate_pushbutton_deb_rep_timer_delay(DEBOUNCE_TIME_TO_STABLE_STATE,&PUSHBUTTON_1);
-    check_button_release(&PUSHBUTTON_1);
+    check_pushbutton(&PUSHBUTTON_1);
     generate_pushbutton_deb_rep_timer_delay((DEBOUNCE_TIME_TO_STABLE_STATE*100),&PUSHBUTTON_1);
-    check_button_release(&PUSHBUTTON_1);
+    check_pushbutton(&PUSHBUTTON_1);
     //Then
     TEST_ASSERT_EQUAL(1,TEST_TIMER);
 }

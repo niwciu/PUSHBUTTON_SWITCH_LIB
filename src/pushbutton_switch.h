@@ -113,6 +113,7 @@ extern "C"
                          PB_triger_mode_t PB_triger_mode,
                          PB_GPIO_interface_get_callback PB_get_driver_interface_adr_callback);
 
+    void check_pushbutton(PUSHBUTTON_TypDef *BUTTON);
     void check_button_push(PUSHBUTTON_TypDef *BUTTON);
     void check_button_release(PUSHBUTTON_TypDef *BUTTON);
     void check_button_short_push_long_push(PUSHBUTTON_TypDef *BUTTON);
