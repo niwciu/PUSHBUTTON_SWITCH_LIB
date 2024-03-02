@@ -49,6 +49,7 @@ set(C_SRCS
     Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_ll_pwr.c
     Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_ll_rcc.c
     Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_ll_utils.c
+    Core/Src/keyboard.c
     Core/Src/main.c
     Core/Src/stm32g0xx_it.c
     Core/Src/syscalls.c

@@ -27,12 +27,12 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "pushbutton_switch.h"
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
 /* USER CODE BEGIN ET */
-
+extern PUSHBUTTON_TypDef KEY_1;
 /* USER CODE END ET */
 
 /* Exported constants --------------------------------------------------------*/

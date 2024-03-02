@@ -1,4 +1,5 @@
 #include "pushbutton_switch.h"
+#include "pushbutton_switch_TIM_interface.h"
 #include "pushbutton_common_test.h"
 
 void generate_pushbutton_deb_rep_timer_delay(debounce_repetition_delay_t delay,PUSHBUTTON_TypDef *BUTTON)

@@ -18,7 +18,7 @@ extern "C"
 #include "pushbutton_switch_interface.h"
 
 /** @brief Time duration for pushbutton debounce in milliseconds. */
-#define PUSHBUTTON_DEBOUNCE_TIME 200U
+#define PUSHBUTTON_DEBOUNCE_TIME 20U
 
 /** @brief Time duration for the first repetition of a pushbutton press in milliseconds. */
 #define PUSHBUTTON_FIRST_REPETITION_TIME 1000U
@@ -126,7 +126,6 @@ extern "C"
     void disable_pusbutton_repetition(PUSHBUTTON_TypDef *BUTTON);
 
     void dec_pushbutton_deb_rep_timer(PUSHBUTTON_TypDef *BUTTON);
-
     /*
      * functionality to be implemented in the future for singals
      *

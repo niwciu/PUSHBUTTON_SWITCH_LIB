@@ -393,11 +393,8 @@ void disable_pusbutton_repetition(PUSHBUTTON_TypDef *BUTTON)
  */
 void dec_pushbutton_deb_rep_timer(PUSHBUTTON_TypDef *BUTTON)
 {
-    if (BUTTON != NULL)
+    if (BUTTON->deb_rep_timer)
     {
-        if (BUTTON->deb_rep_timer)
-        {
-            BUTTON->deb_rep_timer--;
-        }
+        BUTTON->deb_rep_timer--;
     }
 }

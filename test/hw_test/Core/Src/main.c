@@ -22,6 +22,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
+#include "keyboard.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -49,7 +50,6 @@
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 /* USER CODE BEGIN PFP */
-
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -90,17 +90,19 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   /* USER CODE BEGIN 2 */
-  PUSHBUTTON_TypDef KEY_1;
+ 
+  init_keyboard();
+  LL_SYSTICK_EnableIT();
 
-  init_pushbutton(&KEY_1,REPETITION_ON,TRIGER_ON_PUSH,pushbutton_1_GPIO_interface_get);
+  // LL_GPIO_SetOutputPin(LED_GPIO_Port,LED_Pin);
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-    // check_button_release(&KEY_1);
-    check_pushbutton(&KEY_1);
+    
+    check_keyboard();
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -173,6 +175,7 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
+
 
 /* USER CODE END 4 */
 

@@ -43,7 +43,7 @@ extern "C" {
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "pushbutton_switch.h"
+
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
