@@ -1,5 +1,5 @@
 #include "unity/fixture/unity_fixture.h"
-#include "pushbutton_switch.h"
+#include "pushbutton.h"
 #include "mock_pushbutton_GPIO_driver.h"
 #include "pushbutton_common_test.h"
 

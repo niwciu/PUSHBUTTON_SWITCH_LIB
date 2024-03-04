@@ -9,7 +9,7 @@
  * @copyright Copyright (c) 2024
  *
  */
-#include "pushbutton_switch.h"
+#include "pushbutton.h"
 #include <stddef.h>
 #include <stdio.h>
 #include <stdbool.h>

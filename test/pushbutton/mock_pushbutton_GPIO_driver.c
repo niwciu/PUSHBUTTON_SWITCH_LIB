@@ -2,7 +2,7 @@
  * @brief
  *
  */
-#include "pushbutton_switch_interface.h"
+#include "pushbutton_GPIO_interface.h"
 #include <stddef.h>
 #include "mock_pushbutton_GPIO_driver.h"
 

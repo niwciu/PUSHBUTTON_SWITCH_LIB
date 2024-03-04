@@ -1,4 +1,4 @@
-#include "pushbutton_switch.h"
+#include "pushbutton.h"
 #include "pushbutton_switch_TIM_interface.h"
 #include "pushbutton_common_test.h"
 
