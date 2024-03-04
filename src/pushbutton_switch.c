@@ -10,9 +10,8 @@
  *
  */
 #include "pushbutton.h"
-#include "switch.h"
 #include <stddef.h>
-#include <stdio.h>
+// #include <stdio.h>  // to tylko do printfa 
 #include <stdbool.h>
 
 static void update_pushbutton_input_state(PUSHBUTTON_TypDef *BUTTON);
@@ -248,18 +247,6 @@ void init_pushbutton(PUSHBUTTON_TypDef *BUTTON,
     BUTTON->REPETITION_STATUS_FLAG = REPETITION_INACTIVE;
     BUTTON->push_callback = NULL;
     BUTTON->release_callback = NULL;
-}
-
-void init_switch(SWITCH_TypDef *SWITCH, SWITCH_GPIO_interface_get_callback SWITCH_get_driver_interface_adr_callback)
-{
-    SWITCH->GPIO_interface = SWITCH_get_driver_interface_adr_callback();
-    SWITCH->GPIO_interface->GPIO_init();
-
-    // init other parameters of the structure to default init value
-    SWITCH->input_state = SWITCH_INPUT_UNKNOWN;
-    SWITCH->deb_rep_timer = 0;
-    SWITCH->switch_OFF_callback = NULL;
-    SWITCH->switch_ON_callback = NULL;
 }
 
 void check_pushbutton(PUSHBUTTON_TypDef *BUTTON)

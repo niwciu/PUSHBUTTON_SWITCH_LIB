@@ -15,11 +15,19 @@ extern "C"
 {
 #endif /* __cplusplus */
 
-#define SWITCH_DEBOUNCE_TIME 100U
+#define SWITCH_DEBOUNCE_REPETITIONS 100U
 
 #include "switch_GPIO_interface.h"
-    typedef uint16_t SWITCH_timer_t;
+    typedef uint16_t SWITCH_counter_t;
 
+    typedef enum
+    {
+        SW_INIT,
+        SW_OFF,
+        SW_SWITCHED_ON,
+        SW_ON,
+        SW_SWITCHED_OFF
+    } SWITCH_state_macine_t;
     /**
      * @brief
      *
@@ -35,9 +43,10 @@ extern "C"
     {
         SWITCH_driver_interface_t *GPIO_interface; /**< GPIO interface for the pushbutton. */
         SWITCH_input_state_t input_state;          /**<  */
-        SWITCH_timer_t deb_rep_timer;              /**<  */
+        SWITCH_counter_t debounce_counter;              /**<  */
         SWITCH_callback_t switch_ON_callback;      /**<  */
         SWITCH_callback_t switch_OFF_callback;     /**<  */
+        SWITCH_state_macine_t switch_state_machine;
 
     } SWITCH_TypDef;
 
@@ -45,12 +54,11 @@ extern "C"
 
     void init_switch(SWITCH_TypDef *SWITCH, SWITCH_GPIO_interface_get_callback SWITCH_get_driver_interface_adr_callback);
 
-    // void check_switch(SWITCH_TypDef *SWITCH);
+    void check_switch(SWITCH_TypDef *SWITCH);
 
-    // void register_switch_on_callback(SWITCH_TypDef *SWITCH, SWITCH_callback_t switch_ON_callback);
+    void register_switch_ON_callback(SWITCH_TypDef *SWITCH, SWITCH_callback_t switch_ON_callback);
     // void register_switch_off_callback(SWITCH_TypDef *SWITCH, SWITCH_callback_t switch_OFF_callback);
 
-    // void dec_switch_deb_rep_timer(SWITCH_TypDef *SWITCH);
 
 #ifdef __cplusplus
 }

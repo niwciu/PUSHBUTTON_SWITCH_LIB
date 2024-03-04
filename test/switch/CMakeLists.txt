@@ -47,7 +47,7 @@ set(TEST_INCLUDE_DIRS
 )
 
 set(SRCS
-	../../src/pushbutton_switch.c
+	../../src/switch.c
 )
 
 set(TEST_SRCS
