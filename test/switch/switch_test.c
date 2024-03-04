@@ -42,7 +42,7 @@ TEST(Switch, GivenSwitchIsOnWhenSwitchInitThenInputSwitchStateEqualToSwitchON)
 
     TEST_ASSERT_EQUAL(SWITCH_INPUT_ON,SW_1.input_state);
 }
-TEST(Switch, GivenSW1InitAndIncTimerFunctionRegisteredToSwOnAndSW1SwitchedOnAndBouncingWhenSW1StableForDebounceTimeThenTestTimerEqual1)
+TEST(Switch, GivenSwitchIsOnAndSW1InitAndIncTimerFunctionRegisteredToSwOnAndSW1SwitchedOnAndBouncingWhenSW1StableForDebounceTimeThenTestTimerEqual1)
 {
     //Given
     mock_SWITCH_1_STATE=SWITCH_INPUT_OFF;
