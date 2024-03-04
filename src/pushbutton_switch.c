@@ -10,6 +10,7 @@
  *
  */
 #include "pushbutton.h"
+#include "switch.h"
 #include <stddef.h>
 #include <stdio.h>
 #include <stdbool.h>
@@ -240,7 +241,7 @@ void init_pushbutton(PUSHBUTTON_TypDef *BUTTON,
     BUTTON->repetition = PB_repetition_mode;
     BUTTON->triger_mode = PB_triger_mode;
 
-    // init other parameters to default init value
+    // init other parameters of the structure to default init value
     BUTTON->deb_rep_timer = 0;
     BUTTON->pushbutton_state_machine = BUTTON_RELEASED;
     BUTTON->input_state = UNKNOWN;
@@ -249,13 +250,25 @@ void init_pushbutton(PUSHBUTTON_TypDef *BUTTON,
     BUTTON->release_callback = NULL;
 }
 
+void init_switch(SWITCH_TypDef *SWITCH, SWITCH_GPIO_interface_get_callback SWITCH_get_driver_interface_adr_callback)
+{
+    SWITCH->GPIO_interface = SWITCH_get_driver_interface_adr_callback();
+    SWITCH->GPIO_interface->GPIO_init();
+
+    // init other parameters of the structure to default init value
+    SWITCH->input_state = SWITCH_INPUT_UNKNOWN;
+    SWITCH->deb_rep_timer = 0;
+    SWITCH->switch_OFF_callback = NULL;
+    SWITCH->switch_ON_callback = NULL;
+}
+
 void check_pushbutton(PUSHBUTTON_TypDef *BUTTON)
 {
     update_pushbutton_input_state(BUTTON);
     switch (BUTTON->triger_mode)
     {
     case TRIGER_ON_PUSH:
-        debounce_pushbutton_push_state(BUTTON); 
+        debounce_pushbutton_push_state(BUTTON);
         break;
     case TRIGER_ON_RELEASE:
         debounce_pushbutton_release_state(BUTTON);

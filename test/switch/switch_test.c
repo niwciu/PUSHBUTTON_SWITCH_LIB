@@ -5,7 +5,7 @@
 
 // #include "tested_module.h"
 
-SWITCH_TypDef INPUT_SIG_1;
+SWITCH_TypDef SW_1;
 
 TEST_GROUP(Switch);
 
@@ -21,7 +21,7 @@ TEST_TEAR_DOWN(Switch)
 
 TEST(Switch, WhenSwitchInitThenInputSwitchStateEqualToSwitchOFF)
 {
-    init_switch(INPUT_SIG_1);
+    init_switch(&SW_1,switch_1_GPIO_interface_get);
     TEST_ASSERT_EQUAL(SWITCH_OFF,mock_SWITCH_1_STATE);
 }
 

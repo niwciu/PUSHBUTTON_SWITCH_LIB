@@ -21,7 +21,7 @@ extern "C"
     {
         SWITCH_OFF,   /**< Button in the RELEASED state. */
         SWITCH_ON,     /**< Button in the PUSHED state. */
-        SWITCH_UNKNOWN     /**< Unknown state of the button. */
+        SWITCH_INPUT_UNKNOWN     /**< Unknown state of the button. */
     } SWITCH_input_state_t;
 
 

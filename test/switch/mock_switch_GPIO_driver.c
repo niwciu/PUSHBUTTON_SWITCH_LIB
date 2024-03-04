@@ -7,7 +7,7 @@
 #include "mock_switch_GPIO_driver.h"
 
 
-SWITCH_input_state_t mock_SWITCH_1_STATE = SWITCH_UNKNOWN;
+SWITCH_input_state_t mock_SWITCH_1_STATE = SWITCH_INPUT_UNKNOWN;
 
 uint8_t TEST_TIMER = 0;
 
