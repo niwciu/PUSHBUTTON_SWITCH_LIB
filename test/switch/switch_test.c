@@ -21,7 +21,13 @@ TEST_TEAR_DOWN(Switch)
 {
     /* Cleanup after every test */
 }
-
+TEST(Switch, WhenSwitchInitThenSwitchInputPinSetAsInput)
+{
+   
+    init_switch(&SW_1,switch_1_GPIO_interface_get);
+    
+    TEST_ASSERT_EQUAL(PIN_TYPE_INPUT,mock_switch_Pin_type);
+}
 TEST(Switch, GivenSwitchIsOffWhenSwitchInitThenInputSwitchStateEqualToSwitchOFF)
 {
     mock_SWITCH_1_STATE=SWITCH_INPUT_OFF;
