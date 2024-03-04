@@ -15,8 +15,9 @@
 extern "C"
 {
 #endif /* __cplusplus */
+typedef void (*SysTick_callback_t)(void);
 
-
+void subscribe_SysTick_callback(SysTick_callback_t SysTick_callback);
 
 #ifdef __cplusplus
 }

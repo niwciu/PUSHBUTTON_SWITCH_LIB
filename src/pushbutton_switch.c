@@ -23,10 +23,12 @@ static void debounce_pushbutton_short_push_long_push_state(PUSHBUTTON_TypDef *BU
 static void handle_push_debouncing(PUSHBUTTON_TypDef *BUTTON);
 static void handle_long_push_no_repetition_phase(PUSHBUTTON_TypDef *BUTTON);
 static void handle_long_push_phase(PUSHBUTTON_TypDef *BUTTON);
-static void execute_push_callback(PUSHBUTTON_TypDef *BUTTON);
 static void handle_short_push_phase(PUSHBUTTON_TypDef *BUTTON);
-static void handle_short_pus_phase_pin_pushed(PUSHBUTTON_TypDef *BUTTON);
-static void handle_short_pus_phase_pin_released(PUSHBUTTON_TypDef *BUTTON);
+static void handle_short_push_phase_pin_pushed(PUSHBUTTON_TypDef *BUTTON);
+static void handle_short_push_phase_pin_released(PUSHBUTTON_TypDef *BUTTON);
+
+static void execute_push_callback(PUSHBUTTON_TypDef *BUTTON);
+static void execute_release_callback(PUSHBUTTON_TypDef *BUTTON);
 
 static void update_pushbutton_input_state(PUSHBUTTON_TypDef *BUTTON)
 {
@@ -85,10 +87,7 @@ static void debounce_pushbutton_release_state(PUSHBUTTON_TypDef *BUTTON)
     {
         if ((BUTTON->deb_rep_timer) == 1)
         {
-            if (BUTTON->release_callback != NULL)
-            {
-                BUTTON->release_callback();
-            }
+            execute_release_callback(BUTTON);
             BUTTON->deb_rep_timer = 0;
         }
         else
@@ -167,27 +166,19 @@ static void handle_long_push_phase(PUSHBUTTON_TypDef *BUTTON)
     }
 }
 
-void execute_push_callback(PUSHBUTTON_TypDef *BUTTON)
-{
-    if (BUTTON->push_callback != NULL)
-    {
-        BUTTON->push_callback(); // push callback to instancja gdzie trzeba zaerejsrować long push
-    }
-}
-
 static void handle_short_push_phase(PUSHBUTTON_TypDef *BUTTON)
 {
     if ((BUTTON->input_state) == PUSHED)
     {
-        handle_short_pus_phase_pin_pushed(BUTTON);
+        handle_short_push_phase_pin_pushed(BUTTON);
     }
     else
     {
-        handle_short_pus_phase_pin_released(BUTTON);
+        handle_short_push_phase_pin_released(BUTTON);
     }
 }
 
-static void handle_short_pus_phase_pin_pushed(PUSHBUTTON_TypDef *BUTTON)
+static void handle_short_push_phase_pin_pushed(PUSHBUTTON_TypDef *BUTTON)
 {
     if ((BUTTON->deb_rep_timer) == 0)
     {
@@ -205,14 +196,27 @@ static void handle_short_pus_phase_pin_pushed(PUSHBUTTON_TypDef *BUTTON)
     }
 }
 
-static void handle_short_pus_phase_pin_released(PUSHBUTTON_TypDef *BUTTON)
+static void handle_short_push_phase_pin_released(PUSHBUTTON_TypDef *BUTTON)
+{
+    execute_release_callback(BUTTON);
+    BUTTON->deb_rep_timer = PUSHBUTTON_DEBOUNCE_TIME;
+    BUTTON->pushbutton_state_machine = BUTTON_RELEASED;
+}
+
+static void execute_push_callback(PUSHBUTTON_TypDef *BUTTON)
+{
+    if (BUTTON->push_callback != NULL)
+    {
+        BUTTON->push_callback(); // push callback to instancja gdzie trzeba zaerejsrować long push
+    }
+}
+
+static void execute_release_callback(PUSHBUTTON_TypDef *BUTTON)
 {
     if (BUTTON->release_callback != NULL)
     {
         BUTTON->release_callback(); // push callback to instancja gdzie trzeba zaerejsrować long push
     }
-    BUTTON->deb_rep_timer = PUSHBUTTON_DEBOUNCE_TIME;
-    BUTTON->pushbutton_state_machine = BUTTON_RELEASED;
 }
 /**
  * @brief Initializes pushbuttons.
@@ -247,21 +251,18 @@ void init_pushbutton(PUSHBUTTON_TypDef *BUTTON,
 
 void check_pushbutton(PUSHBUTTON_TypDef *BUTTON)
 {
-    if (BUTTON != NULL)
+    update_pushbutton_input_state(BUTTON);
+    switch (BUTTON->triger_mode)
     {
-        update_pushbutton_input_state(BUTTON);
-        switch (BUTTON->triger_mode)
-        {
-        case TRIGER_ON_PUSH:
-            debounce_pushbutton_push_state(BUTTON); 
-            break;
-        case TRIGER_ON_RELEASE:
-            debounce_pushbutton_release_state(BUTTON);
-            break;
-        default:
-            debounce_pushbutton_short_push_long_push_state(BUTTON);
-            break;
-        }
+    case TRIGER_ON_PUSH:
+        debounce_pushbutton_push_state(BUTTON); 
+        break;
+    case TRIGER_ON_RELEASE:
+        debounce_pushbutton_release_state(BUTTON);
+        break;
+    default:
+        debounce_pushbutton_short_push_long_push_state(BUTTON);
+        break;
     }
 }
 
@@ -283,10 +284,7 @@ void check_pushbutton(PUSHBUTTON_TypDef *BUTTON)
  */
 void register_button_push_callback(PUSHBUTTON_TypDef *BUTTON, PB_callback_t callback_on_push)
 {
-    if (BUTTON != NULL)
-    {
-        BUTTON->push_callback = callback_on_push;
-    }
+    BUTTON->push_callback = callback_on_push;
 }
 
 /**
@@ -307,10 +305,7 @@ void register_button_push_callback(PUSHBUTTON_TypDef *BUTTON, PB_callback_t call
  */
 void register_button_release_callback(PUSHBUTTON_TypDef *BUTTON, PB_callback_t callback_on_button_release)
 {
-    if (BUTTON != NULL)
-    {
-        BUTTON->release_callback = callback_on_button_release;
-    }
+    BUTTON->release_callback = callback_on_button_release;
 }
 
 /**
@@ -333,11 +328,8 @@ void register_button_release_callback(PUSHBUTTON_TypDef *BUTTON, PB_callback_t c
  */
 void register_button_short_push_long_push_callbacks(PUSHBUTTON_TypDef *BUTTON, PB_callback_t callback_on_short_push, PB_callback_t callback_on_long_push)
 {
-    if (BUTTON != NULL)
-    {
-        BUTTON->release_callback = callback_on_short_push;
-        BUTTON->push_callback = callback_on_long_push;
-    }
+    BUTTON->release_callback = callback_on_short_push;
+    BUTTON->push_callback = callback_on_long_push;
 }
 
 /**
@@ -352,10 +344,7 @@ void register_button_short_push_long_push_callbacks(PUSHBUTTON_TypDef *BUTTON, P
  */
 void enable_pusbutton_repetition(PUSHBUTTON_TypDef *BUTTON)
 {
-    if (BUTTON != NULL)
-    {
-        BUTTON->repetition = REPETITION_ON;
-    }
+    BUTTON->repetition = REPETITION_ON;
 }
 
 /**
@@ -370,10 +359,7 @@ void enable_pusbutton_repetition(PUSHBUTTON_TypDef *BUTTON)
  */
 void disable_pusbutton_repetition(PUSHBUTTON_TypDef *BUTTON)
 {
-    if (BUTTON != NULL)
-    {
-        BUTTON->repetition = REPETITION_OFF;
-    }
+    BUTTON->repetition = REPETITION_OFF;
 }
 
 /**
@@ -393,8 +379,5 @@ void disable_pusbutton_repetition(PUSHBUTTON_TypDef *BUTTON)
  */
 void dec_pushbutton_deb_rep_timer(PUSHBUTTON_TypDef *BUTTON)
 {
-    if (BUTTON->deb_rep_timer)
-    {
-        BUTTON->deb_rep_timer--;
-    }
+    BUTTON->deb_rep_timer--;
 }

@@ -16,6 +16,7 @@ extern "C"
 {
 #endif /* __cplusplus */
 #include "pushbutton_switch_interface.h"
+#include "pushbutton_switch_TIM_interface.h"
 
 /** @brief Time duration for pushbutton debounce in milliseconds. */
 #define PUSHBUTTON_DEBOUNCE_TIME 20U
@@ -114,9 +115,6 @@ extern "C"
                          PB_GPIO_interface_get_callback PB_get_driver_interface_adr_callback);
 
     void check_pushbutton(PUSHBUTTON_TypDef *BUTTON);
-    void check_button_push(PUSHBUTTON_TypDef *BUTTON);
-    void check_button_release(PUSHBUTTON_TypDef *BUTTON);
-    void check_button_short_push_long_push(PUSHBUTTON_TypDef *BUTTON);
 
     void register_button_push_callback(PUSHBUTTON_TypDef *BUTTON, PB_callback_t callback_on_push);
     void register_button_release_callback(PUSHBUTTON_TypDef *BUTTON, PB_callback_t callback_on_button_release);
