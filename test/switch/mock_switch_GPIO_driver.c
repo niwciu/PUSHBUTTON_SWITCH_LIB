@@ -2,11 +2,12 @@
  * @brief
  *
  */
-#include "switch_GPIO_interface.h"
+
 #include <stddef.h>
 #include "mock_switch_GPIO_driver.h"
 
-SWITCH_input_state_t mock_SWITCH_1_STATE = UNKNOWN;
+
+SWITCH_input_state_t mock_SWITCH_1_STATE = SWITCH_UNKNOWN;
 
 uint8_t TEST_TIMER = 0;
 
@@ -23,18 +24,14 @@ SWITCH_driver_interface_t *switch_1_GPIO_interface_get(void)
 {
     return &SWITCH_1_GPIO_interface_struct;
 }
-SWITCH_driver_interface_t *switch_2_GPIO_interface_get(void)
-{
-    return &SWITCH_2_GPIO_interface_struct;
-}
 
 static void switch_1_gpio_init(void)
 {
-    mock_SWITCH_1_STATE = RELEASED;
+    mock_SWITCH_1_STATE = SWITCH_OFF;
 }
 
 
-static PB_input_state_t get_switch_1_state(void)
+static SWITCH_input_state_t get_switch_1_state(void)
 {
     return mock_SWITCH_1_STATE;
 }

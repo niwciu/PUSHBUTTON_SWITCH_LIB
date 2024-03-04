@@ -54,7 +54,7 @@ set(TEST_SRCS
     switch_test_main.c
     switch_test_runner.c
     switch_test.c
-	#mock_switch_module.c
+	mock_switch_GPIO_driver.c
 )
 
 set(GLOBAL_DEFINES
