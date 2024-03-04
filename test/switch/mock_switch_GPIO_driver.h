@@ -11,10 +11,17 @@
 #include "switch_GPIO_interface.h"
 #include <stdint.h>
 
+typedef enum 
+{
+PIN_TYPE_UNKNOWN,
+PIN_TYPE_INPUT,
+PIN_TYPE_OUTPUT,
+}pin_type_t;
 
 extern SWITCH_input_state_t mock_SWITCH_1_STATE;
 
 extern uint8_t TEST_TIMER;
+extern pin_type_t mock_switch_Pin_type;
 
 void inc_test_timer(void);
 void dec_test_timer(void);
