@@ -75,10 +75,8 @@ TEST(Switch, GivenSwitchIsOffAndTestTimerEqual10AndSW1InitAndIncTimerFunctionReg
     mock_SWITCH_1_STATE=SWITCH_INPUT_OFF;
     init_switch(&SW_1,switch_1_GPIO_interface_get);
     check_switch(&SW_1);
-    check_switch(&SW_1);
     register_switch_ON_callback(&SW_1,inc_test_timer);
     mock_SWITCH_1_STATE=SWITCH_INPUT_ON;
-    check_switch(&SW_1);
     check_switch_X_times(&SW_1,SWITCH_DEBOUNCE_REPETITIONS+1);
     TEST_ASSERT_EQUAL(11,TEST_TIMER);
 }
