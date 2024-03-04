@@ -27,7 +27,7 @@ SWITCH_driver_interface_t *switch_1_GPIO_interface_get(void)
 
 static void switch_1_gpio_init(void)
 {
-    mock_SWITCH_1_STATE = SWITCH_INPUT_OFF;
+    
 }
 
 

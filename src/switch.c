@@ -27,11 +27,11 @@
     SWITCH->GPIO_interface->GPIO_init();
 
     // init other parameters of the structure to default init value
-    SWITCH->input_state = SWITCH_INPUT_UNKNOWN;
+    SWITCH->input_state = SWITCH->GPIO_interface->get_switch_input_state();
     SWITCH->debounce_counter = 0;
     SWITCH->switch_OFF_callback = NULL;
     SWITCH->switch_ON_callback = NULL;
-    SWITCH->switch_state_machine = SW_OFF;
+    SWITCH->switch_state_machine = SW_INIT;
 
     //ToDo testy na inicjalizacj switcha gdy fizycznie jest w jakims stanie
 }
