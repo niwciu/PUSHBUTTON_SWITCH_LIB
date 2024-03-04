@@ -1,9 +1,11 @@
 #include "unity/fixture/unity_fixture.h"
 #include "mock_switch_GPIO_driver.h"
-#include "switch_GPIO_interface.h"
+#include "switch.h"
 // #include "switch_GPIO_interface.h"
 
 // #include "tested_module.h"
+
+SWITCH_TypDef INPUT_SIG_1;
 
 TEST_GROUP(Switch);
 
@@ -19,6 +21,7 @@ TEST_TEAR_DOWN(Switch)
 
 TEST(Switch, WhenSwitchInitThenInputSwitchStateEqualToSwitchOFF)
 {
+    init_switch(INPUT_SIG_1);
     TEST_ASSERT_EQUAL(SWITCH_OFF,mock_SWITCH_1_STATE);
 }
 
