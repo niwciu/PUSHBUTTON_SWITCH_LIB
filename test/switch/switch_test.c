@@ -42,7 +42,7 @@ TEST(Switch, GivenSwitchIsOnWhenSwitchInitThenInputSwitchStateEqualToSwitchON)
 
     TEST_ASSERT_EQUAL(SWITCH_INPUT_ON,SW_1.input_state);
 }
-TEST(Switch, GivenSwitchIsOnAndSW1InitAndIncTimerFunctionRegisteredToSwOnAndSW1SwitchedOnAndBouncingWhenSW1StableForDebounceTimeThenTestTimerEqual1)
+TEST(Switch, GivenSwitchIsOffAndSW1InitAndIncTimerFunctionRegisteredToSwOnAndSW1SwitchedOnAndBouncingWhenSW1StableForDebounceTimeThenTestTimerEqual1)
 {
     //Given
     mock_SWITCH_1_STATE=SWITCH_INPUT_OFF;
@@ -55,14 +55,16 @@ TEST(Switch, GivenSwitchIsOnAndSW1InitAndIncTimerFunctionRegisteredToSwOnAndSW1S
     check_switch(&SW_1);
     TEST_ASSERT_EQUAL(1,TEST_TIMER);
 }
+TEST(Switch, GivenSwitchIsOffAndSW1InitAndIncTimerFunctionRegisteredToSwOnAndSW1SwitchedOnAndBouncingWhenSW1StableForDebounceTimeMinus1ThenTestTimerEqual0)
+{
+    TEST_FAIL_MESSAGE("Implement your test!");
+}
+
 // TEST(Switch, )
 // {
 //     TEST_FAIL_MESSAGE("Implement your test!");
 // }
-// TEST(Switch, )
-// {
-//     TEST_FAIL_MESSAGE("Implement your test!");
-// }
+
 // TEST(Switch, )
 // {
 //     TEST_FAIL_MESSAGE("Implement your test!");
