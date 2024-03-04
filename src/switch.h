@@ -57,7 +57,7 @@ extern "C"
     void check_switch(SWITCH_TypDef *SWITCH);
 
     void register_switch_ON_callback(SWITCH_TypDef *SWITCH, SWITCH_callback_t switch_ON_callback);
-    // void register_switch_off_callback(SWITCH_TypDef *SWITCH, SWITCH_callback_t switch_OFF_callback);
+    void register_switch_OFF_callback(SWITCH_TypDef *SWITCH, SWITCH_callback_t switch_OFF_callback);
 
 
 #ifdef __cplusplus

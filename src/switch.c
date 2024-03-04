@@ -69,11 +69,31 @@ void check_switch(SWITCH_TypDef *SWITCH)
         
         break;
     case SW_ON:
+        if((SWITCH->input_state)==SWITCH_INPUT_OFF)
+        {
+            SWITCH->debounce_counter=SWITCH_DEBOUNCE_REPETITIONS;
+            SWITCH->switch_state_machine=SW_SWITCHED_OFF;
+        }
         break;
     case SW_SWITCHED_OFF:
+        if((SWITCH->input_state)==SWITCH_INPUT_OFF)
+        {
+            SWITCH->debounce_counter--;
+            if((SWITCH->debounce_counter)==0)
+            {
+                SWITCH->switch_state_machine=SW_OFF;
+                if((SWITCH->switch_OFF_callback)!=NULL)
+                {
+                    SWITCH->switch_OFF_callback();
+                }
+            }
+        }
+        else
+        {
+            SWITCH->switch_state_machine=SW_OFF;
+        }
         break;
     default:
-    // printf("\r\ndefault\r\n");
         if((SWITCH->input_state)==SWITCH_INPUT_ON) SWITCH->switch_state_machine=SW_ON;
         else SWITCH->switch_state_machine=SW_OFF;
         break;
@@ -89,4 +109,16 @@ void register_switch_ON_callback(SWITCH_TypDef *SWITCH, SWITCH_callback_t switch
 {
     SWITCH->switch_ON_callback = switch_ON_callback;
 }
+
+/**
+ * @brief 
+ * 
+ * @param SWITCH 
+ * @param switch_OFF_callback 
+ */
+void register_switch_OFF_callback(SWITCH_TypDef *SWITCH, SWITCH_callback_t switch_OFF_callback)
+{
+    SWITCH->switch_OFF_callback = switch_OFF_callback;
+}
+
 
