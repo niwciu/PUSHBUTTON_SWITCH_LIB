@@ -91,10 +91,11 @@ TEST(Switch, GivenSwitchIsONAndTestTimerEqual10AndSW1InitAndDecTimerFunctionRegi
     check_switch_X_times(&SW_1,SWITCH_DEBOUNCE_REPETITIONS+1);
     TEST_ASSERT_EQUAL(9,TEST_TIMER);
 }
-// TEST(Switch, )
-// {
-//     TEST_FAIL_MESSAGE("Implement your test!");
-// }
+TEST(Switch, GivenSwitchIsONAndTestTimerEqual10AndSW1InitAndDecTimerFunctionRegisteredToSwOffAndSW1SwitchedOffAndBouncingWhenSW1StableForDebounceTimeMinus1ThenTestTimerEqual9)
+{
+    TEST_FAIL_MESSAGE("Implement your test!");
+}
+
 // TEST(Switch, )
 // {
 //     TEST_FAIL_MESSAGE("Implement your test!");
