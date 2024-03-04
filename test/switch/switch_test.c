@@ -105,6 +105,18 @@ TEST(Switch, GivenSwitchIsONAndTestTimerEqual10AndSW1InitAndDecTimerFunctionRegi
     TEST_ASSERT_EQUAL(10,TEST_TIMER);
 }
 
+TEST(Switch, GivenSwitchIsONAndTestTimerEqual10AndSW1InitAndDecTimerFunctionRegisteredToSwOffAndSW1SwitchedOffAndBouncingWhenSW1StableForDebounceTimePlus1ThenTestTimerEqual9)
+{
+    mock_SWITCH_1_STATE=SWITCH_INPUT_ON;
+    init_switch(&SW_1,switch_1_GPIO_interface_get);
+    check_switch(&SW_1);
+    register_switch_OFF_callback(&SW_1,dec_test_timer);
+    mock_SWITCH_1_STATE=SWITCH_INPUT_OFF;
+    check_switch(&SW_1);
+    check_switch_X_times(&SW_1,SWITCH_DEBOUNCE_REPETITIONS+1);
+    TEST_ASSERT_EQUAL(9,TEST_TIMER);
+}
+
 // TEST(Switch, )
 // {
 //     TEST_FAIL_MESSAGE("Implement your test!");
