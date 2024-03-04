@@ -15,7 +15,7 @@ TEST_GROUP(Switch);
 TEST_SETUP(Switch)
 {
     /* Init before every test */
-    TEST_TIMER=0;
+    TEST_TIMER=10;
 }
 
 TEST_TEAR_DOWN(Switch)
@@ -43,7 +43,7 @@ TEST(Switch, GivenSwitchIsOnWhenSwitchInitThenInputSwitchStateEqualToSwitchON)
 
     TEST_ASSERT_EQUAL(SWITCH_INPUT_ON,SW_1.input_state);
 }
-TEST(Switch, GivenSwitchIsOffAndSW1InitAndIncTimerFunctionRegisteredToSwOnAndSW1SwitchedOnAndBouncingWhenSW1StableForDebounceTimeThenTestTimerEqual1)
+TEST(Switch, GivenSwitchIsOffAndTestTimerEqual10AndSW1InitAndIncTimerFunctionRegisteredToSwOnAndSW1SwitchedOnAndBouncingWhenSW1StableForDebounceTimeThenTestTimerEqual11)
 {
     //Given
     mock_SWITCH_1_STATE=SWITCH_INPUT_OFF;
@@ -53,9 +53,9 @@ TEST(Switch, GivenSwitchIsOffAndSW1InitAndIncTimerFunctionRegisteredToSwOnAndSW1
     mock_SWITCH_1_STATE=SWITCH_INPUT_ON;
     check_switch(&SW_1);
     check_switch_X_times(&SW_1,SWITCH_DEBOUNCE_REPETITIONS);
-    TEST_ASSERT_EQUAL(1,TEST_TIMER);
+    TEST_ASSERT_EQUAL(11,TEST_TIMER);
 }
-TEST(Switch, GivenSwitchIsOffAndSW1InitAndIncTimerFunctionRegisteredToSwOnAndSW1SwitchedOnAndBouncingWhenSW1StableForDebounceTimeMinus1ThenTestTimerEqual0)
+TEST(Switch, GivenSwitchIsOffAndTestTimerEqual10AndSW1InitAndIncTimerFunctionRegisteredToSwOnAndSW1SwitchedOnAndBouncingWhenSW1StableForDebounceTimeMinus1ThenTestTimerEqual10)
 {
     //Given
     mock_SWITCH_1_STATE=SWITCH_INPUT_OFF;
@@ -66,10 +66,10 @@ TEST(Switch, GivenSwitchIsOffAndSW1InitAndIncTimerFunctionRegisteredToSwOnAndSW1
     mock_SWITCH_1_STATE=SWITCH_INPUT_ON;
     check_switch(&SW_1);
     check_switch_X_times(&SW_1,SWITCH_DEBOUNCE_REPETITIONS-1);
-    TEST_ASSERT_EQUAL(0,TEST_TIMER);
+    TEST_ASSERT_EQUAL(10,TEST_TIMER);
 }
 
-TEST(Switch, GivenSwitchIsOffAndSW1InitAndIncTimerFunctionRegisteredToSwOnAndSW1SwitchedOnAndBouncingWhenSW1StableForDebounceTimePlus1ThenTestTimerEqual0)
+TEST(Switch, GivenSwitchIsOffAndTestTimerEqual10AndSW1InitAndIncTimerFunctionRegisteredToSwOnAndSW1SwitchedOnAndBouncingWhenSW1StableForDebounceTimePlus1ThenTestTimerEqual11)
 {
     //Given
     mock_SWITCH_1_STATE=SWITCH_INPUT_OFF;
@@ -80,7 +80,7 @@ TEST(Switch, GivenSwitchIsOffAndSW1InitAndIncTimerFunctionRegisteredToSwOnAndSW1
     mock_SWITCH_1_STATE=SWITCH_INPUT_ON;
     check_switch(&SW_1);
     check_switch_X_times(&SW_1,SWITCH_DEBOUNCE_REPETITIONS+1);
-    TEST_ASSERT_EQUAL(1,TEST_TIMER);
+    TEST_ASSERT_EQUAL(11,TEST_TIMER);
 }
 
 // TEST(Switch, )
