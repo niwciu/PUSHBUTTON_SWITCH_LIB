@@ -10,7 +10,6 @@
  */
 #include "switch.h"
 #include <stddef.h>
-// #include <stdio.h>
 #include <stdbool.h>
 
 static void handle_DEFAULT_state(SWITCH_TypDef *SWITCH);
@@ -86,9 +85,14 @@ static void handle_SW_OFF_state(SWITCH_TypDef *SWITCH)
 }
 
 /**
- * @brief
- * @param SWITCH
- * @param SWITCH_get_driver_interface_adr_callback
+ * @brief Initializes the switch control module.
+ * @param SWITCH Pointer to the SWITCH_TypDef structure.
+ * @param switch_ON_callback Callback function for switch ON event.
+ * @param switch_OFF_callback Callback function for switch OFF event.
+ * @param SWITCH_get_driver_interface_adr_callback Callback to get the GPIO driver interface address.
+ *
+ * This function initializes the switch control module, configuring the GPIO
+ * interface and setting up callback functions for switch events.
  */
 void init_switch(SWITCH_TypDef *SWITCH,
                  SWITCH_callback_t switch_ON_callback,
@@ -107,6 +111,13 @@ void init_switch(SWITCH_TypDef *SWITCH,
 
 }
 
+/**
+ * @brief Checks the current state of the switch and performs corresponding actions.
+ * @param SWITCH Pointer to the SWITCH_TypDef structure.
+ *
+ * This function checks the current state of the switch state machine and invokes
+ * the appropriate state-handling function.
+ */
 void check_switch(SWITCH_TypDef *SWITCH)
 {
     SWITCH->input_state = SWITCH->GPIO_interface->get_switch_input_state();
