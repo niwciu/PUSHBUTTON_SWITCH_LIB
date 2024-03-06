@@ -19,12 +19,11 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-#include "keyboard.h"
+#include "input_signals.h"
 
 #include <stddef.h>
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "pushbutton_TIM_interface.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -44,12 +43,11 @@
 
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN PV */
-SysTick_callback_t subscribed_SysTick_callbacks[SysTick_CALLBACKS_TABLE_SIZE] = {NULL, NULL};//, NULL, NULL, NULL};
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN PFP */
-static void execute_subscribed_SysTick_callbacks(void);
+
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -60,28 +58,6 @@ static void execute_subscribed_SysTick_callbacks(void);
 /* External variables --------------------------------------------------------*/
 
 /* USER CODE BEGIN EV */
-void subscribe_SysTick_callback(SysTick_callback_t SysTick_callback)
-{
-  for (uint8_t i=0;i<SysTick_CALLBACKS_TABLE_SIZE;i++)
-  {
-    if(subscribed_SysTick_callbacks[i]==NULL)
-    {
-      subscribed_SysTick_callbacks[i]=SysTick_callback;
-      break;
-    }
-  }
-}
-static void execute_subscribed_SysTick_callbacks(void)
-{
-  for (uint8_t i=0;i<SysTick_CALLBACKS_TABLE_SIZE;i++)
-  {
-    if(subscribed_SysTick_callbacks[i]!=NULL)
-    {
-      subscribed_SysTick_callbacks[i]();
-    }
-    else break;
-  }
-}
 /* USER CODE END EV */
 
 /******************************************************************************/
@@ -149,7 +125,7 @@ void PendSV_Handler(void)
 void SysTick_Handler(void)
 {
     /* USER CODE BEGIN SysTick_IRQn 0 */
-    execute_subscribed_SysTick_callbacks();
+
     // update_button_timers();
     /* USER CODE END SysTick_IRQn 0 */
 

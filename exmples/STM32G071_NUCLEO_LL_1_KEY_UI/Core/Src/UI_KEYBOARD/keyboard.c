@@ -31,7 +31,7 @@ PUSHBUTTON_TypDef *ENT_ESC = &KEY_1;
 void init_keyboard(void)
 {
     // Key ENT_ESC Initialization
-    init_pushbutton(ENT_ESC, REPETITION_ON, TRIGER_ON_SHORT_PUSH_AND_LONG_PUSH, pushbutton_1_GPIO_interface_get);
+    init_pushbutton(ENT_ESC, REPETITION_ON, TRIGGER_ON_SHORT_PUSH_AND_LONG_PUSH, pushbutton_1_GPIO_interface_get);
     register_button_short_push_long_push_callbacks(ENT_ESC, LED_on, LED_toggle);
     subscribe_SysTick_callback(update_button_timers);
 
