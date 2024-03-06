@@ -55,7 +55,7 @@ set(C_SRCS
     Core/Src/syscalls.c
     Core/Src/sysmem.c
     Core/Src/system_stm32g0xx.c
-    Core/Src/pushbutton_switch_GPIO_interface.c
+    Core/Src/pushbutton_GPIO_interface.c
 
     ../../src/PUSHBUTTON/pushbutton.c
 	

@@ -32,7 +32,7 @@ static void LED_off (void)
 
 void init_keyboard(void)
 {
-   init_pushbutton(&KEY_1,REPETITION_ON,TRIGER_ON_SHORT_PUSH_AND_LONG_PUSH,pushbutton_1_GPIO_interface_get);
+   init_pushbutton(&KEY_1,REPETITION_ON,TRIGGER_ON_SHORT_PUSH_AND_LONG_PUSH,pushbutton_1_GPIO_interface_get);
    register_button_push_callback(&KEY_1,LED_toogle);
    register_button_release_callback(&KEY_1,LED_off);
    subscribe_SysTick_callback(update_button_timers);

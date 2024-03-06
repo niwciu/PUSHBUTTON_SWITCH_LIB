@@ -24,7 +24,7 @@
 #include <stddef.h>
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "pushbutton_switch_TIM_interface.h"
+#include "pushbutton_TIM_interface.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
