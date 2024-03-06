@@ -51,13 +51,15 @@ extern "C"
     } SWITCH_TypDef;
 
     typedef const SWITCH_driver_interface_t *(*SWITCH_GPIO_interface_get_callback)(void);
+    
 
-    void init_switch(SWITCH_TypDef *SWITCH, SWITCH_GPIO_interface_get_callback SWITCH_get_driver_interface_adr_callback);
+    void init_switch(SWITCH_TypDef *SWITCH,
+                 SWITCH_callback_t switch_ON_callback,
+                 SWITCH_callback_t switch_OFF_callback,
+                 SWITCH_GPIO_interface_get_callback SWITCH_get_driver_interface_adr_callback);
 
     void check_switch(SWITCH_TypDef *SWITCH);
 
-    void register_switch_ON_callback(SWITCH_TypDef *SWITCH, SWITCH_callback_t switch_ON_callback);
-    void register_switch_OFF_callback(SWITCH_TypDef *SWITCH, SWITCH_callback_t switch_OFF_callback);
 
 
 #ifdef __cplusplus

@@ -25,21 +25,21 @@ TEST_TEAR_DOWN(Switch)
 TEST(Switch, WhenSwitchInitThenSwitchInputPinSetAsInput)
 {
    
-    init_switch(&SW_1,switch_1_GPIO_interface_get);
+    init_switch(&SW_1,NULL,NULL,switch_1_GPIO_interface_get);
     
     TEST_ASSERT_EQUAL(PIN_TYPE_INPUT,mock_switch_Pin_type);
 }
 TEST(Switch, GivenSwitchIsOffWhenSwitchInitThenInputSwitchStateEqualToSwitchOFF)
 {
     mock_SWITCH_1_STATE=SWITCH_INPUT_OFF;
-    init_switch(&SW_1,switch_1_GPIO_interface_get);
+    init_switch(&SW_1,NULL,NULL,switch_1_GPIO_interface_get);
     
     TEST_ASSERT_EQUAL(SWITCH_INPUT_OFF,SW_1.input_state);
 }
 TEST(Switch, GivenSwitchIsOnWhenSwitchInitThenInputSwitchStateEqualToSwitchON)
 {
     mock_SWITCH_1_STATE=SWITCH_INPUT_ON;
-    init_switch(&SW_1,switch_1_GPIO_interface_get);
+    init_switch(&SW_1,NULL,NULL,switch_1_GPIO_interface_get);
 
     TEST_ASSERT_EQUAL(SWITCH_INPUT_ON,SW_1.input_state);
 }
@@ -47,9 +47,8 @@ TEST(Switch, GivenSwitchIsOffAndTestTimerEqual10AndSW1InitAndIncTimerFunctionReg
 {
     //Given
     mock_SWITCH_1_STATE=SWITCH_INPUT_OFF;
-    init_switch(&SW_1,switch_1_GPIO_interface_get);
+    init_switch(&SW_1,inc_test_timer,dec_test_timer,switch_1_GPIO_interface_get);
     check_switch(&SW_1);
-    register_switch_ON_callback(&SW_1,inc_test_timer);
     mock_SWITCH_1_STATE=SWITCH_INPUT_ON;
     check_switch(&SW_1);
     check_switch_X_times(&SW_1,SWITCH_DEBOUNCE_REPETITIONS);
@@ -59,10 +58,8 @@ TEST(Switch, GivenSwitchIsOffAndTestTimerEqual10AndSW1InitAndIncTimerFunctionReg
 {
     //Given
     mock_SWITCH_1_STATE=SWITCH_INPUT_OFF;
-    init_switch(&SW_1,switch_1_GPIO_interface_get);
+    init_switch(&SW_1,inc_test_timer,dec_test_timer,switch_1_GPIO_interface_get);
     check_switch(&SW_1);
-    check_switch(&SW_1);
-    register_switch_ON_callback(&SW_1,inc_test_timer);
     mock_SWITCH_1_STATE=SWITCH_INPUT_ON;
     check_switch(&SW_1);
     check_switch_X_times(&SW_1,SWITCH_DEBOUNCE_REPETITIONS-1);
@@ -73,9 +70,8 @@ TEST(Switch, GivenSwitchIsOffAndTestTimerEqual10AndSW1InitAndIncTimerFunctionReg
 {
     //Given
     mock_SWITCH_1_STATE=SWITCH_INPUT_OFF;
-    init_switch(&SW_1,switch_1_GPIO_interface_get);
+    init_switch(&SW_1,inc_test_timer,dec_test_timer,switch_1_GPIO_interface_get);
     check_switch(&SW_1);
-    register_switch_ON_callback(&SW_1,inc_test_timer);
     mock_SWITCH_1_STATE=SWITCH_INPUT_ON;
     check_switch(&SW_1);
     check_switch_X_times(&SW_1,SWITCH_DEBOUNCE_REPETITIONS+1);
@@ -85,9 +81,8 @@ TEST(Switch, GivenSwitchIsOffAndTestTimerEqual10AndSW1InitAndIncTimerFunctionReg
 TEST(Switch, GivenSwitchIsONAndTestTimerEqual10AndSW1InitAndDecTimerFunctionRegisteredToSwOffAndSW1SwitchedOffAndBouncingWhenSW1StableForDebounceTimeThenTestTimerEqual9)
 {
     mock_SWITCH_1_STATE=SWITCH_INPUT_ON;
-    init_switch(&SW_1,switch_1_GPIO_interface_get);
+    init_switch(&SW_1,inc_test_timer,dec_test_timer,switch_1_GPIO_interface_get);
     check_switch(&SW_1);
-    register_switch_OFF_callback(&SW_1,dec_test_timer);
     mock_SWITCH_1_STATE=SWITCH_INPUT_OFF;
     check_switch(&SW_1);
     check_switch_X_times(&SW_1,SWITCH_DEBOUNCE_REPETITIONS);
@@ -96,9 +91,8 @@ TEST(Switch, GivenSwitchIsONAndTestTimerEqual10AndSW1InitAndDecTimerFunctionRegi
 TEST(Switch, GivenSwitchIsONAndTestTimerEqual10AndSW1InitAndDecTimerFunctionRegisteredToSwOffAndSW1SwitchedOffAndBouncingWhenSW1StableForDebounceTimeMinus1ThenTestTimerEqual9)
 {
     mock_SWITCH_1_STATE=SWITCH_INPUT_ON;
-    init_switch(&SW_1,switch_1_GPIO_interface_get);
+    init_switch(&SW_1,inc_test_timer,dec_test_timer,switch_1_GPIO_interface_get);
     check_switch(&SW_1);
-    register_switch_OFF_callback(&SW_1,dec_test_timer);
     mock_SWITCH_1_STATE=SWITCH_INPUT_OFF;
     check_switch(&SW_1);
     check_switch_X_times(&SW_1,SWITCH_DEBOUNCE_REPETITIONS-1);
@@ -108,9 +102,8 @@ TEST(Switch, GivenSwitchIsONAndTestTimerEqual10AndSW1InitAndDecTimerFunctionRegi
 TEST(Switch, GivenSwitchIsONAndTestTimerEqual10AndSW1InitAndDecTimerFunctionRegisteredToSwOffAndSW1SwitchedOffAndBouncingWhenSW1StableForDebounceTimePlus1ThenTestTimerEqual9)
 {
     mock_SWITCH_1_STATE=SWITCH_INPUT_ON;
-    init_switch(&SW_1,switch_1_GPIO_interface_get);
+    init_switch(&SW_1,inc_test_timer,dec_test_timer,switch_1_GPIO_interface_get);
     check_switch(&SW_1);
-    register_switch_OFF_callback(&SW_1,dec_test_timer);
     mock_SWITCH_1_STATE=SWITCH_INPUT_OFF;
     check_switch(&SW_1);
     check_switch_X_times(&SW_1,SWITCH_DEBOUNCE_REPETITIONS+1);

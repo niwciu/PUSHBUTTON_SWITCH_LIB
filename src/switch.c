@@ -13,15 +13,87 @@
 // #include <stdio.h>
 #include <stdbool.h>
 
+static void handle_DEFAULT_state(SWITCH_TypDef *SWITCH);
+static void handle_SW_SWITCHED_OFF_state(SWITCH_TypDef *SWITCH);
+static void handle_SW_ON_state(SWITCH_TypDef *SWITCH);
+static void handle_SW_SWITCHED_ON_state(SWITCH_TypDef *SWITCH);
+static void handle_SW_OFF_state(SWITCH_TypDef *SWITCH);
 
+static void handle_DEFAULT_state(SWITCH_TypDef *SWITCH)
+{
+    if ((SWITCH->input_state) == SWITCH_INPUT_ON)
+        SWITCH->switch_state_machine = SW_ON;
+    else
+        SWITCH->switch_state_machine = SW_OFF;
+}
 
-    /**
-     * @brief
-     * @param SWITCH
-     * @param SWITCH_get_driver_interface_adr_callback
-     */
-    void
-    init_switch(SWITCH_TypDef *SWITCH, SWITCH_GPIO_interface_get_callback SWITCH_get_driver_interface_adr_callback)
+static void handle_SW_SWITCHED_OFF_state(SWITCH_TypDef *SWITCH)
+{
+    if ((SWITCH->input_state) == SWITCH_INPUT_OFF)
+    {
+        SWITCH->debounce_counter--;
+        if ((SWITCH->debounce_counter) == 0)
+        {
+            SWITCH->switch_state_machine = SW_OFF;
+            if ((SWITCH->switch_OFF_callback) != NULL)
+            {
+                SWITCH->switch_OFF_callback();
+            }
+        }
+    }
+    else
+    {
+        SWITCH->switch_state_machine = SW_OFF;
+    }
+}
+
+static void handle_SW_ON_state(SWITCH_TypDef *SWITCH)
+{
+    if ((SWITCH->input_state) == SWITCH_INPUT_OFF)
+    {
+        SWITCH->debounce_counter = SWITCH_DEBOUNCE_REPETITIONS;
+        SWITCH->switch_state_machine = SW_SWITCHED_OFF;
+    }
+}
+
+static void handle_SW_SWITCHED_ON_state(SWITCH_TypDef *SWITCH)
+{
+    if ((SWITCH->input_state) == SWITCH_INPUT_ON)
+    {
+        SWITCH->debounce_counter--;
+        if ((SWITCH->debounce_counter) == 0)
+        {
+            SWITCH->switch_state_machine = SW_ON;
+            if ((SWITCH->switch_ON_callback) != NULL)
+            {
+                SWITCH->switch_ON_callback();
+            }
+        }
+    }
+    else
+    {
+        SWITCH->switch_state_machine = SW_OFF;
+    }
+}
+
+static void handle_SW_OFF_state(SWITCH_TypDef *SWITCH)
+{
+    if ((SWITCH->input_state) == SWITCH_INPUT_ON)
+    {
+        SWITCH->debounce_counter = SWITCH_DEBOUNCE_REPETITIONS;
+        SWITCH->switch_state_machine = SW_SWITCHED_ON;
+    }
+}
+
+/**
+ * @brief
+ * @param SWITCH
+ * @param SWITCH_get_driver_interface_adr_callback
+ */
+void init_switch(SWITCH_TypDef *SWITCH,
+                 SWITCH_callback_t switch_ON_callback,
+                 SWITCH_callback_t switch_OFF_callback,
+                 SWITCH_GPIO_interface_get_callback SWITCH_get_driver_interface_adr_callback)
 {
     SWITCH->GPIO_interface = SWITCH_get_driver_interface_adr_callback();
     SWITCH->GPIO_interface->GPIO_init();
@@ -29,11 +101,10 @@
     // init other parameters of the structure to default init value
     SWITCH->input_state = SWITCH->GPIO_interface->get_switch_input_state();
     SWITCH->debounce_counter = 0;
-    SWITCH->switch_OFF_callback = NULL;
-    SWITCH->switch_ON_callback = NULL;
+    SWITCH->switch_OFF_callback = switch_OFF_callback;
+    SWITCH->switch_ON_callback = switch_ON_callback;
     SWITCH->switch_state_machine = SW_INIT;
 
-    //ToDo testy na inicjalizacj switcha gdy fizycznie jest w jakims stanie
 }
 
 void check_switch(SWITCH_TypDef *SWITCH)
@@ -43,82 +114,19 @@ void check_switch(SWITCH_TypDef *SWITCH)
     switch (SWITCH->switch_state_machine)
     {
     case SW_OFF:
-        if((SWITCH->input_state)==SWITCH_INPUT_ON)
-        {
-            SWITCH->debounce_counter=SWITCH_DEBOUNCE_REPETITIONS;
-            SWITCH->switch_state_machine=SW_SWITCHED_ON;
-        }
+        handle_SW_OFF_state(SWITCH);
         break;
     case SW_SWITCHED_ON:
-        if((SWITCH->input_state)==SWITCH_INPUT_ON)
-        {
-            SWITCH->debounce_counter--;
-            if((SWITCH->debounce_counter)==0)
-            {
-                SWITCH->switch_state_machine=SW_ON;
-                if((SWITCH->switch_ON_callback)!=NULL)
-                {
-                    SWITCH->switch_ON_callback();
-                }
-            }
-        }
-        else
-        {
-            SWITCH->switch_state_machine=SW_OFF;
-        }
-        
+        handle_SW_SWITCHED_ON_state(SWITCH);
         break;
     case SW_ON:
-        if((SWITCH->input_state)==SWITCH_INPUT_OFF)
-        {
-            SWITCH->debounce_counter=SWITCH_DEBOUNCE_REPETITIONS;
-            SWITCH->switch_state_machine=SW_SWITCHED_OFF;
-        }
+        handle_SW_ON_state(SWITCH);
         break;
     case SW_SWITCHED_OFF:
-        if((SWITCH->input_state)==SWITCH_INPUT_OFF)
-        {
-            SWITCH->debounce_counter--;
-            if((SWITCH->debounce_counter)==0)
-            {
-                SWITCH->switch_state_machine=SW_OFF;
-                if((SWITCH->switch_OFF_callback)!=NULL)
-                {
-                    SWITCH->switch_OFF_callback();
-                }
-            }
-        }
-        else
-        {
-            SWITCH->switch_state_machine=SW_OFF;
-        }
+        handle_SW_SWITCHED_OFF_state(SWITCH);
         break;
     default:
-        if((SWITCH->input_state)==SWITCH_INPUT_ON) SWITCH->switch_state_machine=SW_ON;
-        else SWITCH->switch_state_machine=SW_OFF;
+        handle_DEFAULT_state(SWITCH);
         break;
     }
 }
-
-/**
- * @brief
- * @param SWITCH
- * @param switch_ON_callback
- */
-void register_switch_ON_callback(SWITCH_TypDef *SWITCH, SWITCH_callback_t switch_ON_callback)
-{
-    SWITCH->switch_ON_callback = switch_ON_callback;
-}
-
-/**
- * @brief 
- * 
- * @param SWITCH 
- * @param switch_OFF_callback 
- */
-void register_switch_OFF_callback(SWITCH_TypDef *SWITCH, SWITCH_callback_t switch_OFF_callback)
-{
-    SWITCH->switch_OFF_callback = switch_OFF_callback;
-}
-
-
