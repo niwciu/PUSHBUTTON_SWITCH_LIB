@@ -38,7 +38,7 @@ elseif ("${CMAKE_C_COMPILER_ID}" STREQUAL "Clang")
 endif()
 
 set(INCLUDE_DIRS
-	../../src
+	../../src/PUSHBUTTON
 )
 
 set(TEST_INCLUDE_DIRS
@@ -47,7 +47,7 @@ set(TEST_INCLUDE_DIRS
 )
 
 set(SRCS
-	../../src/pushbutton_switch.c
+	../../src/PUSHBUTTON/pushbutton.c
 )
 
 set(TEST_SRCS

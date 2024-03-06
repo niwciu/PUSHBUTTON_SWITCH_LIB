@@ -1,7 +1,7 @@
 
 #include "main.h"
 #include "keyboard.h"
-#include "pushbutton_switch.h"
+#include "pushbutton.h"
 
 PUSHBUTTON_TypDef KEY_1;
 

@@ -33,7 +33,7 @@ set(INCLUDE_DIRS
 # Core/Src
 # Core/Startup
 
-../../src
+../../src/PUSHBUTTON
 
 ./Core/Inc 
 ./Drivers/STM32G0xx_HAL_Driver/Inc 
@@ -57,7 +57,7 @@ set(C_SRCS
     Core/Src/system_stm32g0xx.c
     Core/Src/pushbutton_switch_GPIO_interface.c
 
-    ../../src/pushbutton_switch.c
+    ../../src/PUSHBUTTON/pushbutton.c
 	
 )
 

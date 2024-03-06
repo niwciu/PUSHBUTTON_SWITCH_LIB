@@ -1,4 +1,4 @@
-#include "pushbutton_switch_interface.h"
+#include "pushbutton_GPIO_interface.h"
 #include "main.h"
 
 static void key_1_gpio_init(void);
