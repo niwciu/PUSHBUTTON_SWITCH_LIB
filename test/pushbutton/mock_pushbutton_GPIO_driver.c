@@ -26,11 +26,11 @@ PB_driver_interface_t PUSHBUTTON_2_GPIO_interface_struct = {
     get_pushbutton_2_state,
 };
 
-PB_driver_interface_t *pushbutton_1_GPIO_interface_get(void)
+const PB_driver_interface_t *pushbutton_1_GPIO_interface_get(void)
 {
     return &PUSHBUTTON_1_GPIO_interface_struct;
 }
-PB_driver_interface_t *pushbutton_2_GPIO_interface_get(void)
+const PB_driver_interface_t *pushbutton_2_GPIO_interface_get(void)
 {
     return &PUSHBUTTON_2_GPIO_interface_struct;
 }

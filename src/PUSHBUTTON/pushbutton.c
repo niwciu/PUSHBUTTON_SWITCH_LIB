@@ -11,7 +11,7 @@
  */
 #include "pushbutton.h"
 #include <stddef.h>
-// #include <stdio.h>  // to tylko do printfa 
+// #include <stdio.h>  // to tylko do printfa
 #include <stdbool.h>
 
 static void update_pushbutton_input_state(PUSHBUTTON_TypDef *BUTTON);
@@ -231,14 +231,14 @@ static void execute_release_callback(PUSHBUTTON_TypDef *BUTTON)
  */
 void init_pushbutton(PUSHBUTTON_TypDef *BUTTON,
                      const PB_repetition_t PB_repetition_mode,
-                     PB_triger_mode_t PB_triger_mode,
-                     PB_GPIO_interface_get_callback PB_get_driver_interface_adr_callback)
+                     const PB_trigger_mode_t PB_triger_mode,
+                     const PB_GPIO_interface_get_callback PB_get_driver_interface_adr_callback)
 {
     BUTTON->GPIO_interface = PB_get_driver_interface_adr_callback();
 
     BUTTON->GPIO_interface->GPIO_init();
     BUTTON->repetition = PB_repetition_mode;
-    BUTTON->triger_mode = PB_triger_mode;
+    BUTTON->trigger_mode = PB_triger_mode;
 
     // init other parameters of the structure to default init value
     BUTTON->deb_rep_timer = 0;
@@ -249,15 +249,30 @@ void init_pushbutton(PUSHBUTTON_TypDef *BUTTON,
     BUTTON->release_callback = NULL;
 }
 
+/**
+ * @brief Checks the state of a pushbutton and performs debouncing based on the trigger mode.
+ *
+ * This function updates the input state of the specified pushbutton, then determines the trigger mode
+ * and invokes the corresponding debouncing function. The debouncing process ensures reliable detection
+ * of pushbutton events, such as push, release, short push, or long push, based on the configured trigger mode.
+ *
+ * @param BUTTON The pushbutton structure to check and debounce.
+ *
+ * @note Before calling this function, ensure that the pushbutton has been properly initialized using the
+ * @ref init_pushbutton function.
+ *
+ * @see init_pushbutton, update_pushbutton_input_state, debounce_pushbutton_push_state,
+ * debounce_pushbutton_release_state, debounce_pushbutton_short_push_long_push_state
+ */
 void check_pushbutton(PUSHBUTTON_TypDef *BUTTON)
 {
     update_pushbutton_input_state(BUTTON);
-    switch (BUTTON->triger_mode)
+    switch (BUTTON->trigger_mode)
     {
-    case TRIGER_ON_PUSH:
+    case TRIGGER_ON_PUSH:
         debounce_pushbutton_push_state(BUTTON);
         break;
-    case TRIGER_ON_RELEASE:
+    case TRIGGER_ON_RELEASE:
         debounce_pushbutton_release_state(BUTTON);
         break;
     default:

@@ -18,8 +18,8 @@ TEST_GROUP(pushbutton_push);
 TEST_SETUP(pushbutton_push)
 {
     /* Init before every test */
-    init_pushbutton(&PUSHBUTTON_1,REPETITION_OFF,TRIGER_ON_PUSH, pushbutton_1_GPIO_interface_get);
-    init_pushbutton(&PUSHBUTTON_2,REPETITION_OFF,TRIGER_ON_PUSH, pushbutton_2_GPIO_interface_get);
+    init_pushbutton(&PUSHBUTTON_1,REPETITION_OFF,TRIGGER_ON_PUSH, pushbutton_1_GPIO_interface_get);
+    init_pushbutton(&PUSHBUTTON_2,REPETITION_OFF,TRIGGER_ON_PUSH, pushbutton_2_GPIO_interface_get);
     TEST_TIMER = 0;
 }
 
