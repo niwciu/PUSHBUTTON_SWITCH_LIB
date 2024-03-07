@@ -1,11 +1,10 @@
 name: Run clang-format Check
 on:
   workflow_dispatch:  
-  # push:
-  #   branches: [main, develop]
-  # pull_request:
-  #   branches: [main, develop]
-# on: workflow_dispatch
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
 jobs:
   formatting-check:
     name: Formatting Check
