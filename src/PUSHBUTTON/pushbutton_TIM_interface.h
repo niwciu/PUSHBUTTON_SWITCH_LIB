@@ -3,7 +3,6 @@
  * @author niwciu (niwciu@gmail.com)
  * @brief Defines the interface for integrating pushbutton layer with a timer (TIM) module. It's part of this library but in project this file should come 
  * from Timer implementation layer side where "observer" design patter is implemented.
- * @version 0.0.1
  * @date 2024-03-02
  * @copyright Copyright (c) 2024
  */

@@ -2,7 +2,6 @@
  * @file switch.h
  * @author niwciu (niwciu@gmail.com)
  * @brief Header file for a switch control module.
- * @version 0.0.1
  * @date 2024-03-04
  *
  * This file contains the declarations for a switch control module,

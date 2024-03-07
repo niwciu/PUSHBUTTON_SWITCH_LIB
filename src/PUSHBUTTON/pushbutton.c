@@ -3,7 +3,6 @@
  * @author niwciu (niwciu@gmail.com)
  * @brief This file contains the implementation of a pushbutton switch interface with debouncing and repetition
  * functionality.
- * @version 0.0.1
  * @date 2024-02-26
  *
  * @copyright Copyright (c) 2024

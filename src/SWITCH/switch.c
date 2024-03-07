@@ -2,7 +2,6 @@
  * @file switch.c
  * @brief Switch ( Two state input signal) control module implementation.
  * @author niwciu (niwciu@gmail.com)
- * @version 0.0.1
  * @date 2024-03-04
  *
  * @copyright Copyright (c) 2024

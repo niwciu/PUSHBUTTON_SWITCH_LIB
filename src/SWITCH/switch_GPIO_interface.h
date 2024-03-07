@@ -2,7 +2,6 @@
  * @file switch_GPIO_interface.h
  * @brief Defines the interface for two-state switch drivers, including enumeration for switch states and function pointers for initialization and state retrieval.
  * @author niwciu (niwciu@gmail.com)
- * @version 0.0.1
  * @date 2024-02-26
  * @copyright Copyright (c) 2024
  */
