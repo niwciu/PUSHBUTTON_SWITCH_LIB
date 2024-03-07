@@ -60,21 +60,102 @@ The `PUSHBUTTON_SWITCH_LIB` is a simple cross platform library providing interfa
 
 ## Examples
 ### STM32G071_NUCLEO_LL_1_KEY_UI 
-Example of usage the library to create Use Interface Keyboard module in the procject. 
-Example contain initialization of one pushbutton keybard with short-push and long-push with repetition functinality.
-Short-push trigger/call LED ON function.
-Long-push trigger/call LED TOOGLE function.
+Example of using the library to create a User Interface Keyboard module in the project. The example includes the initialization of one pushbutton keyboard with short-push and long-push with repetition functionality. 
+- Short-push triggers the LED ON function, 
+- Long-push triggers the LED TOGGLE function.
 #### Requirements for compiling and running the example:
+1. CMake installed
+2. Make or Ninja installed
+3. ARM GNU Toolchain (gcc-arm-none-eabi) installed
+4. STM32_Programmer_CLI installed
+5. ST-link (placed on Nucleo Board) installed
 #### Hardware requirements, configuration, and connections:
-#### PUSBUTTON_SWITCH library configuration - pushbutton.h
+1. STM32G071 Nucleo-64<br>
+  <img src="./examples/doc/STM32G071RB_Nucleo.png"   width="400"><br> <br> 
 #### How to build and run the example:
-
+  1. Open the location you want to clone the repository to in your terminal
+  2. Clone the repository to your preferred localization
+      ```bash
+      git clone https://github.com/niwciu/PUSHBUTTON_SWITCH_LIB.git
+      ``` 
+  3. Enter to  PUSHBUTTON_SWITCH_LIB/examples/STM32G071_NUCLEO_LL_1_KEY_UI/
+      ```bash
+      cd ./PUSHBUTTON_SWITCH_LIB/examples/STM32G071_NUCLEO_LL_1_KEY_UI
+      ``` 
+  4. For Make type:
+      ```bash
+      cmake -S ./ -B Debug -G"Unix Makefiles" -DCMAKE_BUILD_TYPE=Debug
+      ```
+      ```bash
+      cd Debug
+      ```
+      ```bash 
+      make all
+      ```
+      ```bash 
+      make flash
+      ``` 
+  5. For Ninja type:
+      ```bash 
+      cmake -S ./ -B Debug -G"Ninja" -DCMAKE_BUILD_TYPE=Debug
+      ```
+      ```bash
+      cd Debug
+      ```
+      ```bash
+      ninja
+      ```
+      ```bash 
+      ninja flash
+      ```
+   6. In some cases Nucleo board requires plugging out and in a USB port to run the program.
 ### STM32G071_NUCLEO_LL_2_STATE_SWITCH
-Example of usage the library to create input signals module in the procject. 
-Example contain initialization of one two state switch that call functions once when goint to ON and OFF state.
-ON state trigger/call LED ON function.
-OFF state trigger/call LED OFF function.
+Example of using the library to create an input signals module in the project. The example includes the initialization of one two-state switch that calls functions when transitioning to ON and OFF states. 
+- ON state triggers the LED ON function, 
+- OFF state triggers the LED OFF function.
 #### Requirements for compiling and running the example:
+1. CMake installed
+2. Make or Ninja installed
+3. ARM GNU Toolchain (gcc-arm-none-eabi) installed
+4. STM32_Programmer_CLI installed
+5. ST-link (placed on Nucleo Board) installed
 #### Hardware requirements, configuration, and connections:
-#### PUSBUTTON_SWITCH library configuration - pushbutton.h
-#### How to build and run the example:
+  1. STM32G071 Nucleo-64<br>
+     <img src="./examples/doc/STM32G071RB_Nucleo.png"   width="400"><br> <br> 
+#### How to build and run the example
+  1. Open the location you want to clone the repository to in your terminal
+  2. Clone the repository to your preferred localization
+      ```bash
+      git clone https://github.com/niwciu/PUSHBUTTON_SWITCH_LIB.git
+      ``` 
+  3. Enter to  PUSHBUTTON_SWITCH_LIB/examples/STM32G071_NUCLEO_LL_2_STATE_SWITCH/
+      ```bash
+      cd ./PUSHBUTTON_SWITCH_LIB/examples/STM32G071_NUCLEO_LL_2_STATE_SWITCH
+      ``` 
+  4. For Make type:
+      ```bash
+      cmake -S ./ -B Debug -G"Unix Makefiles" -DCMAKE_BUILD_TYPE=Debug
+      ```
+      ```bash
+      cd Debug
+      ```
+      ```bash 
+      make all
+      ```
+      ```bash 
+      make flash
+      ``` 
+  5. For Ninja type:
+      ```bash 
+      cmake -S ./ -B Debug -G"Ninja" -DCMAKE_BUILD_TYPE=Debug
+      ```
+      ```bash
+      cd Debug
+      ```
+      ```bash
+      ninja
+      ```
+      ```bash 
+      ninja flash
+      ```
+   6. In some cases Nucleo board requires plugging out and in a USB port to run the program.
