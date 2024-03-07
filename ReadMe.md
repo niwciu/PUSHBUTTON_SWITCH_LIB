@@ -1,6 +1,6 @@
 # PUSHBUTTON_SWITCH_LIB - simple cross platform library
 
-The `PUSHBUTTON_SWITCH_LIB` is a simple cross platform library providing interfaces for pushbutton switches and two-state switches. It includes features such as debouncing, repetition functionality for pushbuttons, and state management for switches.
+The `PUSHBUTTON_SWITCH_LIB` is a simple cross platform library providing interfaces for pushbutton switches and two-state switches (two-state input signals). It includes features such as debouncing, repetition functionality for pushbuttons, and state management for switches.
 
 ## Usage
 
