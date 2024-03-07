@@ -1,6 +1,6 @@
-# PUSHBUTTON_SWITCH_LIB
+# PUSHBUTTON_SWITCH_LIB - simple cross platform library
 
-The `PUSHBUTTON_SWITCH_LIB` is a simple library providing interfaces for pushbutton switches and two-state switches. It includes features such as debouncing, repetition functionality for pushbuttons, and state management for switches.
+The `PUSHBUTTON_SWITCH_LIB` is a simple cross platform library providing interfaces for pushbutton switches and two-state switches. It includes features such as debouncing, repetition functionality for pushbuttons, and state management for switches.
 
 ## Usage
 
@@ -57,3 +57,24 @@ The `PUSHBUTTON_SWITCH_LIB` is a simple library providing interfaces for pushbut
 
 - Make sure to include the necessary dependencies for GPIO and timer interfaces as per your hardware platform.
 - Adjust debounce and repetition settings based on your application requirements.
+
+## Examples
+### STM32G071_NUCLEO_LL_1_KEY_UI 
+Example of usage the library to create Use Interface Keyboard module in the procject. 
+Example contain initialization of one pushbutton keybard with short-push and long-push with repetition functinality.
+Short-push trigger/call LED ON function.
+Long-push trigger/call LED TOOGLE function.
+#### Requirements for compiling and running the example:
+#### Hardware requirements, configuration, and connections:
+#### PUSBUTTON_SWITCH library configuration - pushbutton.h
+#### How to build and run the example:
+
+### STM32G071_NUCLEO_LL_2_STATE_SWITCH
+Example of usage the library to create input signals module in the procject. 
+Example contain initialization of one two state switch that call functions once when goint to ON and OFF state.
+ON state trigger/call LED ON function.
+OFF state trigger/call LED OFF function.
+#### Requirements for compiling and running the example:
+#### Hardware requirements, configuration, and connections:
+#### PUSBUTTON_SWITCH library configuration - pushbutton.h
+#### How to build and run the example:
