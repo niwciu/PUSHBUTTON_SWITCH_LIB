@@ -3,9 +3,9 @@
 #include "mock_pushbutton_GPIO_driver.h"
 #include "pushbutton_common_test.h"
 
-#define DEBOUNCE_TIME_TO_STABLE_STATE (PUSHBUTTON_DEBOUNCE_TIME-1)
-#define TIME_TO_EXECUTE_FIRST_REPETITION (PUSHBUTTON_FIRST_REPETITION_TIME -1)
-#define TIME_TO_EXECUTE_N_REPETITION (PUSHBUTTON_CONTINUOUS_REPETITION_TIME -1)
+#define DEBOUNCE_TIME_TO_STABLE_STATE (PUSHBUTTON_DEBOUNCE_TIME - 1)
+#define TIME_TO_EXECUTE_FIRST_REPETITION (PUSHBUTTON_FIRST_REPETITION_TIME - 1)
+#define TIME_TO_EXECUTE_N_REPETITION (PUSHBUTTON_CONTINUOUS_REPETITION_TIME - 1)
 
 /** @brief Instance of PUSHBUTTON_TypDef representing PUSHBUTTON_1. */
 static PUSHBUTTON_TypDef PUSHBUTTON_1;
@@ -18,8 +18,8 @@ TEST_GROUP(pushbutton_push);
 TEST_SETUP(pushbutton_push)
 {
     /* Init before every test */
-    init_pushbutton(&PUSHBUTTON_1,REPETITION_OFF,TRIGGER_ON_PUSH, pushbutton_1_GPIO_interface_get);
-    init_pushbutton(&PUSHBUTTON_2,REPETITION_OFF,TRIGGER_ON_PUSH, pushbutton_2_GPIO_interface_get);
+    init_pushbutton(&PUSHBUTTON_1, REPETITION_OFF, TRIGGER_ON_PUSH, pushbutton_1_GPIO_interface_get);
+    init_pushbutton(&PUSHBUTTON_2, REPETITION_OFF, TRIGGER_ON_PUSH, pushbutton_2_GPIO_interface_get);
     TEST_TIMER = 0;
 }
 
@@ -266,6 +266,3 @@ TEST(pushbutton_push, GivenKey1InitAndIncTimerFunctionRegisteredWhenKey1PushForT
 
 //     TEST_FAIL_MESSAGE("added new test")
 // }
-
-
-

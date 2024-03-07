@@ -106,7 +106,6 @@ void init_switch(SWITCH_TypDef *SWITCH,
     SWITCH->switch_OFF_callback = switch_OFF_callback;
     SWITCH->switch_ON_callback = switch_ON_callback;
     SWITCH->switch_state_machine = SW_INIT;
-
 }
 
 /**

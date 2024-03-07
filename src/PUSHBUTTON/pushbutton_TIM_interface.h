@@ -1,7 +1,7 @@
 /**
  * @file pushbutton_TIM_interface.h
  * @author niwciu (niwciu@gmail.com)
- * @brief Defines the interface for integrating pushbutton layer with a timer (TIM) module. It's part of this library but in project this file should come 
+ * @brief Defines the interface for integrating pushbutton layer with a timer (TIM) module. It's part of this library but in project this file should come
  * from Timer implementation layer side where "observer" design patter is implemented.
  * @date 2024-03-02
  * @copyright Copyright (c) 2024
@@ -14,21 +14,21 @@ extern "C"
 {
 #endif /* __cplusplus */
 
-/**
- * @brief Callback function type for SysTick events.
- *
- * This function type is used for callback functions that are triggered by SysTick events.
- */
-typedef void (*SysTick_callback_t)(void);
+    /**
+     * @brief Callback function type for SysTick events.
+     *
+     * This function type is used for callback functions that are triggered by SysTick events.
+     */
+    typedef void (*SysTick_callback_t)(void);
 
-/**
- * @brief Subscribes a callback function to SysTick events.
- *
- * This function allows subscribing a callback function to SysTick events for timer-related operations.
- *
- * @param SysTick_callback The callback function to be subscribed.
- */
-void subscribe_SysTick_callback(SysTick_callback_t SysTick_callback);
+    /**
+     * @brief Subscribes a callback function to SysTick events.
+     *
+     * This function allows subscribing a callback function to SysTick events for timer-related operations.
+     *
+     * @param SysTick_callback The callback function to be subscribed.
+     */
+    void subscribe_SysTick_callback(SysTick_callback_t SysTick_callback);
 
 #ifdef __cplusplus
 }

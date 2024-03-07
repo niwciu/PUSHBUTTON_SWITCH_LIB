@@ -108,8 +108,6 @@ extern "C"
         PB_state_t pushbutton_state_machine;         /**< Current state of the pushbutton state machine. */
     } PUSHBUTTON_TypDef;
 
-    
-
     void init_pushbutton(PUSHBUTTON_TypDef *BUTTON,
                          const PB_repetition_t PB_repetition_mode,
                          const PB_trigger_mode_t PB_triger_mode,
