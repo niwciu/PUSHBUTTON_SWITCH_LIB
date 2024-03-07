@@ -2,7 +2,7 @@
 
 The `PUSHBUTTON_SWITCH_LIB` is a simple cross platform library providing interfaces for pushbutton switches and two-state switches (two-state input signals). It includes features such as debouncing, repetition functionality for pushbuttons, and state management for switches.
 
-## Usage
+## Usage - simplest cases
 
 ### Pushbutton Module
 
@@ -37,7 +37,6 @@ The `PUSHBUTTON_SWITCH_LIB` is a simple cross platform library providing interfa
    - `switch.h`
    - `switch.c`
    - `switch_GPIO_interface.h`
-
 2. Initialize the switch using `init_switch` function. Example:
 
     ```c
