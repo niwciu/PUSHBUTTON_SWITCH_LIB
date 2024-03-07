@@ -1,5 +1,5 @@
 /**
- * @file pushbutton_switch.c
+ * @file pushbutton.c
  * @author niwciu (niwciu@gmail.com)
  * @brief This file contains the implementation of a pushbutton switch interface with debouncing and repetition
  * functionality.
@@ -12,7 +12,6 @@
 #include "pushbutton.h"
 #include <stddef.h>
 // #include <stdio.h>  // to tylko do printfa
-#include <stdbool.h>
 
 static void update_pushbutton_input_state(PUSHBUTTON_TypDef *BUTTON);
 static void update_button_deb_rep_counter(PUSHBUTTON_TypDef *BUTTON);

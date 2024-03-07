@@ -25,7 +25,13 @@ static void key_1_gpio_init(void)
 static PB_input_state_t get_key_1_state(void)
 {
     PB_input_state_t test=UNKNOWN;
-    if (LL_GPIO_IsInputPinSet(user_button_GPIO_Port,user_button_Pin)) test= RELEASED;
-    else test=PUSHED;
+    if (LL_GPIO_IsInputPinSet(user_button_GPIO_Port,user_button_Pin)) 
+    {
+        test= RELEASED;
+    }
+    else 
+    {
+        test=PUSHED;
+    }
     return test;
 }

@@ -1,5 +1,5 @@
 /**
- * @file pushbutton_switch_interface.h
+ * @file pushbutton_GPIO_interface.h
  * @brief Defines the interface for pushbutton drivers, including an enumeration for button states and function pointers for initialization and state retrieval.
  * @author niwciu (niwciu@gmail.com)
  * @version 0.0.1

@@ -25,7 +25,13 @@ static void input_1_gpio_init(void)
 static SWITCH_input_state_t get_input_1_state(void)
 {
     SWITCH_input_state_t test=SWITCH_INPUT_UNKNOWN;
-    if (LL_GPIO_IsInputPinSet(user_button_GPIO_Port,user_button_Pin)) test= SWITCH_INPUT_OFF;
-    else test=SWITCH_INPUT_ON;
+    if (LL_GPIO_IsInputPinSet(user_button_GPIO_Port,user_button_Pin))
+    {
+        test= SWITCH_INPUT_OFF;
+    } 
+    else 
+    {
+        test=SWITCH_INPUT_ON;
+    }
     return test;
 }

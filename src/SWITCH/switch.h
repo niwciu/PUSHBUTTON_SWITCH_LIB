@@ -54,7 +54,7 @@ extern "C"
      */
     typedef struct
     {
-        SWITCH_driver_interface_t *GPIO_interface;  /**< GPIO interface for the pushbutton. */
+        SWITCH_driver_interface_t *GPIO_interface;  /**< GPIO interface for the switch. */
         SWITCH_input_state_t input_state;           /**< Current input state of the switch. */
         SWITCH_counter_t debounce_counter;          /**< Counter for switch debounce logic. */
         SWITCH_callback_t switch_ON_callback;       /**< Callback function for switch ON event. */

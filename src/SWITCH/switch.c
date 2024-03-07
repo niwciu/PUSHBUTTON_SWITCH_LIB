@@ -1,16 +1,15 @@
 /**
  * @file switch.c
+ * @brief Switch ( Two state input signal) control module implementation.
  * @author niwciu (niwciu@gmail.com)
- * @brief
  * @version 0.0.1
  * @date 2024-03-04
  *
  * @copyright Copyright (c) 2024
- *
  */
 #include "switch.h"
 #include <stddef.h>
-#include <stdbool.h>
+// #include <stdbool.h>
 
 static void handle_DEFAULT_state(SWITCH_TypDef *SWITCH);
 static void handle_SW_SWITCHED_OFF_state(SWITCH_TypDef *SWITCH);
@@ -121,7 +120,6 @@ void init_switch(SWITCH_TypDef *SWITCH,
 void check_switch(SWITCH_TypDef *SWITCH)
 {
     SWITCH->input_state = SWITCH->GPIO_interface->get_switch_input_state();
-
     switch (SWITCH->switch_state_machine)
     {
     case SW_OFF:

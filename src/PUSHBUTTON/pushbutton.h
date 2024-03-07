@@ -1,5 +1,5 @@
 /**
- * @file pushbutton_switch.h
+ * @file pushbutton.h
  * @brief Library providing an interface for pushbutton switches with debouncing and repetition functionality.
  * @version 0.0.1
  * @date 2024-02-26
