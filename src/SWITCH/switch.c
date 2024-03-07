@@ -41,7 +41,7 @@ static void handle_SW_SWITCHED_OFF_state(SWITCH_TypDef *SWITCH)
     }
     else
     {
-        SWITCH->switch_state_machine = SW_OFF;
+        SWITCH->switch_state_machine = SW_ON;
     }
 }
 
