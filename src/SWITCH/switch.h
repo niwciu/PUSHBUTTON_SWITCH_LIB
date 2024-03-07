@@ -23,7 +23,7 @@ extern "C"
 /**
  * @brief Number of debounce repetitions for the switch.
  */
-#define SWITCH_DEBOUNCE_REPETITIONS 100U
+#define SWITCH_DEBOUNCE_REPETITIONS 1000U
 
 #include "switch_GPIO_interface.h"
 
