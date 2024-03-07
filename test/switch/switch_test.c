@@ -9,6 +9,9 @@ SWITCH_TypDef SW_1;
 
 
 static void check_switch_X_times(SWITCH_TypDef *SWITCH, debounce_repetition_t repetition);
+static void switch_1_pin_bouncing_on_ON(SWITCH_TypDef *SWITCH);
+static void switch_1_pin_bouncing_on_OFF(SWITCH_TypDef *SWITCH);
+
 
 TEST_GROUP(Switch);
 
@@ -51,6 +54,8 @@ TEST(Switch, GivenSwitchIsOffAndTestTimerEqual10AndSW1InitAndIncTimerFunctionReg
     check_switch(&SW_1);
     mock_SWITCH_1_STATE=SWITCH_INPUT_ON;
     check_switch(&SW_1);
+    switch_1_pin_bouncing_on_ON(&SW_1);
+    check_switch(&SW_1);
     check_switch_X_times(&SW_1,SWITCH_DEBOUNCE_REPETITIONS);
     TEST_ASSERT_EQUAL(11,TEST_TIMER);
 }
@@ -61,6 +66,8 @@ TEST(Switch, GivenSwitchIsOffAndTestTimerEqual10AndSW1InitAndIncTimerFunctionReg
     init_switch(&SW_1,inc_test_timer,dec_test_timer,switch_1_GPIO_interface_get);
     check_switch(&SW_1);
     mock_SWITCH_1_STATE=SWITCH_INPUT_ON;
+    check_switch(&SW_1);
+    switch_1_pin_bouncing_on_ON(&SW_1);
     check_switch(&SW_1);
     check_switch_X_times(&SW_1,SWITCH_DEBOUNCE_REPETITIONS-1);
     TEST_ASSERT_EQUAL(10,TEST_TIMER);
@@ -74,6 +81,8 @@ TEST(Switch, GivenSwitchIsOffAndTestTimerEqual10AndSW1InitAndIncTimerFunctionReg
     check_switch(&SW_1);
     mock_SWITCH_1_STATE=SWITCH_INPUT_ON;
     check_switch(&SW_1);
+    switch_1_pin_bouncing_on_ON(&SW_1);
+    check_switch(&SW_1);
     check_switch_X_times(&SW_1,SWITCH_DEBOUNCE_REPETITIONS+1);
     TEST_ASSERT_EQUAL(11,TEST_TIMER);
 }
@@ -85,6 +94,8 @@ TEST(Switch, GivenSwitchIsONAndTestTimerEqual10AndSW1InitAndDecTimerFunctionRegi
     check_switch(&SW_1);
     mock_SWITCH_1_STATE=SWITCH_INPUT_OFF;
     check_switch(&SW_1);
+    switch_1_pin_bouncing_on_OFF(&SW_1);
+    check_switch(&SW_1);
     check_switch_X_times(&SW_1,SWITCH_DEBOUNCE_REPETITIONS);
     TEST_ASSERT_EQUAL(9,TEST_TIMER);
 }
@@ -94,6 +105,8 @@ TEST(Switch, GivenSwitchIsONAndTestTimerEqual10AndSW1InitAndDecTimerFunctionRegi
     init_switch(&SW_1,inc_test_timer,dec_test_timer,switch_1_GPIO_interface_get);
     check_switch(&SW_1);
     mock_SWITCH_1_STATE=SWITCH_INPUT_OFF;
+    check_switch(&SW_1);
+    switch_1_pin_bouncing_on_OFF(&SW_1);
     check_switch(&SW_1);
     check_switch_X_times(&SW_1,SWITCH_DEBOUNCE_REPETITIONS-1);
     TEST_ASSERT_EQUAL(10,TEST_TIMER);
@@ -105,6 +118,8 @@ TEST(Switch, GivenSwitchIsONAndTestTimerEqual10AndSW1InitAndDecTimerFunctionRegi
     init_switch(&SW_1,inc_test_timer,dec_test_timer,switch_1_GPIO_interface_get);
     check_switch(&SW_1);
     mock_SWITCH_1_STATE=SWITCH_INPUT_OFF;
+    check_switch(&SW_1);
+    switch_1_pin_bouncing_on_OFF(&SW_1);
     check_switch(&SW_1);
     check_switch_X_times(&SW_1,SWITCH_DEBOUNCE_REPETITIONS+1);
     TEST_ASSERT_EQUAL(9,TEST_TIMER);
@@ -150,4 +165,41 @@ static void check_switch_X_times(SWITCH_TypDef *SWITCH, debounce_repetition_t re
         repetition--;
         check_switch(SWITCH);
     }
+}
+
+void switch_1_pin_bouncing_on_ON(SWITCH_TypDef *SWITCH)
+{
+    check_switch_X_times(SWITCH,20);
+    mock_SWITCH_1_STATE=SWITCH_INPUT_OFF;
+    check_switch_X_times(SWITCH,30);
+    mock_SWITCH_1_STATE=SWITCH_INPUT_ON;
+
+    check_switch_X_times(SWITCH,20);
+    mock_SWITCH_1_STATE=SWITCH_INPUT_OFF;
+    check_switch_X_times(SWITCH,30);
+    mock_SWITCH_1_STATE=SWITCH_INPUT_ON;
+
+    check_switch_X_times(SWITCH,20);
+    mock_SWITCH_1_STATE=SWITCH_INPUT_OFF;
+    check_switch_X_times(SWITCH,30);
+    mock_SWITCH_1_STATE=SWITCH_INPUT_ON;
+}
+
+
+void switch_1_pin_bouncing_on_OFF(SWITCH_TypDef *SWITCH)
+{
+    check_switch_X_times(SWITCH,20);
+    mock_SWITCH_1_STATE=SWITCH_INPUT_ON;
+    check_switch_X_times(SWITCH,30);
+    mock_SWITCH_1_STATE=SWITCH_INPUT_OFF;
+
+    check_switch_X_times(SWITCH,20);
+    mock_SWITCH_1_STATE=SWITCH_INPUT_ON;
+    check_switch_X_times(SWITCH,30);
+    mock_SWITCH_1_STATE=SWITCH_INPUT_OFF;
+
+    check_switch_X_times(SWITCH,20);
+    mock_SWITCH_1_STATE=SWITCH_INPUT_ON;
+    check_switch_X_times(SWITCH,30);
+    mock_SWITCH_1_STATE=SWITCH_INPUT_OFF;
 }
