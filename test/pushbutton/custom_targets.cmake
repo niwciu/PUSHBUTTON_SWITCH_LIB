@@ -8,31 +8,32 @@
 
 
 #TARGETS FOR RUNNING UNIT TESTS
-add_custom_target(run lcd_hd44780_test)
+message(STATUS "To run Unit Tests, you can use predefine target: \r\n\trun,")
+add_custom_target(run pushbutton_test)
 
 # TARGET FOR CHECKING CODE COMPLEXITY METRICS"
 # check if lizard software is available 
 find_program(lizard_program lizard)
 if(lizard_program)
-	message(STATUS "Lizard was found, you can use predefined targets for src folder Code Complexity Metrics: \r\n\tccm,\r\n\tccmr,")
+	message(STATUS "Lizard was found, you can use predefined targets for PUSHBUTTON src folder Code Complexity Metrics: \r\n\tccm,\r\n\tccmr,")
 else()
-	message(STATUS "Lizard was not found. \r\n\tInstall Lizard to get predefined targets for src folder Code Complexity Metrics")
+	message(STATUS "Lizard was not found. \r\n\tInstall Lizard to get predefined targets for PUSHBUTTON src folder Code Complexity Metrics")
 endif()
 # Prints CCM for src folder in the console
-add_custom_target(ccm lizard ../../../src/ --CCN 12 -Tnloc=30 -a 4 --languages cpp -V -i 1)
+add_custom_target(ccm lizard ../../../src/PUSHBUTTON/ --CCN 12 -Tnloc=30 -a 4 --languages cpp -V -i 1)
 # Create CCM report in reports/Cylcomatic_Complexity/
-add_custom_target(ccmr lizard ../../../src/ --CCN 12 -Tnloc=30 -a 4 --languages cpp -V -o ../../../reports/Cyclomatic_Complexity/Lizard_report.html)
+add_custom_target(ccmr lizard ../../../src/PUSHBUTTON --CCN 12 -Tnloc=30 -a 4 --languages cpp -V -o ../../../reports/Cyclomatic_Complexity/PUSHBUTTON/Lizard_report.html)
 
 # TARGET FOR MAKING STATIC ANALYSIS OF THE SOURCE CODE AND UNIT TEST CODE
 # check if cppchec software is available 
 find_program(cppcheck_program cppcheck)
 if(cppcheck_program)
-	message(STATUS "CppCheck was found, you can use predefined targets for static analize : \r\n\tcppcheck_src,\r\n\tcppcheck_tests,")
+	message(STATUS "CppCheck was found, you can use predefined targets for static analize : \r\n\tcppcheck_src,\r\n\tcppcheck_test,")
 else()
 	message(STATUS "CppCheck was not found. \r\n\tInstall CppCheck to get predefined targets for static analize")
 endif()
 # Prints static analize output for src folder in the console
-add_custom_target(cppcheck_src cppcheck ../../../src --enable=all --inconclusive --force --inline-suppr --platform=win64 --suppress=missingInclude --suppress=missingIncludeSystem --suppress=unusedFunction)
+add_custom_target(cppcheck_src cppcheck ../../../src/PUSHBUTTON/ --enable=all --inconclusive --force --inline-suppr --platform=win64 --suppress=missingInclude --suppress=missingIncludeSystem --suppress=unusedFunction)
 # Prints static analize output for specific test_module folder in the console
 add_custom_target(cppcheck_test cppcheck ../../../test/pushbutton -itest/pushbutton/out -itest/pushbutton/out_avr --enable=all --inconclusive --force --inline-suppr --platform=win64 --suppress=missingInclude --suppress=missingIncludeSystem || echo "test")
 
@@ -53,4 +54,4 @@ else()
 		message(STATUS "python3 and gcovr were not found. \r\n\tInstall python 3 and gcovr to get predefined targets for uint tests code coverage report generation")
 	endif()
 endif()
-add_custom_target(ccr python3 -m gcovr CMakeFiles/pushbutton_test.dir/D_/0_Projekty/6_Biblioteki/PUSHBUTTON_SWITCH_LIB/src -r ../../.. --html-details ../../../reports/Code_Coverage/pushbutton_switch_gcov_report.html)
+add_custom_target(ccr python3 -m gcovr CMakeFiles/pushbutton_test.dir/D_/0_Projekty/6_Biblioteki/PUSHBUTTON_SWITCH_LIB/src/PUSHBUTTON -r ../../.. --html-details ../../../reports/Code_Coverage/PUSHBUTTON/pushbutton_gcov_report.html)
