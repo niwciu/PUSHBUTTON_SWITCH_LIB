@@ -7,7 +7,10 @@ TEST_GROUP_RUNNER(pushbutton)
     RUN_TEST_CASE(pushbutton_init, WhenKey2InitThenKey2PinStateIsReleased);
     RUN_TEST_CASE(pushbutton_init, GivenSystemResetWhenKey1InitThendefaultValuesOfStructureAreCorrect);
     RUN_TEST_CASE(pushbutton_init, GivenSystemResetWhenPushbutton1InitWithRepetitionOnAndTrigerOnShortPushLongPushThenPushbuttonStructIsCorrect);
+    RUN_TEST_CASE(pushbutton_init, GivenSystemResetWhenPushbutton1InitWithRepetitionOFFAndTrigerOnShortPushLongPushThenPushbuttonStructIsCorrect);
     // RUN_TEST_CASE(pushbutton_init, );
+    // RUN_TEST_CASE(pushbutton_init, );
+
     /* Test cases for pushbutton triger mode TRIGER_ON_PUSH*/
     RUN_TEST_CASE(pushbutton_push, GivenKey1InitAndIncTimerFunctionRegisteredAndKey1PushedAndBouncingWhenPushStableForDebounceTimeThenTestTimerEqual1);
     RUN_TEST_CASE(pushbutton_push, GivenKey2InitAndIncTimerFunctionRegisteredAndKey2PushedAndBouncingWhenPushStableForDebounceTimeThenTestTimerEqual1);

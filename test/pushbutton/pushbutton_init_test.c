@@ -80,10 +80,27 @@ TEST(pushbutton_init, GivenSystemResetWhenPushbutton1InitWithRepetitionOnAndTrig
     init_pushbutton(&PUSHBUTTON_1, REPETITION_ON, TRIGGER_ON_SHORT_PUSH_AND_LONG_PUSH, pb_1_GPIO_interface_get);
     // Then
     expected_PB_config_value_t PB_expected_config = {
-    REPETITION_ON,
-    TRIGGER_ON_SHORT_PUSH_AND_LONG_PUSH,
-    pb_1_GPIO_interface_get,
-    &PB_init_status};
+        REPETITION_ON,
+        TRIGGER_ON_SHORT_PUSH_AND_LONG_PUSH,
+        pb_1_GPIO_interface_get,
+        &PB_init_status};
+    check_expected_configurable_PB_struct_values(&PUSHBUTTON_1, &PB_expected_config);
+    check_PB_struct_default_init_value(&PUSHBUTTON_1, &PB_init_status);
+
+    TEST_ASSERT_EQUAL(OK, PB_init_status);
+}
+
+TEST(pushbutton_init, GivenSystemResetWhenPushbutton1InitWithRepetitionOFFAndTrigerOnShortPushLongPushThenPushbuttonStructIsCorrect)
+{
+    PB_init_status_t PB_init_status = OK;
+    // When
+    init_pushbutton(&PUSHBUTTON_1, REPETITION_OFF, TRIGGER_ON_SHORT_PUSH_AND_LONG_PUSH, pb_1_GPIO_interface_get);
+    // Then
+    expected_PB_config_value_t PB_expected_config = {
+        REPETITION_OFF,
+        TRIGGER_ON_SHORT_PUSH_AND_LONG_PUSH,
+        pb_1_GPIO_interface_get,
+        &PB_init_status};
     check_expected_configurable_PB_struct_values(&PUSHBUTTON_1, &PB_expected_config);
     check_PB_struct_default_init_value(&PUSHBUTTON_1, &PB_init_status);
 
