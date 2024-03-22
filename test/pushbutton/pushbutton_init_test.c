@@ -18,13 +18,22 @@ typedef enum
 
 } PB_init_status_t;
 
+typedef struct
+{
+    const PB_repetition_t PB_repetition_mode;
+    const PB_trigger_mode_t PB_triger_mode;
+    const PB_GPIO_interface_get_callback PB_get_driver_interface_adr_callback;
+    PB_init_status_t *PB_init_status;
+} expected_PB_config_value_t;
+
 /** @brief Instance of PUSHBUTTON_TypDef representing PUSHBUTTON_1. */
 static PUSHBUTTON_TypDef PUSHBUTTON_1;
 
 /** @brief Instance of PUSHBUTTON_TypDef representing PUSHBUTTON_2. */
 static PUSHBUTTON_TypDef PUSHBUTTON_2;
 
-static void check_PB_struct_internall_init_value( const PUSHBUTTON_TypDef *BUTTON, PB_init_status_t *PB_init_status);
+static void check_PB_struct_default_init_value(const PUSHBUTTON_TypDef *BUTTON, PB_init_status_t *PB_init_status);
+static void check_expected_configurable_PB_struct_values(const PUSHBUTTON_TypDef *BUTTON, expected_PB_config_value_t *expected_val);
 
 TEST_GROUP(pushbutton_init);
 
@@ -56,30 +65,32 @@ TEST(pushbutton_init, WhenKey2InitThenKey2PinStateIsReleased)
 TEST(pushbutton_init, GivenSystemResetWhenKey1InitThendefaultValuesOfStructureAreCorrect)
 {
     PB_init_status_t PB_init_status = OK;
-    check_PB_struct_internall_init_value(&PUSHBUTTON_1,&PB_init_status);
+    check_PB_struct_default_init_value(&PUSHBUTTON_1, &PB_init_status);
     TEST_ASSERT_EQUAL(OK, PB_init_status);
 }
 
-    // PUSHBUTTON_1.GPIO_interface = PB_get_driver_interface_adr_callback();
+// PUSHBUTTON_1.GPIO_interface = PB_get_driver_interface_adr_callback();
 
-
-    // init other parameters of the structure to default init value
+// init other parameters of the structure to default init value
 
 TEST(pushbutton_init, GivenSystemResetWhenPushbutton1InitWithRepetitionOnAndTrigerOnShortPushLongPushThenPushbuttonStructIsCorrect)
 {
     PB_init_status_t PB_init_status = OK;
-    //When
-    init_pushbutton(&PUSHBUTTON_1,REPETITION_ON,TRIGGER_ON_SHORT_PUSH_AND_LONG_PUSH,pb_1_GPIO_interface_get);
-    
-    if((PUSHBUTTON_1.GPIO_interface)!= pb_1_GPIO_interface_get()) PB_init_status |= DRIVER_STRUCT_ADR_ERROR;
-    if((PUSHBUTTON_1.repetition )!= REPETITION_ON) PB_init_status |= REPETIOTION_MODE_ERROR;
-    if((PUSHBUTTON_1.trigger_mode) != TRIGGER_ON_SHORT_PUSH_AND_LONG_PUSH) PB_init_status |= TRIGER_MODE_ERROR;
+    // When
+    init_pushbutton(&PUSHBUTTON_1, REPETITION_ON, TRIGGER_ON_SHORT_PUSH_AND_LONG_PUSH, pb_1_GPIO_interface_get);
+    // Then
+    expected_PB_config_value_t PB_expected_config = {
+    REPETITION_ON,
+    TRIGGER_ON_SHORT_PUSH_AND_LONG_PUSH,
+    pb_1_GPIO_interface_get,
+    &PB_init_status};
+    check_expected_configurable_PB_struct_values(&PUSHBUTTON_1, &PB_expected_config);
+    check_PB_struct_default_init_value(&PUSHBUTTON_1, &PB_init_status);
 
-    check_PB_struct_internall_init_value(&PUSHBUTTON_1,&PB_init_status);
     TEST_ASSERT_EQUAL(OK, PB_init_status);
 }
 
-static void check_PB_struct_internall_init_value( const PUSHBUTTON_TypDef *BUTTON, PB_init_status_t *PB_init_status)
+static void check_PB_struct_default_init_value(const PUSHBUTTON_TypDef *BUTTON, PB_init_status_t *PB_init_status)
 {
     if ((BUTTON->deb_rep_timer) != 0)
         *PB_init_status |= DEB_REP_TIM_ERROR;
@@ -93,6 +104,15 @@ static void check_PB_struct_internall_init_value( const PUSHBUTTON_TypDef *BUTTO
         *PB_init_status |= PUSH_CALLBACK_ERROR;
     if ((BUTTON->release_callback) != NULL)
         *PB_init_status |= RELEASE_CALLBACK_ERROR;
+}
+static void check_expected_configurable_PB_struct_values(const PUSHBUTTON_TypDef *BUTTON, expected_PB_config_value_t *expected_val)
+{
+    if ((BUTTON->GPIO_interface) != expected_val->PB_get_driver_interface_adr_callback())
+        *(expected_val->PB_init_status) |= DRIVER_STRUCT_ADR_ERROR;
+    if ((BUTTON->repetition) != expected_val->PB_repetition_mode)
+        *(expected_val->PB_init_status) |= REPETIOTION_MODE_ERROR;
+    if ((BUTTON->trigger_mode) != expected_val->PB_triger_mode)
+        *(expected_val->PB_init_status) |= TRIGER_MODE_ERROR;
 }
 // TEST(pushbutton_init, )
 // {
