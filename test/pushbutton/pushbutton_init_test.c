@@ -36,10 +36,10 @@ TEST(pushbutton_init, WhenKey2InitThenKey2PinStateIsReleased)
     TEST_ASSERT_EQUAL(RELEASED, mock_PUSHBUTTON_2_STATE);
 }
 
-// TEST(pushbutton_init, )
-// {
-//     TEST_FAIL_MESSAGE("Implement your test!");
-// }
+TEST(pushbutton_init, GivenSystemResetWhenKey1InitThendefaultValuesOfStructureAreCorrect)
+{
+    TEST_FAIL_MESSAGE("Implement your test!");
+}
 
 // TEST(pushbutton_init, )
 // {
