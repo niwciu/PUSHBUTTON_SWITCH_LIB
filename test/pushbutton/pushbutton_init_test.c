@@ -12,6 +12,9 @@ typedef enum
     REPETITION_STATUS_FLAG_ERROR = 0x8U,
     PUSH_CALLBACK_ERROR = 0x10U,
     RELEASE_CALLBACK_ERROR = 0x20U,
+    DRIVER_STRUCT_ADR_ERROR = 0x40U,
+    REPETIOTION_MODE_ERROR = 0x80u,
+    TRIGER_MODE_ERROR = 0x100U,
 
 } PB_init_status_t;
 
@@ -69,16 +72,36 @@ TEST(pushbutton_init, GivenSystemResetWhenKey1InitThendefaultValuesOfStructureAr
 
     // PUSHBUTTON_1.GPIO_interface = PB_get_driver_interface_adr_callback();
 
-    // PUSHBUTTON_1.GPIO_interface->GPIO_init();
-    // PUSHBUTTON_1.repetition = PB_repetition_mode;
-    // PUSHBUTTON_1.trigger_mode = PB_triger_mode;
 
     // init other parameters of the structure to default init value
+
+TEST(pushbutton_init, GivenSystemResetWhenPushbutton1InitWithRepetitionOnAndTrigerOnShortPushLongPushThenPushbuttonStructIsCorrect)
+{
+    PB_init_status_t PB_init_status = OK;
+
+    //When
+    init_pushbutton(&PUSHBUTTON_1,REPETITION_ON,TRIGGER_ON_SHORT_PUSH_AND_LONG_PUSH,pb_1_GPIO_interface_get);
     
-// TEST(pushbutton_init, )
-// {
-//     TEST_FAIL_MESSAGE("Implement your test!");
-// }
+    if((PUSHBUTTON_1.GPIO_interface)!= pb_1_GPIO_interface_get()) PB_init_status |= DRIVER_STRUCT_ADR_ERROR;
+    if((PUSHBUTTON_1.repetition )!= REPETITION_ON) PB_init_status |= REPETIOTION_MODE_ERROR;
+    if((PUSHBUTTON_1.trigger_mode) != TRIGGER_ON_SHORT_PUSH_AND_LONG_PUSH) PB_init_status |= TRIGER_MODE_ERROR;
+
+
+    if ((PUSHBUTTON_1.deb_rep_timer) != 0)
+        PB_init_status |= DEB_REP_TIM_ERROR;
+    if ((PUSHBUTTON_1.pushbutton_state_machine) != BUTTON_RELEASED)
+        PB_init_status |= STATE_MACHINE_ERROR;
+    if ((PUSHBUTTON_1.input_state) != UNKNOWN)
+        PB_init_status |= INPUT_STATE_ERROR;
+    if ((PUSHBUTTON_1.REPETITION_STATUS_FLAG) != REPETITION_INACTIVE)
+        PB_init_status |= REPETITION_STATUS_FLAG_ERROR;
+    if ((PUSHBUTTON_1.push_callback) != NULL)
+        PB_init_status |= PUSH_CALLBACK_ERROR;
+    if ((PUSHBUTTON_1.release_callback) != NULL)
+        PB_init_status |= RELEASE_CALLBACK_ERROR;
+
+    TEST_ASSERT_EQUAL(OK, PB_init_status);
+}
 
 // TEST(pushbutton_init, )
 // {
