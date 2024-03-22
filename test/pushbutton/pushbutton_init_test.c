@@ -24,6 +24,8 @@ static PUSHBUTTON_TypDef PUSHBUTTON_1;
 /** @brief Instance of PUSHBUTTON_TypDef representing PUSHBUTTON_2. */
 static PUSHBUTTON_TypDef PUSHBUTTON_2;
 
+static void check_PB_struct_internall_init_value( const PUSHBUTTON_TypDef *BUTTON, PB_init_status_t *PB_init_status);
+
 TEST_GROUP(pushbutton_init);
 
 TEST_SETUP(pushbutton_init)
@@ -54,19 +56,7 @@ TEST(pushbutton_init, WhenKey2InitThenKey2PinStateIsReleased)
 TEST(pushbutton_init, GivenSystemResetWhenKey1InitThendefaultValuesOfStructureAreCorrect)
 {
     PB_init_status_t PB_init_status = OK;
-
-    if ((PUSHBUTTON_1.deb_rep_timer) != 0)
-        PB_init_status |= DEB_REP_TIM_ERROR;
-    if ((PUSHBUTTON_1.pushbutton_state_machine) != BUTTON_RELEASED)
-        PB_init_status |= STATE_MACHINE_ERROR;
-    if ((PUSHBUTTON_1.input_state) != UNKNOWN)
-        PB_init_status |= INPUT_STATE_ERROR;
-    if ((PUSHBUTTON_1.REPETITION_STATUS_FLAG) != REPETITION_INACTIVE)
-        PB_init_status |= REPETITION_STATUS_FLAG_ERROR;
-    if ((PUSHBUTTON_1.push_callback) != NULL)
-        PB_init_status |= PUSH_CALLBACK_ERROR;
-    if ((PUSHBUTTON_1.release_callback) != NULL)
-        PB_init_status |= RELEASE_CALLBACK_ERROR;
+    check_PB_struct_internall_init_value(&PUSHBUTTON_1,&PB_init_status);
     TEST_ASSERT_EQUAL(OK, PB_init_status);
 }
 
@@ -78,7 +68,6 @@ TEST(pushbutton_init, GivenSystemResetWhenKey1InitThendefaultValuesOfStructureAr
 TEST(pushbutton_init, GivenSystemResetWhenPushbutton1InitWithRepetitionOnAndTrigerOnShortPushLongPushThenPushbuttonStructIsCorrect)
 {
     PB_init_status_t PB_init_status = OK;
-
     //When
     init_pushbutton(&PUSHBUTTON_1,REPETITION_ON,TRIGGER_ON_SHORT_PUSH_AND_LONG_PUSH,pb_1_GPIO_interface_get);
     
@@ -86,23 +75,25 @@ TEST(pushbutton_init, GivenSystemResetWhenPushbutton1InitWithRepetitionOnAndTrig
     if((PUSHBUTTON_1.repetition )!= REPETITION_ON) PB_init_status |= REPETIOTION_MODE_ERROR;
     if((PUSHBUTTON_1.trigger_mode) != TRIGGER_ON_SHORT_PUSH_AND_LONG_PUSH) PB_init_status |= TRIGER_MODE_ERROR;
 
-
-    if ((PUSHBUTTON_1.deb_rep_timer) != 0)
-        PB_init_status |= DEB_REP_TIM_ERROR;
-    if ((PUSHBUTTON_1.pushbutton_state_machine) != BUTTON_RELEASED)
-        PB_init_status |= STATE_MACHINE_ERROR;
-    if ((PUSHBUTTON_1.input_state) != UNKNOWN)
-        PB_init_status |= INPUT_STATE_ERROR;
-    if ((PUSHBUTTON_1.REPETITION_STATUS_FLAG) != REPETITION_INACTIVE)
-        PB_init_status |= REPETITION_STATUS_FLAG_ERROR;
-    if ((PUSHBUTTON_1.push_callback) != NULL)
-        PB_init_status |= PUSH_CALLBACK_ERROR;
-    if ((PUSHBUTTON_1.release_callback) != NULL)
-        PB_init_status |= RELEASE_CALLBACK_ERROR;
-
+    check_PB_struct_internall_init_value(&PUSHBUTTON_1,&PB_init_status);
     TEST_ASSERT_EQUAL(OK, PB_init_status);
 }
 
+static void check_PB_struct_internall_init_value( const PUSHBUTTON_TypDef *BUTTON, PB_init_status_t *PB_init_status)
+{
+    if ((BUTTON->deb_rep_timer) != 0)
+        *PB_init_status |= DEB_REP_TIM_ERROR;
+    if ((BUTTON->pushbutton_state_machine) != BUTTON_RELEASED)
+        *PB_init_status |= STATE_MACHINE_ERROR;
+    if ((BUTTON->input_state) != UNKNOWN)
+        *PB_init_status |= INPUT_STATE_ERROR;
+    if ((BUTTON->REPETITION_STATUS_FLAG) != REPETITION_INACTIVE)
+        *PB_init_status |= REPETITION_STATUS_FLAG_ERROR;
+    if ((BUTTON->push_callback) != NULL)
+        *PB_init_status |= PUSH_CALLBACK_ERROR;
+    if ((BUTTON->release_callback) != NULL)
+        *PB_init_status |= RELEASE_CALLBACK_ERROR;
+}
 // TEST(pushbutton_init, )
 // {
 //     TEST_FAIL_MESSAGE("Implement your test!");
