@@ -12,15 +12,15 @@
  * @copyright Copyright (c) 2024
  */
 
-#include "keyboard.h"
+#include "keypad.h"
 #include "pushbutton.h"
 #include "LED_GPIO_driver.h"
 
-/** @brief Structure representing KEY_1 pushbutton. */
-PUSHBUTTON_TypDef KEY_1;
+/** @brief Structure representing PUSHBUTTON_1 pushbutton. */
+PUSHBUTTON_TypDef PUSHBUTTON_1;
 
-/** @brief Pointer to the KEY_1 pushbutton structure. */
-PUSHBUTTON_TypDef *ENT_ESC = &KEY_1;
+/** @brief Pointer to the PUSHBUTTON_1 pushbutton structure. */
+PUSHBUTTON_TypDef *ENT_ESC = &PUSHBUTTON_1;
 
 /**
  * @brief Initializes the keyboard pushbutton components.

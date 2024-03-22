@@ -16,8 +16,8 @@ TEST_GROUP(pushbutton_release);
 TEST_SETUP(pushbutton_release)
 {
     /* Init before every test */
-    init_pushbutton(&PUSHBUTTON_1, REPETITION_OFF, TRIGGER_ON_RELEASE, pushbutton_1_GPIO_interface_get);
-    init_pushbutton(&PUSHBUTTON_2, REPETITION_OFF, TRIGGER_ON_RELEASE, pushbutton_2_GPIO_interface_get);
+    init_pushbutton(&PUSHBUTTON_1, REPETITION_OFF, TRIGGER_ON_RELEASE, pb_1_GPIO_interface_get);
+    init_pushbutton(&PUSHBUTTON_2, REPETITION_OFF, TRIGGER_ON_RELEASE, pb_2_GPIO_interface_get);
     TEST_TIMER = 0;
 }
 

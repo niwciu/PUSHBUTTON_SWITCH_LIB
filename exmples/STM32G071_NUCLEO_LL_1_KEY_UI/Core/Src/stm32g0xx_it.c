@@ -19,7 +19,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-#include "keyboard.h"
+#include "keypad.h"
 
 #include <stddef.h>
 /* Private includes ----------------------------------------------------------*/

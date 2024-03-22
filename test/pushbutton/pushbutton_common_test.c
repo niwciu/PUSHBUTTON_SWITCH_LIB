@@ -2,6 +2,9 @@
 #include "pushbutton_TIM_interface.h"
 #include "pushbutton_common_test.h"
 
+pushbutton_UP_GPIO_interface_get_ptr pb_1_GPIO_interface_get= pushbutton_1_GPIO_interface_get;
+pushbutton_UP_GPIO_interface_get_ptr pb_2_GPIO_interface_get= pushbutton_2_GPIO_interface_get;
+
 void generate_pushbutton_deb_rep_timer_delay(debounce_repetition_delay_t delay, PUSHBUTTON_TypDef *BUTTON)
 {
     for (debounce_repetition_delay_t i = delay; i > 0; i--)

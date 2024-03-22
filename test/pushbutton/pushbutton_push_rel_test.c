@@ -13,7 +13,7 @@ TEST_SETUP(pushbutton_push_rel)
 {
     /* Init before every test */
     // Given ...
-    init_pushbutton(&PUSHBUTTON_1, REPETITION_OFF, TRIGGER_ON_SHORT_PUSH_AND_LONG_PUSH, pushbutton_1_GPIO_interface_get);
+    init_pushbutton(&PUSHBUTTON_1, REPETITION_OFF, TRIGGER_ON_SHORT_PUSH_AND_LONG_PUSH, pb_1_GPIO_interface_get);
     TEST_TIMER = 10;
     register_button_short_push_long_push_callbacks(&PUSHBUTTON_1, inc_test_timer, dec_test_timer);
 }

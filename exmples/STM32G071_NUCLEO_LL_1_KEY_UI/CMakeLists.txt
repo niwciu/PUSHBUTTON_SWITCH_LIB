@@ -31,7 +31,7 @@ set(INCLUDE_DIRS
 ./Core
 ./Core/Inc
 ./Core/Src/LED
-./Core/Src/UI_KEYBOARD
+./Core/Src/UI_KEYPAD
 # Core/Src
 # Core/Startup
 
@@ -53,8 +53,8 @@ set(C_SRCS
     Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_ll_utils.c
     
     Core/Src/LED/LED_GPIO_driver.c
-    Core/Src/UI_KEYBOARD/keyboard.c
-    Core/Src/UI_KEYBOARD/pushbutton_GPIO_interface.c
+    Core/Src/UI_KEYPAD/keypad.c
+    Core/Src/UI_KEYPAD/pushbutton_GPIO_interface.c
     Core/Src/main.c
     Core/Src/stm32g0xx_it.c
     Core/Src/syscalls.c
