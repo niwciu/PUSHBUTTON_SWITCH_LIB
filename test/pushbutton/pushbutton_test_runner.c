@@ -2,9 +2,10 @@
 
 TEST_GROUP_RUNNER(pushbutton)
 {
-    /* Test cases to run */
-    RUN_TEST_CASE(pushbutton_push, WhenKey2InitThenKey2PinStateIsReleased);
-    RUN_TEST_CASE(pushbutton_push, WhenKey2InitThenKey2PinStateIsReleased);
+    /* Test cases for init phase */
+    RUN_TEST_CASE(pushbutton_init, WhenKey2InitThenKey2PinStateIsReleased);
+    RUN_TEST_CASE(pushbutton_init, WhenKey2InitThenKey2PinStateIsReleased);
+    /* Test cases for pushbutton triger mode TRIGER_ON_PUSH*/
     RUN_TEST_CASE(pushbutton_push, GivenKey1InitAndIncTimerFunctionRegisteredAndKey1PushedAndBouncingWhenPushStableForDebounceTimeThenTestTimerEqual1);
     RUN_TEST_CASE(pushbutton_push, GivenKey2InitAndIncTimerFunctionRegisteredAndKey2PushedAndBouncingWhenPushStableForDebounceTimeThenTestTimerEqual1);
     RUN_TEST_CASE(pushbutton_push, GivenKey1InitAndIncTimerFunctionRegisteredAndKey1PushedAndBouncingWhenPushStableForMoreThanDebounceTimeThenTestTimerEqual1);
@@ -15,13 +16,14 @@ TEST_GROUP_RUNNER(pushbutton)
     RUN_TEST_CASE(pushbutton_push, GivenKey1InitAndIncTimerFunctionRegisteredWhenKey1PushForTimeEqualToReachDoubleRepetitionThenTestTimerValueIs3);
     RUN_TEST_CASE(pushbutton_push, GivenKey1InitAndIncTimerFunctionRegisteredWhenKey1PushForTimeLessToReachTripleRepetitionThenTestTimerValueIs3);
     RUN_TEST_CASE(pushbutton_push, GivenKey1InitAndIncTimerFunctionRegisteredWhenKey1PushForTimeLongerToReachTripleRepetitionThenTestTimerValueIs4);
-
+    /* Test cases for pushbutton triger mode TRIGER_ON_RELEASE*/
     RUN_TEST_CASE(pushbutton_release, GivenKey1InitAndIncTimerFunctionRegisteredAndKey1PushAndBouncingAndReleaseAndBouncingWhenPinStateIsStableForDebounceTimeThenTestTimerEqual1);
     RUN_TEST_CASE(pushbutton_release, GivenKey1InitAndIncTimerFunctionRegisteredAndKey1PushAndBouncingAndReleaseAndBouncingWhenPinStateIsStableForLessThanDebounceTimeThenTestTimerEqual0);
     RUN_TEST_CASE(pushbutton_release, GivenKey1InitAndIncTimerFunctionRegisteredWhenKey1PushAndBouncingAndReleaseAndPinBouncingThenTestTimerEqual0);
     RUN_TEST_CASE(pushbutton_release, GivenKey1InitAndIncTimerFunctionRegisteredAndKey1PushAndBouncingAndReleaseAndBouncingWhenPinStayReleasedForPushButtonDebounceTimeThenTestTimerEqual1);
     RUN_TEST_CASE(pushbutton_release, GivenKey1InitAndIncTimerFunctionRegisteredAndKey1PushAndBouncingAndReleaseAndBouncingWhenPinStayReleasedForlongerThanPushButtonDebounceTimeThenTestTimerEqual1);
 
+    /* Test cases for pushbutton triger mode TRIGGER_ON_SHORT_PUSH_AND_LONG_PUSH*/
     // Cases where pushed button pass debounce phase and is in stable push state and than was released to call function on /short push release (short push done by user)
     RUN_TEST_CASE(pushbutton_push_rel, GivenTestTimerEqual10AndKey1InitAndNoRepetitionAndDecTimerFunctionRegisteredOnButtonReleaseAndIncFucnRegisteredOnButtonPushAndButton1PushedAndBouncingAndPushIsStableForTimeMaxPushTimeWhenPushbuttonReleasedAndBouncingThenTestTimerEqual11);
     RUN_TEST_CASE(pushbutton_push_rel, GivenTestTimerEqual10AndKey1InitAndNoRepetitionAndDecTimerFunctionRegisteredOnButtonReleaseAndIncFucnRegisteredOnButtonPushAndButton1PushedAndBouncingAndPushIsStableForTimeMaxPushTimeWhenPushbuttonReleasedAndBouncingAndStableForDebounceTimeThenTestTimerEqual11);

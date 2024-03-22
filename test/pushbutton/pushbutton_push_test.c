@@ -28,18 +28,6 @@ TEST_TEAR_DOWN(pushbutton_push)
     /* Cleanup after every test */
 }
 
-TEST(pushbutton_push, WhenKey1InitThenKey1PinStateIsReleased)
-{
-
-    TEST_ASSERT_EQUAL(RELEASED, mock_PUSHBUTTON_1_STATE);
-}
-
-TEST(pushbutton_push, WhenKey2InitThenKey2PinStateIsReleased)
-{
-
-    TEST_ASSERT_EQUAL(RELEASED, mock_PUSHBUTTON_2_STATE);
-}
-
 TEST(pushbutton_push, GivenKey1InitAndIncTimerFunctionRegisteredAndKey1PushedAndBouncingWhenPushStableForDebounceTimeThenTestTimerEqual1)
 {
     // Given
