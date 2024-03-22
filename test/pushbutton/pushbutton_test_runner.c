@@ -3,8 +3,8 @@
 TEST_GROUP_RUNNER(pushbutton)
 {
     /* Test cases to run */
-    RUN_TEST_CASE(pushbutton_push, WhenKey1InitThenKey1PinStateIsHigh);
-    RUN_TEST_CASE(pushbutton_push, WhenKey2InitThenKey2PinStateIsHigh);
+    RUN_TEST_CASE(pushbutton_push, WhenKey2InitThenKey2PinStateIsReleased);
+    RUN_TEST_CASE(pushbutton_push, WhenKey2InitThenKey2PinStateIsReleased);
     RUN_TEST_CASE(pushbutton_push, GivenKey1InitAndIncTimerFunctionRegisteredAndKey1PushedAndBouncingWhenPushStableForDebounceTimeThenTestTimerEqual1);
     RUN_TEST_CASE(pushbutton_push, GivenKey2InitAndIncTimerFunctionRegisteredAndKey2PushedAndBouncingWhenPushStableForDebounceTimeThenTestTimerEqual1);
     RUN_TEST_CASE(pushbutton_push, GivenKey1InitAndIncTimerFunctionRegisteredAndKey1PushedAndBouncingWhenPushStableForMoreThanDebounceTimeThenTestTimerEqual1);
