@@ -54,7 +54,7 @@ set(C_SRCS
     
     Core/Src/LED/LED_GPIO_driver.c
     Core/Src/UI_KEYPAD/keypad.c
-    Core/Src/UI_KEYPAD/pushbutton_GPIO_interface.c
+    Core/Src/PB_GPIO_DRIVER_INTERFACE/pushbutton_GPIO_interface.c
     Core/Src/main.c
     Core/Src/stm32g0xx_it.c
     Core/Src/syscalls.c

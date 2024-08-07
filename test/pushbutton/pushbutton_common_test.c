@@ -1,5 +1,4 @@
 #include "pushbutton.h"
-#include "pushbutton_TIM_interface.h"
 #include "pushbutton_common_test.h"
 
 pushbutton_UP_GPIO_interface_get_ptr pb_1_GPIO_interface_get= pushbutton_1_GPIO_interface_get;
