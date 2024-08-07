@@ -33,15 +33,8 @@ The `PUSHBUTTON_SWITCH_LIB` is a simple cross-platform C library providing inter
 - Driver interface that is fully separated from the driver layer
 
 ## Examples, how to use library etc.
-<<<<<<< HEAD
-For more information about usage, examples, colaboration and all features please refer to [project wiki](https://github.com/niwciu/PUSHBUTTON_SWITCH_LIB/wiki)  
-=======
-For more information about usage, examples, colaboration and all features please refer to [project wiki](https://github.com/niwciu/PUSHBUTTON_SWITCH_LIB/wiki)
 
-***
-![myEmbeddedWayBanerWhiteSmaller](https://github.com/user-attachments/assets/f4825882-e285-4e02-a75c-68fc86ff5716)
-***
->>>>>>> develop
+For more information about usage, examples, colaboration and all features please refer to [project wiki](https://github.com/niwciu/PUSHBUTTON_SWITCH_LIB/wiki)
 
 ***
 ![myEmbeddedWayBanerWhiteSmaller](https://github.com/user-attachments/assets/f4825882-e285-4e02-a75c-68fc86ff5716)
