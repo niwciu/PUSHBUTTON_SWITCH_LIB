@@ -1,4 +1,4 @@
-# PUSHBUTTON_SWITCH_LIB - simple cross platform library 
+# PUSHBUTTON_SWITCH_LIB - simple C cross-platform library 
 ![keypad_lib](https://github.com/user-attachments/assets/d7c28488-53b3-46a1-956d-2e8736f214d3)
 ![GitHub License](https://img.shields.io/github/license/niwciu/PUSHBUTTON_SWITCH_LIB)  
 ![GitHub top language](https://img.shields.io/github/languages/top/niwciu/PUSHBUTTON_SWITCH_LIB)
@@ -33,10 +33,10 @@ The `PUSHBUTTON_SWITCH_LIB` is a simple cross-platform C library providing inter
 - Driver interface that is fully separated from the driver layer
 
 ## Examples, how to use library etc.
+
 For more information about usage, examples, colaboration and all features please refer to [project wiki](https://github.com/niwciu/PUSHBUTTON_SWITCH_LIB/wiki)
 
 ***
 ![myEmbeddedWayBanerWhiteSmaller](https://github.com/user-attachments/assets/f4825882-e285-4e02-a75c-68fc86ff5716)
 ***
-
 
