@@ -22,7 +22,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
-#include "keyboard.h"
+#include "keypad.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -91,7 +91,7 @@ int main(void)
   MX_GPIO_Init();
   /* USER CODE BEGIN 2 */
  
-  init_keyboard();
+  init_keypad();
   LL_SYSTICK_EnableIT();
 
   // LL_GPIO_SetOutputPin(LED_GPIO_Port,LED_Pin);
@@ -102,7 +102,7 @@ int main(void)
   while (1)
   {
     
-    check_keyboard();
+    check_keypad();
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */

@@ -1,3 +1,7 @@
+typedef PB_driver_interface_t *(*pushbutton_UP_GPIO_interface_get_ptr)(void);
+extern pushbutton_UP_GPIO_interface_get_ptr pb_1_GPIO_interface_get;
+extern pushbutton_UP_GPIO_interface_get_ptr pb_2_GPIO_interface_get;
+
 typedef uint16_t debounce_repetition_delay_t;
 
 void generate_pushbutton_deb_rep_timer_delay(debounce_repetition_delay_t delay, PUSHBUTTON_TypDef *BUTTON);

@@ -12,15 +12,18 @@
  * @copyright Copyright (c) 2024
  */
 
-#include "keyboard.h"
+#include "keypad.h"
+#include "keypad_TIM_interface.h"
 #include "pushbutton.h"
 #include "LED_GPIO_driver.h"
 
-/** @brief Structure representing KEY_1 pushbutton. */
-PUSHBUTTON_TypDef KEY_1;
+/** @brief Structure representing PUSHBUTTON_1 pushbutton. */
+PUSHBUTTON_TypDef PUSHBUTTON_1;
 
-/** @brief Pointer to the KEY_1 pushbutton structure. */
-PUSHBUTTON_TypDef *ENT_ESC = &KEY_1;
+/** @brief Pointer to the PUSHBUTTON_1 pushbutton structure. */
+PUSHBUTTON_TypDef *ENT_ESC = &PUSHBUTTON_1;
+
+static void update_button_timers(void);
 
 /**
  * @brief Initializes the keyboard pushbutton components.
@@ -28,15 +31,18 @@ PUSHBUTTON_TypDef *ENT_ESC = &KEY_1;
  * and registers corresponding callback functions. It also subscribes to the SysTick timer
  * for periodic updates of pushbuttonbutton timers.
  */
-void init_keyboard(void)
+void init_keypad(void)
 {
     // Key ENT_ESC Initialization
     init_pushbutton(ENT_ESC, REPETITION_ON, TRIGGER_ON_SHORT_PUSH_AND_LONG_PUSH, pushbutton_1_GPIO_interface_get);
     register_button_short_push_long_push_callbacks(ENT_ESC, LED_on, LED_toggle);
-    subscribe_SysTick_callback(update_button_timers);
 
     // KEY_2 Initialization
+    // ...
     // KEY_3 Initialization
+    // ...
+
+    subscribe_keypad_timers_update_callback(update_button_timers);
 }
 
 /**
@@ -44,7 +50,7 @@ void init_keyboard(void)
  * @details This function checks the state of the pushbuttons in the keyboard,
  * processes any events, and updates the button timers.
  */
-void check_keyboard(void)
+void check_keypad(void)
 {
     check_pushbutton(ENT_ESC);
     //check_pushbutton(&KEY_2);
@@ -56,9 +62,10 @@ void check_keyboard(void)
  * @details This function is called periodically by the SysTick timer to update
  * the debounce and repetition timers for the pushbuttons in the keyboard.
  */
-void update_button_timers(void)
+static void update_button_timers(void)
 {
     dec_pushbutton_deb_rep_timer(ENT_ESC);
     // dec_pushbutton_deb_rep_timer(&KEY_2);
     // dec_pushbutton_deb_rep_timer(&KEY_3);
 }
+
