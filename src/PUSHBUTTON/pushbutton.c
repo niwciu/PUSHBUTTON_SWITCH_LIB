@@ -223,9 +223,16 @@ static void execute_release_callback(PUSHBUTTON_TypDef *BUTTON)
  * calling their initialization functions, and setting up the necessary configurations.
  *
  * The initialization includes:
- * - Retrieving GPIO interfaces for PUSHBUTTON_1 and PUSHBUTTON_2.
+ * - Retrieving GPIO interfaces for PUSHBUTTON.
  * - Calling the initialization function for each pushbutton through the obtained GPIO interfaces.
- * - Setting the initial state of the state machines for PUSHBUTTON_1 and PUSHBUTTON_2 to BUTTON_RELEASED.
+ * - Setting the initial state of the state machines for PUSHBUTTON to BUTTON_RELEASED.
+ *
+ * @param BUTTON Pointer to the pushbutton structure to initialize.
+ * @param PB_repetition_mode The repetition mode for the pushbutton ::PB_repetition_t.
+ * @param PB_triger_mode The trigger mode for the pushbutton events ::PB_trigger_mode_t.
+ * @param PB_get_driver_interface_adr_callback Callback function to obtain GPIO interface address.
+ *
+ *
  */
 void init_pushbutton(PUSHBUTTON_TypDef *BUTTON,
                      const PB_repetition_t PB_repetition_mode,

@@ -18,9 +18,9 @@
  extern "C" {
 #endif
 
-void init_keyboard(void);
-void check_keyboard(void);
-void update_button_timers (void);
+void init_keypad(void);
+void check_keypad(void);
+// void update_button_timers(void);
 
 
 #ifdef __cplusplus

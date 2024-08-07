@@ -13,7 +13,6 @@ extern "C"
 {
 #endif /* __cplusplus */
 #include "pushbutton_GPIO_interface.h"
-#include "pushbutton_TIM_interface.h"
 
 /** @brief Time duration for pushbutton debounce in milliseconds. */
 #define PUSHBUTTON_DEBOUNCE_TIME 20U

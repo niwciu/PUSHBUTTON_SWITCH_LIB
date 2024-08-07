@@ -19,12 +19,12 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-#include "keyboard.h"
+#include "keypad.h"
 
 #include <stddef.h>
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "pushbutton_TIM_interface.h"
+#include "keypad_TIM_interface.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -44,7 +44,7 @@
 
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN PV */
-SysTick_callback_t subscribed_SysTick_callbacks[SysTick_CALLBACKS_TABLE_SIZE] = {NULL, NULL};//, NULL, NULL, NULL};
+keypad_timers_update_callback_t subscribed_SysTick_callbacks[SysTick_CALLBACKS_TABLE_SIZE] = {NULL};
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -60,14 +60,14 @@ static void execute_subscribed_SysTick_callbacks(void);
 /* External variables --------------------------------------------------------*/
 
 /* USER CODE BEGIN EV */
-void subscribe_SysTick_callback(SysTick_callback_t SysTick_callback)
+void subscribe_keypad_timers_update_callback(keypad_timers_update_callback_t Timer_callback)
 {
   for (uint8_t i=0;i<SysTick_CALLBACKS_TABLE_SIZE;i++)
   {
     if(subscribed_SysTick_callbacks[i]==NULL)
     {
-      subscribed_SysTick_callbacks[i]=SysTick_callback;
-      break;
+        subscribed_SysTick_callbacks[i] = Timer_callback;
+        break;
     }
   }
 }

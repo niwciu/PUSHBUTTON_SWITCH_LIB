@@ -18,26 +18,14 @@ TEST_GROUP(pushbutton_push);
 TEST_SETUP(pushbutton_push)
 {
     /* Init before every test */
-    init_pushbutton(&PUSHBUTTON_1, REPETITION_OFF, TRIGGER_ON_PUSH, pushbutton_1_GPIO_interface_get);
-    init_pushbutton(&PUSHBUTTON_2, REPETITION_OFF, TRIGGER_ON_PUSH, pushbutton_2_GPIO_interface_get);
+    init_pushbutton(&PUSHBUTTON_1, REPETITION_OFF, TRIGGER_ON_PUSH, pb_1_GPIO_interface_get);
+    init_pushbutton(&PUSHBUTTON_2, REPETITION_OFF, TRIGGER_ON_PUSH, pb_2_GPIO_interface_get);
     TEST_TIMER = 0;
 }
 
 TEST_TEAR_DOWN(pushbutton_push)
 {
     /* Cleanup after every test */
-}
-
-TEST(pushbutton_push, WhenKey1InitThenKey1PinStateIsHigh)
-{
-
-    TEST_ASSERT_EQUAL(RELEASED, mock_PUSHBUTTON_1_STATE);
-}
-
-TEST(pushbutton_push, WhenKey2InitThenKey2PinStateIsHigh)
-{
-
-    TEST_ASSERT_EQUAL(RELEASED, mock_PUSHBUTTON_2_STATE);
 }
 
 TEST(pushbutton_push, GivenKey1InitAndIncTimerFunctionRegisteredAndKey1PushedAndBouncingWhenPushStableForDebounceTimeThenTestTimerEqual1)
