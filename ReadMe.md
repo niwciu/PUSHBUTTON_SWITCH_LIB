@@ -1,4 +1,4 @@
-# PUSHBUTTON_SWITCH_LIB - simple cross platform library 
+# PUSHBUTTON_SWITCH_LIB - simple C cross-platform library 
 ![keypad_lib](https://github.com/user-attachments/assets/d7c28488-53b3-46a1-956d-2e8736f214d3)
 ![GitHub License](https://img.shields.io/github/license/niwciu/PUSHBUTTON_SWITCH_LIB)  
 ![GitHub top language](https://img.shields.io/github/languages/top/niwciu/PUSHBUTTON_SWITCH_LIB)
