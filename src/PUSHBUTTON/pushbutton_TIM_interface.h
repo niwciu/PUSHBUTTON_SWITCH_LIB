@@ -15,20 +15,22 @@ extern "C"
 #endif /* __cplusplus */
 
     /**
-     * @brief Callback function type for SysTick events.
+     * @brief Callback function type for 1 ms timer events.
      *
-     * This function type is used for callback functions that are triggered by SysTick events.
+     * This function type is used for callback functions that are triggered every 1ms by timer events. 
+     * 
+     *  
      */
-    typedef void (*SysTick_callback_t)(void);
+    typedef void (*Timer_callback_t)(void);
 
     /**
-     * @brief Subscribes a callback function to SysTick events.
+     * @brief Subscribes a callback function to timer events fired with 1ms resolution.
      *
-     * This function allows subscribing a callback function to SysTick events for timer-related operations.
+     * This function allows subscribing a callback function to timer events for timer-related operations.
      *
      * @param SysTick_callback The callback function to be subscribed.
      */
-    void subscribe_SysTick_callback(SysTick_callback_t SysTick_callback);
+    void subscribe_timer_callback(Timer_callback_t Timer_callback);
 
 #ifdef __cplusplus
 }

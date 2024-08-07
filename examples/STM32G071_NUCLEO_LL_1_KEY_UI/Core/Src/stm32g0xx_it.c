@@ -44,7 +44,7 @@
 
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN PV */
-SysTick_callback_t subscribed_SysTick_callbacks[SysTick_CALLBACKS_TABLE_SIZE] = {NULL, NULL};//, NULL, NULL, NULL};
+Timer_callback_t subscribed_SysTick_callbacks[SysTick_CALLBACKS_TABLE_SIZE] = {NULL, NULL};//, NULL, NULL, NULL};
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -60,14 +60,14 @@ static void execute_subscribed_SysTick_callbacks(void);
 /* External variables --------------------------------------------------------*/
 
 /* USER CODE BEGIN EV */
-void subscribe_SysTick_callback(SysTick_callback_t SysTick_callback)
+void subscribe_timer_callback(Timer_callback_t Timer_callback)
 {
   for (uint8_t i=0;i<SysTick_CALLBACKS_TABLE_SIZE;i++)
   {
     if(subscribed_SysTick_callbacks[i]==NULL)
     {
-      subscribed_SysTick_callbacks[i]=SysTick_callback;
-      break;
+        subscribed_SysTick_callbacks[i] = Timer_callback;
+        break;
     }
   }
 }

@@ -29,11 +29,6 @@ extern "C"
     typedef void (*pushbutton_init_func_p)(void);
 
     /**
-     * @brief Pointer to a function type for initializing a pushbutton.
-     */
-    typedef void (*pushbutton_init_func_p)(void);
-
-    /**
      * @brief Pointer to a function type for getting the state of a pushbutton.
      *
      * This function should return one of the values from the #PB_input_state_t enumeration.
