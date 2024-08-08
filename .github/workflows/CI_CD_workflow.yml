@@ -7,7 +7,7 @@ on:
 #     branches: [main, develop]
 jobs:
   formatting-check:
-    name: clang-foramt Check
+    name: Run Clang-foramt Check
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -26,8 +26,8 @@ jobs:
         check-path: ${{ matrix.path['check'] }}
         exclude-regex: ${{ matrix.path['exclude'] }}
         # fallback-style: 'Microsoft' # optional
-  cppcheck-annotations_scr:
-    name: cppcheck /src
+  cppcheck-annotations:
+    name: Run CppCheck /src
     needs: formatting-check
     runs-on: ubuntu-latest
     steps:
@@ -50,7 +50,7 @@ jobs:
           repo-token: "${{ secrets.GITHUB_TOKEN }}"
           title: 'Results of CppCheck src files'
           input: 'annotations.json'
-      - name: Run cppcheck /tests
+      - name: Run CppCheck /tests
         uses: Konstantin343/cppcheck-annotation-action@v1.0
         with:
           std: 'c99'
@@ -67,8 +67,8 @@ jobs:
           title: 'Results of CppCheck test files'
           input: 'annotations.json'
   lizard:
-    name: Code Complexity Check
-    needs: cppcheck-annotations_scr
+    name: RUN Code Complexity Check
+    needs: cppcheck-annotations
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4.1.1
@@ -82,7 +82,8 @@ jobs:
           verbose: "true"
           arguments: "4"
   pushbutton_switch_test_running:
-    name: PushButton Test RUN
+    name: RUN PushButton Tests
+    needs: cppcheck-annotations
     runs-on: windows-latest 
     steps:
     - name: Checkout code
@@ -114,7 +115,8 @@ jobs:
       run: ./pushbutton_test.exe -v
 
   Switch_test_running:
-    name: Switch Test RUN
+    name: Run Switch Tests
+    needs: cppcheck-annotations
     runs-on: windows-latest 
     steps:
     - name: Checkout code
