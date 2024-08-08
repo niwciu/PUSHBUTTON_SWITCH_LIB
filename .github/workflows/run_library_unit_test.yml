@@ -86,13 +86,10 @@ jobs:
     #   working-directory: test/switch/out
     #   run: ./switch_test.exe -v
 
-    - name: List files
-      run: dir
-
     - name: Coveralls
       uses: coverallsapp/github-action@v2
       with:
-        files: ./pushbutton.c.gcov ./pushbutton.c.gcov.json.gz
+        files: ./coverage.json
 
       
 
