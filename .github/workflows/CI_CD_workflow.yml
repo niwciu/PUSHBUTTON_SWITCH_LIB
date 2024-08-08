@@ -1,11 +1,11 @@
-# name: Run CI/CD Workflow
-# on:
-#   workflow_dispatch:  
-# #   push:
-# #     branches: [main, develop]
-# #   pull_request:
-# #     branches: [main, develop]
-# jobs:
+name: Run CI/CD Workflow
+on:
+  workflow_dispatch:  
+#   push:
+#     branches: [main, develop]
+#   pull_request:
+#     branches: [main, develop]
+jobs:
 #   formatting-check:
 #     name: Run Clang-foramt Check
 #     runs-on: ubuntu-latest
