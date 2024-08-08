@@ -1,4 +1,4 @@
-name: Run CI/CD Workflow
+name: Library Ci
 on:
   workflow_dispatch:  
 #   push:
@@ -7,7 +7,7 @@ on:
 #     branches: [main, develop]
 jobs:
   formatting-check:
-    name: clang-foramt Check
+    name: Run Clang-foramt Check
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -26,9 +26,13 @@ jobs:
         check-path: ${{ matrix.path['check'] }}
         exclude-regex: ${{ matrix.path['exclude'] }}
         # fallback-style: 'Microsoft' # optional
-  cppcheck-annotations_scr:
-    name: cppcheck /src
+
+  cppcheck-annotations:
+    name: RUN_CppCheck
     needs: formatting-check
+    strategy:
+      matrix:
+        path: ['./src' , './test/template']
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -40,35 +44,65 @@ jobs:
           std: 'c99'
           platform: 'unix64'
           log-level: 'verbose'
-          sources: './src'
+          sources: ${{matrix.path}}
           annotation-failures: 'warning'
           # suppress: 'unusedFunction'
           # annotation-level-default: 'error'
-      - name: Annotate lines with errors src
+      - name: Annotate lines with errors src 
         uses: yuzutech/annotations-action@v0.5.0
         with:
           repo-token: "${{ secrets.GITHUB_TOKEN }}"
-          title: 'Results of CppCheck src files'
+          title: 'Results of CppCheck ${{matrix.path}}'
           input: 'annotations.json'
-      - name: Run cppcheck /tests
-        uses: Konstantin343/cppcheck-annotation-action@v1.0
-        with:
-          std: 'c99'
-          platform: 'unix64'
-          log-level: 'verbose'
-          sources: './test/template'
-          annotation-failures: 'warning'
-          # suppress: 'unusedFunction'
-          # annotation-level-default: 'error'
-      - name: Annotate lines with errors test_src
-        uses: yuzutech/annotations-action@v0.5.0
-        with:
-          repo-token: "${{ secrets.GITHUB_TOKEN }}"
-          title: 'Results of CppCheck test files'
-          input: 'annotations.json'
+
+  # cppcheck-annotations_src:
+  #   name: Run CppCheck /src
+  #   needs: formatting-check
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v4.1.1
+
+  #     - name: Run cppcheck-annotation-action for src
+  #       uses: Konstantin343/cppcheck-annotation-action@v1.0
+  #       with:
+  #         std: 'c99'
+  #         platform: 'unix64'
+  #         log-level: 'verbose'
+  #         sources: './src'
+  #         annotation-failures: 'warning'
+  #         # suppress: 'unusedFunction'
+  #         # annotation-level-default: 'error'
+  #     - name: Annotate lines with errors src
+  #       uses: yuzutech/annotations-action@v0.5.0
+  #       with:
+  #         repo-token: "${{ secrets.GITHUB_TOKEN }}"
+  #         title: 'Results of CppCheck src files'
+  #         input: 'annotations.json'
+  # cppcheck-annotations_test:
+  #   name: Run CppCheck /test
+  #   needs: formatting-check
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Run CppCheck /tests
+  #       uses: Konstantin343/cppcheck-annotation-action@v1.0
+  #       with:
+  #         std: 'c99'
+  #         platform: 'unix64'
+  #         log-level: 'verbose'
+  #         sources: './test/template'
+  #         annotation-failures: 'warning'
+  #         # suppress: 'unusedFunction'
+  #         # annotation-level-default: 'error'
+  #     - name: Annotate lines with errors test_src
+  #       uses: yuzutech/annotations-action@v0.5.0
+  #       with:
+  #         repo-token: "${{ secrets.GITHUB_TOKEN }}"
+  #         title: 'Results of CppCheck test files'
+  #         input: 'annotations.json'
   lizard:
-    name: Code Complexity Check
-    needs: cppcheck-annotations_scr
+    name: RUN Code Complexity Check
+    needs: cppcheck-annotations
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4.1.1
@@ -81,13 +115,42 @@ jobs:
           language: "cpp"
           verbose: "true"
           arguments: "4"
-  template_test_running:
-    name: Template Test RUN
-    needs: cppcheck-annotations_scr
+
+  # unit_tests_running:
+  #   name: RUN PushButton Tests
+  #   needs: cppcheck-annotations
+  #   strategy:
+  #     matrix:
+  #       module: [pushbutton , switch]
+  #   runs-on: windows-latest 
+  #   steps:
+  #   - name: Checkout code
+  #     uses: actions/checkout@v4.1.1
+  #     with:
+  #       submodules: recursive
+        
+  #   - name: Install Ninja
+  #     uses: seanmiddleditch/gha-setup-ninja@v3
+        
+  #   - name: Build binary
+  #     working-directory: test/${{matrix.module}}
+  #     run: |
+  #       mkdir out
+  #       cmake -Bout -GNinja
+  #       cmake --build out
+
+  #   - name: List files
+  #     working-directory: test/${{matrix.module}}/out
+  #     run: dir
+
+  #   - name: Run ${{matrix.module}} tests
+  #     working-directory: test/${{matrix.module}}/out
+  #     run: ./${{matrix.module}}_test.exe -v
+
+  pushbutton_test_running:
+    name: RUN PushButton Tests
+    needs: cppcheck-annotations
     runs-on: windows-latest 
-    # strategy:
-    #   matrix:
-    #     os: [ubuntu-latest, windows-latest]
     steps:
     - name: Checkout code
       uses: actions/checkout@v4.1.1
@@ -98,20 +161,99 @@ jobs:
       uses: seanmiddleditch/gha-setup-ninja@v3
         
     - name: Build binary
-      working-directory: test/template
+      working-directory: test/pushbutton
       run: |
         mkdir out
         cmake -Bout -GNinja
         cmake --build out
 
     - name: List files
-      working-directory: test/template/out
+      working-directory: test/pushbutton/out
       run: dir
 
-    - name: Run template tests
-      working-directory: test/template/out
-      run: ./template_test.exe -v
+    - name: Run pushbutton tests
+      working-directory: test/pushbutton/out
+      run: ./pushbutton_test.exe -v
 
+  switch_test_running:
+    name: Run Switch Tests
+    needs: cppcheck-annotations
+    runs-on: windows-latest 
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4.1.1
+      with:
+        submodules: recursive
+        
+    - name: Install Ninja
+      uses: seanmiddleditch/gha-setup-ninja@v3
+        
+    - name: Build binary
+      working-directory: test/switch
+      run: |
+        mkdir out
+        cmake -Bout -GNinja
+        cmake --build out
+
+    - name: List files
+      working-directory: test/switch/out
+      run: dir
+
+    - name: Run inputs tests
+      working-directory: test/switch/out
+      run: ./switch_test.exe -v
+
+  
+
+  build_pushbutton_for_STM32G071:
+    name: Build STM32G071_NUCLEO_LL_1_KEY_UI
+    needs: pushbutton_test_running
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4.1.1
+      with:
+        submodules: recursive
+
+    - name: Install Ninja
+      uses: seanmiddleditch/gha-setup-ninja@v3
+
+    - name: Install Arm GNU Toolchain (arm-none-eabi-gcc)
+      uses: carlosperate/arm-none-eabi-gcc-action@v1
+    - run: arm-none-eabi-gcc --version
+
+    - name: Build binary
+      working-directory: examples/STM32G071_NUCLEO_LL_1_KEY_UI
+      run: |
+        mkdir out
+        cmake -DCMAKE_TOOLCHAIN_FILE=cmake/arm-none-eabi-gcc.cmake
+        cmake -Bout -GNinja
+        cmake --build out 
+
+  build_switch_for_STM32G071:
+    name: Build STM32G071_NUCLEO_LL_2_STATE_SWITCH
+    needs: switch_test_running
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4.1.1
+      with:
+        submodules: recursive
+
+    - name: Install Ninja
+      uses: seanmiddleditch/gha-setup-ninja@v3
+
+    - name: Install Arm GNU Toolchain (arm-none-eabi-gcc)
+      uses: carlosperate/arm-none-eabi-gcc-action@v1
+    - run: arm-none-eabi-gcc --version
+
+    - name: Build binary
+      working-directory: examples/STM32G071_NUCLEO_LL_2_STATE_SWITCH
+      run: |
+        mkdir out
+        cmake -DCMAKE_TOOLCHAIN_FILE=cmake/arm-none-eabi-gcc.cmake
+        cmake -Bout -GNinja
+        cmake --build out       
       # next steps are metrix report generations basing on Unit Test build and run artefacts
 
       #next job can be builds check on for specific platforms. Those buils can produce artefacts taht can be later deployed on github page
