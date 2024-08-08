@@ -1,7 +1,7 @@
 # PUSHBUTTON_SWITCH_LIB - simple C cross-platform library 
 ![keypad_lib](https://github.com/user-attachments/assets/d7c28488-53b3-46a1-956d-2e8736f214d3)    
 
-![GitHub License](https://img.shields.io/github/license/niwciu/PUSHBUTTON_SWITCH_LIB) ![GitHub top language](https://img.shields.io/github/languages/top/niwciu/PUSHBUTTON_SWITCH_LIB) ![GitHub Release](https://img.shields.io/github/v/release/niwciu/PUSHBUTTON_SWITCH_LIB) <a href='https://coveralls.io/github/niwciu/PUSHBUTTON_SWITCH_LIB?branch=feature/code_coverage_page_deploy'><img src='https://coveralls.io/repos/github/niwciu/PUSHBUTTON_SWITCH_LIB/badge.svg?branch=feature/code_coverage_page_deploy' alt='Coverage Status' /></a> ![Unit Tests](https://github.com/niwciu/PUSHBUTTON_SWITCH_LIB/actions/workflows/CI_CD_workflow.yml/badge.svg)
+![GitHub License](https://img.shields.io/github/license/niwciu/PUSHBUTTON_SWITCH_LIB) ![GitHub top language](https://img.shields.io/github/languages/top/niwciu/PUSHBUTTON_SWITCH_LIB) ![GitHub Release](https://img.shields.io/github/v/release/niwciu/PUSHBUTTON_SWITCH_LIB) <a href='https://coveralls.io/github/niwciu/PUSHBUTTON_SWITCH_LIB?branch=feature/code_coverage_page_deploy'><img src='https://coveralls.io/repos/github/niwciu/PUSHBUTTON_SWITCH_LIB/badge.svg?branch=feature/code_coverage_page_deploy' alt='Coverage Status' /></a> ![Unit Tests](https://github.com/niwciu/PUSHBUTTON_SWITCH_LIB/actions/workflows/CI_workflow.yml/badge.svg)
 
 <b><a href='https://niwciu.github.io/PUSHBUTTON_SWITCH_LIB/reports/Code_Coverage/PUSHBUTTON/pushbutton_gcov_report.html'>PushButton GCOVR Report</a></b>  
 <b><a href='https://niwciu.github.io/PUSHBUTTON_SWITCH_LIB/reports/Cyclomatic_Complexity/PUSHBUTTON/Lizard_report.html'>PushButton Code Complexity Report</a></b>  
