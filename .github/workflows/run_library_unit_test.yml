@@ -92,7 +92,7 @@ jobs:
     - name: Coveralls
       uses: coverallsapp/github-action@v2
       with:
-        files: ./pushbutton.c.gcov 
+        files: ./pushbutton.c.gcov ./pushbutton.c.gcov.json.gz
 
       
 
