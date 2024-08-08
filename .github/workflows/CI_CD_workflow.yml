@@ -91,10 +91,10 @@ jobs:
       with:
         submodules: recursive
         
-    - name: arm-none-eabi-gcc
-      uses: ryanwinter/arm-none-eabi-gcc@master
-      with:
-        release: '10-2021.10'
+    # - name: arm-none-eabi-gcc
+    #   uses: ryanwinter/arm-none-eabi-gcc@master
+    #   with:
+    #     release: '10-2021.10'
         
     - name: Install Ninja
       uses: seanmiddleditch/gha-setup-ninja@v3
@@ -114,20 +114,20 @@ jobs:
       working-directory: test/pushbutton/out
       run: ./pushbutton_test.exe -v
 
-  Switch_test_running:
+  switch_test_running:
     name: Run Switch Tests
     needs: cppcheck-annotations
     runs-on: windows-latest 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v4.0.0
+      uses: actions/checkout@v4.1.1
       with:
         submodules: recursive
         
-    - name: arm-none-eabi-gcc
-      uses: ryanwinter/arm-none-eabi-gcc@master
-      with:
-        release: '10-2021.10'
+    # - name: arm-none-eabi-gcc
+    #   uses: ryanwinter/arm-none-eabi-gcc@master
+    #   with:
+    #     release: '10-2021.10'
         
     - name: Install Ninja
       uses: seanmiddleditch/gha-setup-ninja@v3
@@ -146,6 +146,35 @@ jobs:
     - name: Run inputs tests
       working-directory: test/switch/out
       run: ./switch_test.exe -v
+
+  build_for_ARM:
+    name: Run arm-nen-eabi-gcc Build
+    needs: pushbutton_switch_test_running
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4.1.1
+      with:
+        submodules: recursive
+        
+    # - name: arm-none-eabi-gcc
+    #   uses: ryanwinter/arm-none-eabi-gcc@master
+    #   with:
+    #     release: '10-2021.10'
+        
+    - name: Install Ninja
+      uses: seanmiddleditch/gha-setup-ninja@v3
+      
+    - name: Install Arm GNU Toolchain (arm-none-eabi-gcc)
+      uses: carlosperate/arm-none-eabi-gcc-action@v1
+    - run: arm-none-eabi-gcc --version
+        
+    - name: Build binary
+      working-directory: test/pushbutton
+      run: |
+        mkdir out
+        cmake -Bout -GNinja
+        cmake --build out 
 
       # next steps are metrix report generations basing on Unit Test build and run artefacts
 
