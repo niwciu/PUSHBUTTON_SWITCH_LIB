@@ -81,36 +81,69 @@ jobs:
           language: "cpp"
           verbose: "true"
           arguments: "4"
-  template_test_running:
-    name: Template Test RUN
-    needs: cppcheck-annotations_scr
+  pushbutton_switch_test_running:
+    name: PushButton Test RUN
     runs-on: windows-latest 
-    # strategy:
-    #   matrix:
-    #     os: [ubuntu-latest, windows-latest]
     steps:
     - name: Checkout code
       uses: actions/checkout@v4.1.1
       with:
         submodules: recursive
         
+    - name: arm-none-eabi-gcc
+      uses: ryanwinter/arm-none-eabi-gcc@master
+      with:
+        release: '10-2021.10'
+        
     - name: Install Ninja
       uses: seanmiddleditch/gha-setup-ninja@v3
         
     - name: Build binary
-      working-directory: test/template
+      working-directory: test/pushbutton
       run: |
         mkdir out
         cmake -Bout -GNinja
         cmake --build out
 
     - name: List files
-      working-directory: test/template/out
+      working-directory: test/pushbutton/out
       run: dir
 
-    - name: Run template tests
-      working-directory: test/template/out
-      run: ./template_test.exe -v
+    - name: Run pushbutton tests
+      working-directory: test/pushbutton/out
+      run: ./pushbutton_test.exe -v
+
+  Switch_test_running:
+    name: Switch Test RUN
+    runs-on: windows-latest 
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4.0.0
+      with:
+        submodules: recursive
+        
+    - name: arm-none-eabi-gcc
+      uses: ryanwinter/arm-none-eabi-gcc@master
+      with:
+        release: '10-2021.10'
+        
+    - name: Install Ninja
+      uses: seanmiddleditch/gha-setup-ninja@v3
+        
+    - name: Build binary
+      working-directory: test/switch
+      run: |
+        mkdir out
+        cmake -Bout -GNinja
+        cmake --build out
+
+    - name: List files
+      working-directory: test/switch/out
+      run: dir
+
+    - name: Run inputs tests
+      working-directory: test/switch/out
+      run: ./switch_test.exe -v
 
       # next steps are metrix report generations basing on Unit Test build and run artefacts
 
