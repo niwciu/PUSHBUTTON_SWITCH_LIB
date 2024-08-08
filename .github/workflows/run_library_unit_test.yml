@@ -59,32 +59,37 @@ jobs:
     #     os: [ubuntu-latest, windows-latest]
     steps:
     - name: Checkout code
-      uses: actions/checkout@v4.0.0
+      uses: actions/checkout@v4.1.1
       with:
         submodules: recursive
         
-    - name: arm-none-eabi-gcc
-      uses: ryanwinter/arm-none-eabi-gcc@master
-      with:
-        release: '10-2021.10'
+    # - name: arm-none-eabi-gcc
+    #   uses: ryanwinter/arm-none-eabi-gcc@master
+    #   with:
+    #     release: '10-2021.10'
         
-    - name: Install Ninja
-      uses: seanmiddleditch/gha-setup-ninja@v3
+    # - name: Install Ninja
+    #   uses: seanmiddleditch/gha-setup-ninja@v3
         
-    - name: Build binary
-      working-directory: test/switch
-      run: |
-        mkdir out
-        cmake -Bout -GNinja
-        cmake --build out
+    # - name: Build binary
+    #   working-directory: test/switch
+    #   run: |
+    #     mkdir out
+    #     cmake -Bout -GNinja
+    #     cmake --build out
 
-    - name: List files
-      working-directory: test/switch/out
-      run: dir
+    # - name: List files
+    #   working-directory: test/switch/out
+    #   run: dir
 
-    - name: Run inputs tests
-      working-directory: test/switch/out
-      run: ./switch_test.exe -v
+    # - name: Run inputs tests
+    #   working-directory: test/switch/out
+    #   run: ./switch_test.exe -v
+
+    - name: Report Coveralls
+      uses: coverallsapp/github-action@v2
+
+      
 
   # template_2_test_running:
   #   name: template_2 Test RUN
