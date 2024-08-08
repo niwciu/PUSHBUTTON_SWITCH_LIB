@@ -100,136 +100,126 @@ jobs:
   #         repo-token: "${{ secrets.GITHUB_TOKEN }}"
   #         title: 'Results of CppCheck test files'
   #         input: 'annotations.json'
-  # lizard:
-  #   name: RUN Code Complexity Check
-  #   needs: cppcheck-annotations_src
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v4.1.1
-  #     - name: Lizard Runner
-  #       uses: Uno-Takashi/Lizard-Runner@v3
-  #       with:
-  #         path: "./src"
-  #         CCN: "12"
-  #         Threshold: "nloc=30"
-  #         language: "cpp"
-  #         verbose: "true"
-  #         arguments: "4"
-  # pushbutton_test_running:
-  #   name: RUN PushButton Tests
-  #   needs: cppcheck-annotations_src
-  #   runs-on: windows-latest 
-  #   steps:
-  #   - name: Checkout code
-  #     uses: actions/checkout@v4.1.1
-  #     with:
-  #       submodules: recursive
+  lizard:
+    name: RUN Code Complexity Check
+    needs: cppcheck-annotations
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4.1.1
+      - name: Lizard Runner
+        uses: Uno-Takashi/Lizard-Runner@v3
+        with:
+          path: "./src"
+          CCN: "12"
+          Threshold: "nloc=30"
+          language: "cpp"
+          verbose: "true"
+          arguments: "4"
+  pushbutton_test_running:
+    name: RUN PushButton Tests
+    needs: cppcheck-annotations
+    runs-on: windows-latest 
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4.1.1
+      with:
+        submodules: recursive
         
-  #   # - name: arm-none-eabi-gcc
-  #   #   uses: ryanwinter/arm-none-eabi-gcc@master
-  #   #   with:
-  #   #     release: '10-2021.10'
+    - name: Install Ninja
+      uses: seanmiddleditch/gha-setup-ninja@v3
         
-  #   - name: Install Ninja
-  #     uses: seanmiddleditch/gha-setup-ninja@v3
+    - name: Build binary
+      working-directory: test/pushbutton
+      run: |
+        mkdir out
+        cmake -Bout -GNinja
+        cmake --build out
+
+    - name: List files
+      working-directory: test/pushbutton/out
+      run: dir
+
+    - name: Run pushbutton tests
+      working-directory: test/pushbutton/out
+      run: ./pushbutton_test.exe -v
+
+  switch_test_running:
+    name: Run Switch Tests
+    needs: cppcheck-annotations
+    runs-on: windows-latest 
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4.1.1
+      with:
+        submodules: recursive
         
-  #   - name: Build binary
-  #     working-directory: test/pushbutton
-  #     run: |
-  #       mkdir out
-  #       cmake -Bout -GNinja
-  #       cmake --build out
-
-  #   - name: List files
-  #     working-directory: test/pushbutton/out
-  #     run: dir
-
-  #   - name: Run pushbutton tests
-  #     working-directory: test/pushbutton/out
-  #     run: ./pushbutton_test.exe -v
-
-  # switch_test_running:
-  #   name: Run Switch Tests
-  #   needs: cppcheck-annotations_src
-  #   runs-on: windows-latest 
-  #   steps:
-  #   - name: Checkout code
-  #     uses: actions/checkout@v4.1.1
-  #     with:
-  #       submodules: recursive
+    - name: Install Ninja
+      uses: seanmiddleditch/gha-setup-ninja@v3
         
-  #   # - name: arm-none-eabi-gcc
-  #   #   uses: ryanwinter/arm-none-eabi-gcc@master
-  #   #   with:
-  #   #     release: '10-2021.10'
-        
-  #   - name: Install Ninja
-  #     uses: seanmiddleditch/gha-setup-ninja@v3
-        
-  #   - name: Build binary
-  #     working-directory: test/switch
-  #     run: |
-  #       mkdir out
-  #       cmake -Bout -GNinja
-  #       cmake --build out
+    - name: Build binary
+      working-directory: test/switch
+      run: |
+        mkdir out
+        cmake -Bout -GNinja
+        cmake --build out
 
-  #   - name: List files
-  #     working-directory: test/switch/out
-  #     run: dir
+    - name: List files
+      working-directory: test/switch/out
+      run: dir
 
-  #   - name: Run inputs tests
-  #     working-directory: test/switch/out
-  #     run: ./switch_test.exe -v
+    - name: Run inputs tests
+      working-directory: test/switch/out
+      run: ./switch_test.exe -v
 
-  # build_pushbutton_for_STM32G071:
-  #   name: Build STM32G071_NUCLEO_LL_1_KEY_UI
-  #   needs: pushbutton_test_running
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #   - name: Checkout code
-  #     uses: actions/checkout@v4.1.1
-  #     with:
-  #       submodules: recursive
+  build_pushbutton_for_STM32G071:
+    name: Build STM32G071_NUCLEO_LL_1_KEY_UI
+    needs: pushbutton_test_running
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4.1.1
+      with:
+        submodules: recursive
 
-  #   - name: Install Ninja
-  #     uses: seanmiddleditch/gha-setup-ninja@v3
+    - name: Install Ninja
+      uses: seanmiddleditch/gha-setup-ninja@v3
 
-  #   - name: Install Arm GNU Toolchain (arm-none-eabi-gcc)
-  #     uses: carlosperate/arm-none-eabi-gcc-action@v1
-  #   - run: arm-none-eabi-gcc --version
+    - name: Install Arm GNU Toolchain (arm-none-eabi-gcc)
+      uses: carlosperate/arm-none-eabi-gcc-action@v1
+    - run: arm-none-eabi-gcc --version
 
-  #   - name: Build binary
-  #     working-directory: examples/STM32G071_NUCLEO_LL_1_KEY_UI
-  #     run: |
-  #       mkdir out
-  #       cmake -DCMAKE_TOOLCHAIN_FILE=cmake/arm-none-eabi-gcc.cmake
-  #       cmake -Bout -GNinja
-  #       cmake --build out 
+    - name: Build binary
+      working-directory: examples/STM32G071_NUCLEO_LL_1_KEY_UI
+      run: |
+        mkdir out
+        cmake -DCMAKE_TOOLCHAIN_FILE=cmake/arm-none-eabi-gcc.cmake
+        cmake -Bout -GNinja
+        cmake --build out 
 
-  # build_switch_for_STM32G071:
-  #   name: Build STM32G071_NUCLEO_LL_2_STATE_SWITCH
-  #   needs: switch_test_running
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #   - name: Checkout code
-  #     uses: actions/checkout@v4.1.1
-  #     with:
-  #       submodules: recursive
+  build_switch_for_STM32G071:
+    name: Build STM32G071_NUCLEO_LL_2_STATE_SWITCH
+    needs: switch_test_running
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4.1.1
+      with:
+        submodules: recursive
 
-  #   - name: Install Ninja
-  #     uses: seanmiddleditch/gha-setup-ninja@v3
+    - name: Install Ninja
+      uses: seanmiddleditch/gha-setup-ninja@v3
 
-  #   - name: Install Arm GNU Toolchain (arm-none-eabi-gcc)
-  #     uses: carlosperate/arm-none-eabi-gcc-action@v1
-  #   - run: arm-none-eabi-gcc --version
+    - name: Install Arm GNU Toolchain (arm-none-eabi-gcc)
+      uses: carlosperate/arm-none-eabi-gcc-action@v1
+    - run: arm-none-eabi-gcc --version
 
-  #   - name: Build binary
-  #     working-directory: examples/STM32G071_NUCLEO_LL_2_STATE_SWITCH
-  #     run: |
-  #       mkdir out
-  #       cmake -DCMAKE_TOOLCHAIN_FILE=cmake/arm-none-eabi-gcc.cmake
-  #       cmake -Bout -GNinja
-  #       cmake --build out       
+    - name: Build binary
+      working-directory: examples/STM32G071_NUCLEO_LL_2_STATE_SWITCH
+      run: |
+        mkdir out
+        cmake -DCMAKE_TOOLCHAIN_FILE=cmake/arm-none-eabi-gcc.cmake
+        cmake -Bout -GNinja
+        cmake --build out       
       # next steps are metrix report generations basing on Unit Test build and run artefacts
 
       #next job can be builds check on for specific platforms. Those buils can produce artefacts taht can be later deployed on github page
