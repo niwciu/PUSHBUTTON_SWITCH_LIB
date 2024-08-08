@@ -103,13 +103,16 @@ jobs:
   lizard:
     name: RUN Code Complexity Check
     needs: cppcheck-annotations
+    strategy:
+      matrix:
+        module: [PUSHBUTTON , SWITCH]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4.1.1
       - name: Lizard Runner
         uses: Uno-Takashi/Lizard-Runner@v3
         with:
-          path: "./src"
+          path: "./src/${{matrix.module}}"
           CCN: "12"
           Threshold: "nloc=30"
           language: "cpp"
