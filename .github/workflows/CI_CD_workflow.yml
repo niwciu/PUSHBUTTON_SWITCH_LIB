@@ -170,7 +170,7 @@ jobs:
     - run: arm-none-eabi-gcc --version
 
     - name: Build binary
-      working-directory: test/pushbutton
+      working-directory: examples/STM32G071_NUCLEO_LL_1_KEY_UI
       run: |
         mkdir out
         cmake -DCMAKE_TOOLCHAIN_FILE=cmake/arm-none-eabi-gcc.cmake
