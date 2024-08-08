@@ -1,4 +1,4 @@
-name: Run CI/CD Workflow
+name: Library Ci
 on:
   workflow_dispatch:  
 #   push:

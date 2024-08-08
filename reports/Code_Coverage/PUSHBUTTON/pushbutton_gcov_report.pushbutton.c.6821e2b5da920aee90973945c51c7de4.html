@@ -9,11 +9,10 @@
   </head>
 
   <body>
+
     <header>
       <h1>GCC Code Coverage Report</h1>
-
       <hr/>
-
       <div class="summary">
 <div>
   <table class="legend">
@@ -23,11 +22,11 @@
     </tr>
     <tr>
       <th scope="row">File:</th>
-      <td>src\PUSHBUTTON\pushbutton.c</td>
+      <td>pushbutton.c</td>
     </tr>
     <tr>
       <th scope="row">Date:</th>
-      <td>2024-08-06 22:27:07</td>
+      <td>2024-08-08 22:10:57</td>
     </tr>
   </table>
 </div>
@@ -60,255 +59,42 @@
   </table>
 </div>
       </div>
-
       <hr/>
     </header>
-
     <nav>
 <details>
   <summary>List of functions</summary>
   <table class="listOfFunctions">
     <tr>
-      <th>Function</th>
-      <th>Line</th>
+      <th>Function (Line)</th>
       <th>Call count</th>
+      <th>Block coverage</th>
     </tr>
-    <tr>
-      <td>
-        <a href="#l272">check_pushbutton</a>
-      </td>
-      <td>
-        <a href="#l272">272</a>
-      </td>
-      <td>
-        <a href="#l272"> called 3534 times</a>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <a href="#l57">debounce_pushbutton_push_state</a>
-      </td>
-      <td>
-        <a href="#l57">57</a>
-      </td>
-      <td>
-        <a href="#l57"> called 540 times</a>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <a href="#l78">debounce_pushbutton_release_state</a>
-      </td>
-      <td>
-        <a href="#l78">78</a>
-      </td>
-      <td>
-        <a href="#l78"> called 474 times</a>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <a href="#l98">debounce_pushbutton_short_push_long_push_state</a>
-      </td>
-      <td>
-        <a href="#l98">98</a>
-      </td>
-      <td>
-        <a href="#l98"> called 2520 times</a>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <a href="#l400">dec_pushbutton_deb_rep_timer</a>
-      </td>
-      <td>
-        <a href="#l400">400</a>
-      </td>
-      <td>
-        <a href="#l400"> called 69750 times</a>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <a href="#l380">disable_pusbutton_repetition</a>
-      </td>
-      <td>
-        <a href="#l380">380</a>
-      </td>
-      <td>
-        <a href="#l380"> called 38 times</a>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <a href="#l365">enable_pusbutton_repetition</a>
-      </td>
-      <td>
-        <a href="#l365">365</a>
-      </td>
-      <td>
-        <a href="#l365"> called 18 times</a>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <a href="#l204">execute_push_callback</a>
-      </td>
-      <td>
-        <a href="#l204">204</a>
-      </td>
-      <td>
-        <a href="#l204"> called 54 times</a>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <a href="#l212">execute_release_callback</a>
-      </td>
-      <td>
-        <a href="#l212">212</a>
-      </td>
-      <td>
-        <a href="#l212"> called 24 times</a>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <a href="#l138">handle_long_push_no_repetition_phase</a>
-      </td>
-      <td>
-        <a href="#l138">138</a>
-      </td>
-      <td>
-        <a href="#l138"> called 48 times</a>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <a href="#l150">handle_long_push_phase</a>
-      </td>
-      <td>
-        <a href="#l150">150</a>
-      </td>
-      <td>
-        <a href="#l150"> called 48 times</a>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <a href="#l123">handle_push_debouncing</a>
-      </td>
-      <td>
-        <a href="#l123">123</a>
-      </td>
-      <td>
-        <a href="#l123"> called 1008 times</a>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <a href="#l167">handle_short_push_phase</a>
-      </td>
-      <td>
-        <a href="#l167">167</a>
-      </td>
-      <td>
-        <a href="#l167"> called 168 times</a>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <a href="#l179">handle_short_push_phase_pin_pushed</a>
-      </td>
-      <td>
-        <a href="#l179">179</a>
-      </td>
-      <td>
-        <a href="#l179"> called 150 times</a>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <a href="#l197">handle_short_push_phase_pin_released</a>
-      </td>
-      <td>
-        <a href="#l197">197</a>
-      </td>
-      <td>
-        <a href="#l197"> called 18 times</a>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <a href="#l237">init_pushbutton</a>
-      </td>
-      <td>
-        <a href="#l237">237</a>
-      </td>
-      <td>
-        <a href="#l237"> called 120 times</a>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <a href="#l305">register_button_push_callback</a>
-      </td>
-      <td>
-        <a href="#l305">305</a>
-      </td>
-      <td>
-        <a href="#l305"> called 20 times</a>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <a href="#l326">register_button_release_callback</a>
-      </td>
-      <td>
-        <a href="#l326">326</a>
-      </td>
-      <td>
-        <a href="#l326"> called 10 times</a>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <a href="#l349">register_button_short_push_long_push_callbacks</a>
-      </td>
-      <td>
-        <a href="#l349">349</a>
-      </td>
-      <td>
-        <a href="#l349"> called 36 times</a>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <a href="#l36">update_button_deb_rep_counter</a>
-      </td>
-      <td>
-        <a href="#l36">36</a>
-      </td>
-      <td>
-        <a href="#l36"> called 36 times</a>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <a href="#l31">update_pushbutton_input_state</a>
-      </td>
-      <td>
-        <a href="#l31">31</a>
-      </td>
-      <td>
-        <a href="#l31"> called 3534 times</a>
-      </td>
-    </tr>
+    <tr><td><a href="#l272">check_pushbutton (line 272)</a></td><td>called 3534 times</td><td>100.0%</td></tr>
+    <tr><td><a href="#l57">debounce_pushbutton_push_state (line 57)</a></td><td>called 540 times</td><td>100.0%</td></tr>
+    <tr><td><a href="#l78">debounce_pushbutton_release_state (line 78)</a></td><td>called 474 times</td><td>100.0%</td></tr>
+    <tr><td><a href="#l98">debounce_pushbutton_short_push_long_push_state (line 98)</a></td><td>called 2520 times</td><td>100.0%</td></tr>
+    <tr><td><a href="#l400">dec_pushbutton_deb_rep_timer (line 400)</a></td><td>called 69750 times</td><td>100.0%</td></tr>
+    <tr><td><a href="#l380">disable_pusbutton_repetition (line 380)</a></td><td>called 38 times</td><td>100.0%</td></tr>
+    <tr><td><a href="#l365">enable_pusbutton_repetition (line 365)</a></td><td>called 18 times</td><td>100.0%</td></tr>
+    <tr><td><a href="#l204">execute_push_callback (line 204)</a></td><td>called 54 times</td><td>100.0%</td></tr>
+    <tr><td><a href="#l212">execute_release_callback (line 212)</a></td><td>called 24 times</td><td>100.0%</td></tr>
+    <tr><td><a href="#l138">handle_long_push_no_repetition_phase (line 138)</a></td><td>called 48 times</td><td>100.0%</td></tr>
+    <tr><td><a href="#l150">handle_long_push_phase (line 150)</a></td><td>called 48 times</td><td>100.0%</td></tr>
+    <tr><td><a href="#l123">handle_push_debouncing (line 123)</a></td><td>called 1008 times</td><td>100.0%</td></tr>
+    <tr><td><a href="#l167">handle_short_push_phase (line 167)</a></td><td>called 168 times</td><td>100.0%</td></tr>
+    <tr><td><a href="#l179">handle_short_push_phase_pin_pushed (line 179)</a></td><td>called 150 times</td><td>100.0%</td></tr>
+    <tr><td><a href="#l197">handle_short_push_phase_pin_released (line 197)</a></td><td>called 18 times</td><td>100.0%</td></tr>
+    <tr><td><a href="#l237">init_pushbutton (line 237)</a></td><td>called 120 times</td><td>100.0%</td></tr>
+    <tr><td><a href="#l305">register_button_push_callback (line 305)</a></td><td>called 20 times</td><td>100.0%</td></tr>
+    <tr><td><a href="#l326">register_button_release_callback (line 326)</a></td><td>called 10 times</td><td>100.0%</td></tr>
+    <tr><td><a href="#l349">register_button_short_push_long_push_callbacks (line 349)</a></td><td>called 36 times</td><td>100.0%</td></tr>
+    <tr><td><a href="#l36">update_button_deb_rep_counter (line 36)</a></td><td>called 36 times</td><td>100.0%</td></tr>
+    <tr><td><a href="#l31">update_pushbutton_input_state (line 31)</a></td><td>called 3534 times</td><td>100.0%</td></tr>
   </table>
 </details>
 
     </nav>
-
     <main>
 <div class="file-source">
   <table>
@@ -1068,8 +854,8 @@
         </div>
         </details>
       </td>
-      <td class="linecount coveredLine">2520</td>
-      <td class="src coveredLine"><span class="w">    </span><span class="k">switch</span><span class="w"> </span><span class="p">(</span><span class="n">BUTTON</span><span class="o">-&gt;</span><span class="n">pushbutton_state_machine</span><span class="p">)</span></td>
+      <td class="linecount partialCoveredLine">2520</td>
+      <td class="src partialCoveredLine"><span class="w">    </span><span class="k">switch</span><span class="w"> </span><span class="p">(</span><span class="n">BUTTON</span><span class="o">-&gt;</span><span class="n">pushbutton_state_machine</span><span class="p">)</span></td>
     </tr>
     <tr class="source-line">
       <td class="lineno"><a id="l101" href="#l101">101</a></td>
@@ -1880,8 +1666,8 @@
         </div>
         </details>
       </td>
-      <td class="linecount coveredLine">54</td>
-      <td class="src coveredLine"><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">BUTTON</span><span class="o">-&gt;</span><span class="n">push_callback</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">)</span></td>
+      <td class="linecount partialCoveredLine">54</td>
+      <td class="src partialCoveredLine"><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">BUTTON</span><span class="o">-&gt;</span><span class="n">push_callback</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">)</span></td>
     </tr>
     <tr class="source-line">
       <td class="lineno"><a id="l207" href="#l207">207</a></td>
@@ -1943,8 +1729,8 @@
         </div>
         </details>
       </td>
-      <td class="linecount coveredLine">24</td>
-      <td class="src coveredLine"><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">BUTTON</span><span class="o">-&gt;</span><span class="n">release_callback</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">)</span></td>
+      <td class="linecount partialCoveredLine">24</td>
+      <td class="src partialCoveredLine"><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">BUTTON</span><span class="o">-&gt;</span><span class="n">release_callback</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">)</span></td>
     </tr>
     <tr class="source-line">
       <td class="lineno"><a id="l215" href="#l215">215</a></td>
@@ -2014,7 +1800,7 @@
       <td class="linebranch">
       </td>
       <td class="linecount "></td>
-      <td class="src "><span class="cm"> * </span></td>
+      <td class="src "><span class="cm"> *</span></td>
     </tr>
     <tr class="source-line">
       <td class="lineno"><a id="l225" href="#l225">225</a></td>
@@ -2084,14 +1870,14 @@
       <td class="linebranch">
       </td>
       <td class="linecount "></td>
-      <td class="src "><span class="cm"> * </span></td>
+      <td class="src "><span class="cm"> *</span></td>
     </tr>
     <tr class="source-line">
       <td class="lineno"><a id="l235" href="#l235">235</a></td>
       <td class="linebranch">
       </td>
       <td class="linecount "></td>
-      <td class="src "><span class="cm"> * </span></td>
+      <td class="src "><span class="cm"> *</span></td>
     </tr>
     <tr class="source-line">
       <td class="lineno"><a id="l236" href="#l236">236</a></td>
@@ -3288,9 +3074,8 @@
 </div>
       <hr/>
     </main>
-
     <footer>
-      Generated by: <a href="http://gcovr.com/en/6.0">GCOVR (Version 6.0)</a>
+      Generated by: <a href="http://gcovr.com/en/main">GCOVR (Version 7.2+main)</a>
     </footer>
   </body>
 </html>
