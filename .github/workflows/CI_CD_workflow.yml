@@ -147,8 +147,8 @@ jobs:
 #       working-directory: test/switch/out
 #       run: ./switch_test.exe -v
 
-  build_for_ARM:
-    name: Run arm-nen-eabi-gcc Build
+  build_pushbutton_for_STM32G071:
+    name: Run STM32G071_NUCLEO_LL_1_KEY_UI Build
     # needs: pushbutton_switch_test_running
     runs-on: ubuntu-latest
     steps:
@@ -156,12 +156,7 @@ jobs:
       uses: actions/checkout@v4.1.1
       with:
         submodules: recursive
-        
-    # - name: arm-none-eabi-gcc
-    #   uses: ryanwinter/arm-none-eabi-gcc@master
-    #   with:
-    #     release: '10-2021.10'
-        
+
     - name: Install Ninja
       uses: seanmiddleditch/gha-setup-ninja@v3
 
@@ -177,6 +172,30 @@ jobs:
         cmake -Bout -GNinja
         cmake --build out 
 
+  build_switch_for_STM32G071:
+    name: Run STM32G071_NUCLEO_LL_2_STATE_SWITCH Build
+    # needs: pushbutton_switch_test_running
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4.1.1
+      with:
+        submodules: recursive
+
+    - name: Install Ninja
+      uses: seanmiddleditch/gha-setup-ninja@v3
+
+    - name: Install Arm GNU Toolchain (arm-none-eabi-gcc)
+      uses: carlosperate/arm-none-eabi-gcc-action@v1
+    - run: arm-none-eabi-gcc --version
+
+    - name: Build binary
+      working-directory: examples/STM32G071_NUCLEO_LL_2_STATE_SWITCH
+      run: |
+        mkdir out
+        cmake -DCMAKE_TOOLCHAIN_FILE=cmake/arm-none-eabi-gcc.cmake
+        cmake -Bout -GNinja
+        cmake --build out       
       # next steps are metrix report generations basing on Unit Test build and run artefacts
 
       #next job can be builds check on for specific platforms. Those buils can produce artefacts taht can be later deployed on github page
