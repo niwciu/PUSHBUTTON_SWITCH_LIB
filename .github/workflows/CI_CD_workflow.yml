@@ -81,7 +81,7 @@ jobs:
           language: "cpp"
           verbose: "true"
           arguments: "4"
-  pushbutton_switch_test_running:
+  pushbutton_test_running:
     name: RUN PushButton Tests
     needs: cppcheck-annotations
     runs-on: windows-latest 
@@ -149,7 +149,7 @@ jobs:
 
   build_pushbutton_for_STM32G071:
     name: Run STM32G071_NUCLEO_LL_1_KEY_UI Build
-    needs: pushbutton_switch_test_running
+    needs: pushbutton_test_running
     runs-on: ubuntu-latest
     steps:
     - name: Checkout code
@@ -174,7 +174,7 @@ jobs:
 
   build_switch_for_STM32G071:
     name: Run STM32G071_NUCLEO_LL_2_STATE_SWITCH Build
-    needs: pushbutton_switch_test_running
+    needs: switch_test_running
     runs-on: ubuntu-latest
     steps:
     - name: Checkout code
