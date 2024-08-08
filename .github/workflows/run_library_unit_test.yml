@@ -89,7 +89,7 @@ jobs:
     - name: Coveralls
       uses: coverallsapp/github-action@v2
       with:
-        files: ./coverage.json
+        files: ./switch_coverage.json ./pushbutton_coverage.json
 
       
 
