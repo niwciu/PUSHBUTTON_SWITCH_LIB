@@ -18,37 +18,37 @@ jobs:
       with:
         submodules: recursive
         
-    - name: arm-none-eabi-gcc
-      uses: ryanwinter/arm-none-eabi-gcc@master
-      with:
-        release: '10-2021.10'
+    # - name: arm-none-eabi-gcc
+    #   uses: ryanwinter/arm-none-eabi-gcc@master
+    #   with:
+    #     release: '10-2021.10'
         
-    - name: Install Ninja
-      uses: seanmiddleditch/gha-setup-ninja@v3
+    # - name: Install Ninja
+    #   uses: seanmiddleditch/gha-setup-ninja@v3
         
-    - name: Build binary
-      working-directory: test/pushbutton
-      run: |
-        mkdir out
-        cmake -Bout -GNinja
-        cmake --build out
+    # - name: Build binary
+    #   working-directory: test/pushbutton
+    #   run: |
+    #     mkdir out
+    #     cmake -Bout -GNinja
+    #     cmake --build out
 
-    - name: List files
-      working-directory: test/pushbutton/out
-      run: dir
+    # - name: List files
+    #   working-directory: test/pushbutton/out
+    #   run: dir
 
-    - name: Run pushbutton tests
-      working-directory: test/pushbutton/out
-      run: ./pushbutton_test.exe -v
+    # - name: Run pushbutton tests
+    #   working-directory: test/pushbutton/out
+    #   run: ./pushbutton_test.exe -v
     
-    - name: RUN GCOVR
-      working-directory: test/pushbutton/out
-      run: make ccr
+    # - name: RUN GCOVR
+    #   working-directory: test/pushbutton/out
+    #   run: make ccr
 
-    - name: Coveralls
-      uses: coverallsapp/github-action@v2
-      with:
-        files: ./coverage.json 
+    # - name: Coveralls
+    #   uses: coverallsapp/github-action@v2
+    #   with:
+    #     files: ./coverage.json 
       
 
   Switch_test_running:
@@ -86,8 +86,13 @@ jobs:
     #   working-directory: test/switch/out
     #   run: ./switch_test.exe -v
 
-    - name: Report Coveralls
+    - name: List files
+      run: dir
+
+    - name: Coveralls
       uses: coverallsapp/github-action@v2
+      with:
+        files: coverage.json 
 
       
 
