@@ -42,10 +42,14 @@ jobs:
       run: ./pushbutton_test.exe -v
     
     - name: RUN GCOVR
+      working-directory: test/pushbutton/out
       run: make ccr
-      
+
     - name: Coveralls
       uses: coverallsapp/github-action@v2
+      with:
+        files: ./coverage.json 
+      
 
   Switch_test_running:
     name: Switch Test RUN
