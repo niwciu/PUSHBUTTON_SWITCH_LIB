@@ -1,13 +1,9 @@
 # PUSHBUTTON_SWITCH_LIB - simple C cross-platform library 
 ![keypad_lib](https://github.com/user-attachments/assets/d7c28488-53b3-46a1-956d-2e8736f214d3)
-[![GitHub License](https://img.shields.io/github/license/niwciu/PUSHBUTTON_SWITCH_LIB)](https://github.com/niwciu/PUSHBUTTON_SWITCH_LIB/blob/main/LICENSE)  [![GitHub Release](https://img.shields.io/github/v/release/niwciu/PUSHBUTTON_SWITCH_LIB)](https://github.com/niwciu/PUSHBUTTON_SWITCH_LIB/releases)  
-![GitHub top language](https://img.shields.io/github/languages/top/niwciu/PUSHBUTTON_SWITCH_LIB)  
-![GitHub branch check runs](https://img.shields.io/github/check-runs/niwciu/LCD_HD44780/main) 
-[![Coverage Status](https://coveralls.io/repos/github/niwciu/PUSHBUTTON_SWITCH_LIB/badge.svg?branch=feature/code_coverage_page_deploy)](https://coveralls.io/github/niwciu/PUSHBUTTON_SWITCH_LIB?branch=feature/code_coverage_page_deploy)  
-![Unit Tests](https://github.com/niwciu/PUSHBUTTON_SWITCH_LIB/actions/workflows/run_library_unit_test.yml/badge.svg)
-![cppcheck](https://github.com/niwciu/PUSHBUTTON_SWITCH_LIB/actions/workflows/run_cppcheck.yml/badge.svg)
-![clang-format](https://github.com/niwciu/PUSHBUTTON_SWITCH_LIB/actions/workflows/clang-format_check.yml/badge.svg)
-![code complexity](https://github.com/niwciu/PUSHBUTTON_SWITCH_LIB/actions/workflows/run_lizard_lib_check.yml/badge.svg) 
+![GitHub License](https://img.shields.io/github/license/niwciu/PUSHBUTTON_SWITCH_LIB) ![GitHub top language](https://img.shields.io/github/languages/top/niwciu/PUSHBUTTON_SWITCH_LIB) ![GitHub Release](https://img.shields.io/github/v/release/niwciu/PUSHBUTTON_SWITCH_LIB) <a href='https://coveralls.io/github/niwciu/PUSHBUTTON_SWITCH_LIB?branch=feature/code_coverage_page_deploy'><img src='https://coveralls.io/repos/github/niwciu/PUSHBUTTON_SWITCH_LIB/badge.svg?branch=feature/code_coverage_page_deploy' alt='Coverage Status' /></a> ![Unit Tests](https://github.com/niwciu/PUSHBUTTON_SWITCH_LIB/actions/workflows/CI_CD_workflow.yml/badge.svg)
+
+<b><a href='./reports/pushbutton_gcov_report.html'>GCOVR Code Coverage Report</a></b> 
+<b><a href='https://coveralls.io/github/niwciu/PUSHBUTTON_SWITCH_LIB?branch=feature/code_coverage_page_deploy'>Code Complexity Check Report</a></b>
 
 The `PUSHBUTTON_SWITCH_LIB` is a simple cross-platform C library providing interfaces for pushbuttons and two-state switches (two-state input signals).
 

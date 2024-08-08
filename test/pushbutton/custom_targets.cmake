@@ -56,4 +56,5 @@ else()
 endif()
 add_custom_target(ccr python3 -m gcovr CMakeFiles/pushbutton_test.dir/D_/EMBEDDED/LIBRARIES/C_libraries/PUSHBUTTON_SWITCH_LIB/src/PUSHBUTTON -r ../../.. 
                   --html-details ../../../reports/Code_Coverage/PUSHBUTTON/pushbutton_gcov_report.html
-				  --coveralls --coveralls ../../../coverage.json)
+				#   --html-theme github.blue
+				  --coveralls --coveralls ../../../pusbutton_coverage.json)
