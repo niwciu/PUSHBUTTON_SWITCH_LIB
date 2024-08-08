@@ -1,4 +1,4 @@
-name: Library Ci
+name: Library CI
 on:
   workflow_dispatch:  
 #   push:
