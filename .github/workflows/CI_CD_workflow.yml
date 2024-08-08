@@ -26,7 +26,7 @@ jobs:
         check-path: ${{ matrix.path['check'] }}
         exclude-regex: ${{ matrix.path['exclude'] }}
         # fallback-style: 'Microsoft' # optional
-  cppcheck-annotations:
+  cppcheck-annotations_src:
     name: Run CppCheck /src
     needs: formatting-check
     runs-on: ubuntu-latest
@@ -50,6 +50,11 @@ jobs:
           repo-token: "${{ secrets.GITHUB_TOKEN }}"
           title: 'Results of CppCheck src files'
           input: 'annotations.json'
+  cppcheck-annotations_test:
+    name: Run CppCheck /test
+    needs: formatting-check
+    runs-on: ubuntu-latest
+    steps:
       - name: Run CppCheck /tests
         uses: Konstantin343/cppcheck-annotation-action@v1.0
         with:
@@ -68,7 +73,7 @@ jobs:
           input: 'annotations.json'
   lizard:
     name: RUN Code Complexity Check
-    needs: cppcheck-annotations
+    needs: cppcheck-annotations_src
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4.1.1
