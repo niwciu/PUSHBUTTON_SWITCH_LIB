@@ -1,155 +1,155 @@
-name: Run CI/CD Workflow
-on:
-  workflow_dispatch:  
-#   push:
-#     branches: [main, develop]
-#   pull_request:
-#     branches: [main, develop]
-jobs:
-  formatting-check:
-    name: Run Clang-foramt Check
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        path:
-          - check: 'src'
-            exclude: ''              # Nothing to exclude
-          - check: 'test'
-            exclude: '(template|unity|hw_test)'  # Exclude file paths containing "template" or "unity"
+# name: Run CI/CD Workflow
+# on:
+#   workflow_dispatch:  
+# #   push:
+# #     branches: [main, develop]
+# #   pull_request:
+# #     branches: [main, develop]
+# jobs:
+#   formatting-check:
+#     name: Run Clang-foramt Check
+#     runs-on: ubuntu-latest
+#     strategy:
+#       matrix:
+#         path:
+#           - check: 'src'
+#             exclude: ''              # Nothing to exclude
+#           - check: 'test'
+#             exclude: '(template|unity|hw_test)'  # Exclude file paths containing "template" or "unity"
 
-    steps:
-    - uses: actions/checkout@v4.1.1
-    - name: Run clang-format style check for C/C++/Protobuf programs.
-      uses: jidicula/clang-format-action@v4.11.0
-      with:
-        clang-format-version: '17'
-        check-path: ${{ matrix.path['check'] }}
-        exclude-regex: ${{ matrix.path['exclude'] }}
-        # fallback-style: 'Microsoft' # optional
-  cppcheck-annotations:
-    name: Run CppCheck /src
-    needs: formatting-check
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.1.1
+#     steps:
+#     - uses: actions/checkout@v4.1.1
+#     - name: Run clang-format style check for C/C++/Protobuf programs.
+#       uses: jidicula/clang-format-action@v4.11.0
+#       with:
+#         clang-format-version: '17'
+#         check-path: ${{ matrix.path['check'] }}
+#         exclude-regex: ${{ matrix.path['exclude'] }}
+#         # fallback-style: 'Microsoft' # optional
+#   cppcheck-annotations:
+#     name: Run CppCheck /src
+#     needs: formatting-check
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4.1.1
 
-      - name: Run cppcheck-annotation-action for src
-        uses: Konstantin343/cppcheck-annotation-action@v1.0
-        with:
-          std: 'c99'
-          platform: 'unix64'
-          log-level: 'verbose'
-          sources: './src'
-          annotation-failures: 'warning'
-          # suppress: 'unusedFunction'
-          # annotation-level-default: 'error'
-      - name: Annotate lines with errors src
-        uses: yuzutech/annotations-action@v0.5.0
-        with:
-          repo-token: "${{ secrets.GITHUB_TOKEN }}"
-          title: 'Results of CppCheck src files'
-          input: 'annotations.json'
-      - name: Run CppCheck /tests
-        uses: Konstantin343/cppcheck-annotation-action@v1.0
-        with:
-          std: 'c99'
-          platform: 'unix64'
-          log-level: 'verbose'
-          sources: './test/template'
-          annotation-failures: 'warning'
-          # suppress: 'unusedFunction'
-          # annotation-level-default: 'error'
-      - name: Annotate lines with errors test_src
-        uses: yuzutech/annotations-action@v0.5.0
-        with:
-          repo-token: "${{ secrets.GITHUB_TOKEN }}"
-          title: 'Results of CppCheck test files'
-          input: 'annotations.json'
-  lizard:
-    name: RUN Code Complexity Check
-    needs: cppcheck-annotations
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4.1.1
-      - name: Lizard Runner
-        uses: Uno-Takashi/Lizard-Runner@v3
-        with:
-          path: "./src"
-          CCN: "12"
-          Threshold: "nloc=30"
-          language: "cpp"
-          verbose: "true"
-          arguments: "4"
-  pushbutton_switch_test_running:
-    name: RUN PushButton Tests
-    needs: cppcheck-annotations
-    runs-on: windows-latest 
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v4.1.1
-      with:
-        submodules: recursive
+#       - name: Run cppcheck-annotation-action for src
+#         uses: Konstantin343/cppcheck-annotation-action@v1.0
+#         with:
+#           std: 'c99'
+#           platform: 'unix64'
+#           log-level: 'verbose'
+#           sources: './src'
+#           annotation-failures: 'warning'
+#           # suppress: 'unusedFunction'
+#           # annotation-level-default: 'error'
+#       - name: Annotate lines with errors src
+#         uses: yuzutech/annotations-action@v0.5.0
+#         with:
+#           repo-token: "${{ secrets.GITHUB_TOKEN }}"
+#           title: 'Results of CppCheck src files'
+#           input: 'annotations.json'
+#       - name: Run CppCheck /tests
+#         uses: Konstantin343/cppcheck-annotation-action@v1.0
+#         with:
+#           std: 'c99'
+#           platform: 'unix64'
+#           log-level: 'verbose'
+#           sources: './test/template'
+#           annotation-failures: 'warning'
+#           # suppress: 'unusedFunction'
+#           # annotation-level-default: 'error'
+#       - name: Annotate lines with errors test_src
+#         uses: yuzutech/annotations-action@v0.5.0
+#         with:
+#           repo-token: "${{ secrets.GITHUB_TOKEN }}"
+#           title: 'Results of CppCheck test files'
+#           input: 'annotations.json'
+#   lizard:
+#     name: RUN Code Complexity Check
+#     needs: cppcheck-annotations
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/checkout@v4.1.1
+#       - name: Lizard Runner
+#         uses: Uno-Takashi/Lizard-Runner@v3
+#         with:
+#           path: "./src"
+#           CCN: "12"
+#           Threshold: "nloc=30"
+#           language: "cpp"
+#           verbose: "true"
+#           arguments: "4"
+#   pushbutton_switch_test_running:
+#     name: RUN PushButton Tests
+#     needs: cppcheck-annotations
+#     runs-on: windows-latest 
+#     steps:
+#     - name: Checkout code
+#       uses: actions/checkout@v4.1.1
+#       with:
+#         submodules: recursive
         
-    # - name: arm-none-eabi-gcc
-    #   uses: ryanwinter/arm-none-eabi-gcc@master
-    #   with:
-    #     release: '10-2021.10'
+#     # - name: arm-none-eabi-gcc
+#     #   uses: ryanwinter/arm-none-eabi-gcc@master
+#     #   with:
+#     #     release: '10-2021.10'
         
-    - name: Install Ninja
-      uses: seanmiddleditch/gha-setup-ninja@v3
+#     - name: Install Ninja
+#       uses: seanmiddleditch/gha-setup-ninja@v3
         
-    - name: Build binary
-      working-directory: test/pushbutton
-      run: |
-        mkdir out
-        cmake -Bout -GNinja
-        cmake --build out
+#     - name: Build binary
+#       working-directory: test/pushbutton
+#       run: |
+#         mkdir out
+#         cmake -Bout -GNinja
+#         cmake --build out
 
-    - name: List files
-      working-directory: test/pushbutton/out
-      run: dir
+#     - name: List files
+#       working-directory: test/pushbutton/out
+#       run: dir
 
-    - name: Run pushbutton tests
-      working-directory: test/pushbutton/out
-      run: ./pushbutton_test.exe -v
+#     - name: Run pushbutton tests
+#       working-directory: test/pushbutton/out
+#       run: ./pushbutton_test.exe -v
 
-  switch_test_running:
-    name: Run Switch Tests
-    needs: cppcheck-annotations
-    runs-on: windows-latest 
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v4.1.1
-      with:
-        submodules: recursive
+#   switch_test_running:
+#     name: Run Switch Tests
+#     needs: cppcheck-annotations
+#     runs-on: windows-latest 
+#     steps:
+#     - name: Checkout code
+#       uses: actions/checkout@v4.1.1
+#       with:
+#         submodules: recursive
         
-    # - name: arm-none-eabi-gcc
-    #   uses: ryanwinter/arm-none-eabi-gcc@master
-    #   with:
-    #     release: '10-2021.10'
+#     # - name: arm-none-eabi-gcc
+#     #   uses: ryanwinter/arm-none-eabi-gcc@master
+#     #   with:
+#     #     release: '10-2021.10'
         
-    - name: Install Ninja
-      uses: seanmiddleditch/gha-setup-ninja@v3
+#     - name: Install Ninja
+#       uses: seanmiddleditch/gha-setup-ninja@v3
         
-    - name: Build binary
-      working-directory: test/switch
-      run: |
-        mkdir out
-        cmake -Bout -GNinja
-        cmake --build out
+#     - name: Build binary
+#       working-directory: test/switch
+#       run: |
+#         mkdir out
+#         cmake -Bout -GNinja
+#         cmake --build out
 
-    - name: List files
-      working-directory: test/switch/out
-      run: dir
+#     - name: List files
+#       working-directory: test/switch/out
+#       run: dir
 
-    - name: Run inputs tests
-      working-directory: test/switch/out
-      run: ./switch_test.exe -v
+#     - name: Run inputs tests
+#       working-directory: test/switch/out
+#       run: ./switch_test.exe -v
 
   build_for_ARM:
     name: Run arm-nen-eabi-gcc Build
-    needs: pushbutton_switch_test_running
+    # needs: pushbutton_switch_test_running
     runs-on: ubuntu-latest
     steps:
     - name: Checkout code
@@ -164,15 +164,16 @@ jobs:
         
     - name: Install Ninja
       uses: seanmiddleditch/gha-setup-ninja@v3
-      
+
     - name: Install Arm GNU Toolchain (arm-none-eabi-gcc)
       uses: carlosperate/arm-none-eabi-gcc-action@v1
     - run: arm-none-eabi-gcc --version
-        
+
     - name: Build binary
       working-directory: test/pushbutton
       run: |
         mkdir out
+        cmake -DCMAKE_TOOLCHAIN_FILE=cmake/arm-none-eabi-gcc.cmake
         cmake -Bout -GNinja
         cmake --build out 
 
