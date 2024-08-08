@@ -1,6 +1,7 @@
+        -:    0:Colorization: profile count: [46m[Kzero coverage (exceptional)[m[K [41m[Kzero coverage (unexceptional)[m[K [45m[Kunexecuted block[m[K
         -:    0:Source:D:/EMBEDDED/LIBRARIES/C_libraries/PUSHBUTTON_SWITCH_LIB/src/PUSHBUTTON/pushbutton.c
-        -:    0:Graph:D:\EMBEDDED\LIBRARIES\C_libraries\PUSHBUTTON_SWITCH_LIB\test\pushbutton\out\CMakeFiles\pushbutton_test.dir\D_\EMBEDDED\LIBRARIES\C_libraries\PUSHBUTTON_SWITCH_LIB\src\PUSHBUTTON\pushbutton.c.gcno
-        -:    0:Data:D:\EMBEDDED\LIBRARIES\C_libraries\PUSHBUTTON_SWITCH_LIB\test\pushbutton\out\CMakeFiles\pushbutton_test.dir\D_\EMBEDDED\LIBRARIES\C_libraries\PUSHBUTTON_SWITCH_LIB\src\PUSHBUTTON\pushbutton.c.gcda
+        -:    0:Graph:D:\EMBEDDED\LIBRARIES\C_libraries\PUSHBUTTON_SWITCH_LIB\test\pushbutton\out\CMakeFiles\pushbutton_test.dir\D_\EMBEDDED\LIBRARIES\C_libraries\PUSHBUTTON_SWITCH_LIB\src\PUSHBUTTON/pushbutton.gcno
+        -:    0:Data:D:\EMBEDDED\LIBRARIES\C_libraries\PUSHBUTTON_SWITCH_LIB\test\pushbutton\out\CMakeFiles\pushbutton_test.dir\D_\EMBEDDED\LIBRARIES\C_libraries\PUSHBUTTON_SWITCH_LIB\src\PUSHBUTTON/pushbutton.gcda
         -:    0:Runs:2
         -:    1:/**
         -:    2: * @file pushbutton.c
@@ -32,20 +33,27 @@
         -:   28:static void execute_push_callback(PUSHBUTTON_TypDef *BUTTON);
         -:   29:static void execute_release_callback(PUSHBUTTON_TypDef *BUTTON);
         -:   30:
+function update_pushbutton_input_state called 3534 returned 100% blocks executed 100%
      3534:   31:static void update_pushbutton_input_state(PUSHBUTTON_TypDef *BUTTON)
         -:   32:{
      3534:   33:    BUTTON->input_state = BUTTON->GPIO_interface->get_button_input_state();
      3534:   33-block  0
+call    0 returned 3534
      3534:   34:}
         -:   35:
+function update_button_deb_rep_counter called 36 returned 100% blocks executed 100%
        36:   36:static void update_button_deb_rep_counter(PUSHBUTTON_TypDef *BUTTON)
         -:   37:{
         -:   38:
        36:   39:    if ((BUTTON->repetition) == REPETITION_ON)
        36:   39-block  0
+branch  0 taken 30 (fallthrough)
+branch  1 taken 6
         -:   40:    {
        30:   41:        if ((BUTTON->REPETITION_STATUS_FLAG) == REPETITION_INACTIVE)
        30:   41-block  0
+branch  0 taken 12 (fallthrough)
+branch  1 taken 18
         -:   42:        {
        12:   43:            BUTTON->deb_rep_timer = PUSHBUTTON_FIRST_REPETITION_TIME;
        12:   44:            BUTTON->REPETITION_STATUS_FLAG = REPETITION_ACTIVE;
@@ -64,17 +72,24 @@
         -:   54:    }
        36:   55:}
         -:   56:
+function debounce_pushbutton_push_state called 540 returned 100% blocks executed 100%
       540:   57:static void debounce_pushbutton_push_state(PUSHBUTTON_TypDef *BUTTON)
         -:   58:{
       540:   59:    if ((BUTTON->input_state) == PUSHED)
       540:   59-block  0
+branch  0 taken 320 (fallthrough)
+branch  1 taken 220
         -:   60:    {
       320:   61:        if ((BUTTON->deb_rep_timer) == 1)
       320:   61-block  0
+branch  0 taken 36 (fallthrough)
+branch  1 taken 284
         -:   62:        {
        36:   63:            execute_push_callback(BUTTON);
        36:   63-block  0
+call    0 returned 36
        36:   64:            update_button_deb_rep_counter(BUTTON);
+call    0 returned 36
         -:   65:        }
         -:   66:        else
         -:   67:        {
@@ -89,10 +104,13 @@
         -:   75:    }
       540:   76:}
         -:   77:
+function debounce_pushbutton_release_state called 474 returned 100% blocks executed 100%
       474:   78:static void debounce_pushbutton_release_state(PUSHBUTTON_TypDef *BUTTON)
         -:   79:{
       474:   80:    if ((BUTTON->input_state) == PUSHED)
       474:   80-block  0
+branch  0 taken 230 (fallthrough)
+branch  1 taken 244
         -:   81:    {
       230:   82:        BUTTON->deb_rep_timer = PUSHBUTTON_DEBOUNCE_TIME;
       230:   82-block  0
@@ -101,9 +119,12 @@
         -:   85:    {
       244:   86:        if ((BUTTON->deb_rep_timer) == 1)
       244:   86-block  0
+branch  0 taken 6 (fallthrough)
+branch  1 taken 238
         -:   87:        {
         6:   88:            execute_release_callback(BUTTON);
         6:   88-block  0
+call    0 returned 6
         6:   89:            BUTTON->deb_rep_timer = 0;
         -:   90:        }
         -:   91:        else
@@ -113,14 +134,23 @@
         -:   95:    }
       474:   96:}
         -:   97:
+function debounce_pushbutton_short_push_long_push_state called 2520 returned 100% blocks executed 100%
      2520:   98:void debounce_pushbutton_short_push_long_push_state(PUSHBUTTON_TypDef *BUTTON)
         -:   99:{
      2520:  100:    switch (BUTTON->pushbutton_state_machine)
      2520:  100-block  0
+branch  0 taken 1248
+branch  1 taken 1008
+branch  2 taken 168
+branch  3 taken 48
+branch  4 taken 48
+branch  5 taken 0
         -:  101:    {
      1248:  102:    case BUTTON_RELEASED:
      1248:  103:        if ((BUTTON->input_state) == PUSHED)
      1248:  103-block  0
+branch  0 taken 396 (fallthrough)
+branch  1 taken 852
         -:  104:        {
       396:  105:            BUTTON->pushbutton_state_machine = PUSH_DEBOUNCING;
       396:  106:            BUTTON->deb_rep_timer = PUSHBUTTON_DEBOUNCE_TIME;
@@ -131,28 +161,37 @@
      1008:  109:    case PUSH_DEBOUNCING:
      1008:  110:        handle_push_debouncing(BUTTON);
      1008:  110-block  0
+call    0 returned 1008
      1008:  111:        break;
       168:  112:    case SHORT_PUSH_PHASE:
       168:  113:        handle_short_push_phase(BUTTON);
       168:  113-block  0
+call    0 returned 168
       168:  114:        break;
        48:  115:    case LONG_PUSH_PHASE:
        48:  116:        handle_long_push_phase(BUTTON);
        48:  116-block  0
+call    0 returned 48
        48:  117:        break;
        48:  118:    case LONG_PUSH_NO_REPETITION_PHASE:
        48:  119:        handle_long_push_no_repetition_phase(BUTTON);
        48:  119-block  0
+call    0 returned 48
        48:  120:        break;
         -:  121:    }
      2520:  122:}
+function handle_push_debouncing called 1008 returned 100% blocks executed 100%
      1008:  123:static void handle_push_debouncing(PUSHBUTTON_TypDef *BUTTON)
         -:  124:{
      1008:  125:    if ((BUTTON->input_state) == PUSHED)
      1008:  125-block  0
+branch  0 taken 642 (fallthrough)
+branch  1 taken 366
         -:  126:    {
       642:  127:        if ((BUTTON->deb_rep_timer) == 0)
       642:  127-block  0
+branch  0 taken 30 (fallthrough)
+branch  1 taken 612
         -:  128:        {
        30:  129:            BUTTON->pushbutton_state_machine = SHORT_PUSH_PHASE;
        30:  130:            BUTTON->deb_rep_timer = PUSHBUTTON_SHORT_PUSH_TIME_MAX;
@@ -165,10 +204,13 @@
       366:  135-block  0
         -:  136:    }
      1008:  137:}
+function handle_long_push_no_repetition_phase called 48 returned 100% blocks executed 100%
        48:  138:static void handle_long_push_no_repetition_phase(PUSHBUTTON_TypDef *BUTTON)
         -:  139:{
        48:  140:    if ((BUTTON->input_state) == RELEASED)
        48:  140-block  0
+branch  0 taken 6 (fallthrough)
+branch  1 taken 42
         -:  141:    {
         6:  142:        BUTTON->pushbutton_state_machine = BUTTON_RELEASED;
         6:  142-block  0
@@ -180,16 +222,22 @@
         -:  147:    }
        48:  148:}
         -:  149:
+function handle_long_push_phase called 48 returned 100% blocks executed 100%
        48:  150:static void handle_long_push_phase(PUSHBUTTON_TypDef *BUTTON)
         -:  151:{
        48:  152:    if ((BUTTON->input_state) == PUSHED)
        48:  152-block  0
+branch  0 taken 42 (fallthrough)
+branch  1 taken 6
         -:  153:    {
        42:  154:        if ((BUTTON->deb_rep_timer) == 0)
        42:  154-block  0
+branch  0 taken 6 (fallthrough)
+branch  1 taken 36
         -:  155:        {
         6:  156:            execute_push_callback(BUTTON);
         6:  156-block  0
+call    0 returned 6
         6:  157:            BUTTON->deb_rep_timer = PUSHBUTTON_CONTINUOUS_REPETITION_TIME;
         -:  158:        }
         -:  159:    }
@@ -201,30 +249,41 @@
         -:  164:    }
        48:  165:}
         -:  166:
+function handle_short_push_phase called 168 returned 100% blocks executed 100%
       168:  167:static void handle_short_push_phase(PUSHBUTTON_TypDef *BUTTON)
         -:  168:{
       168:  169:    if ((BUTTON->input_state) == PUSHED)
       168:  169-block  0
+branch  0 taken 150 (fallthrough)
+branch  1 taken 18
         -:  170:    {
       150:  171:        handle_short_push_phase_pin_pushed(BUTTON);
       150:  171-block  0
+call    0 returned 150
         -:  172:    }
         -:  173:    else
         -:  174:    {
        18:  175:        handle_short_push_phase_pin_released(BUTTON);
        18:  175-block  0
+call    0 returned 18
         -:  176:    }
       168:  177:}
         -:  178:
+function handle_short_push_phase_pin_pushed called 150 returned 100% blocks executed 100%
       150:  179:static void handle_short_push_phase_pin_pushed(PUSHBUTTON_TypDef *BUTTON)
         -:  180:{
       150:  181:    if ((BUTTON->deb_rep_timer) == 0)
       150:  181-block  0
+branch  0 taken 12 (fallthrough)
+branch  1 taken 138
         -:  182:    {
        12:  183:        execute_push_callback(BUTTON);
        12:  183-block  0
+call    0 returned 12
         -:  184:
        12:  185:        if (BUTTON->repetition == REPETITION_ON)
+branch  0 taken 6 (fallthrough)
+branch  1 taken 6
         -:  186:        {
         6:  187:            BUTTON->pushbutton_state_machine = LONG_PUSH_PHASE;
         6:  188:            BUTTON->deb_rep_timer = PUSHBUTTON_FIRST_REPETITION_TIME;
@@ -238,31 +297,41 @@
         -:  194:    }
       150:  195:}
         -:  196:
+function handle_short_push_phase_pin_released called 18 returned 100% blocks executed 100%
        18:  197:static void handle_short_push_phase_pin_released(PUSHBUTTON_TypDef *BUTTON)
         -:  198:{
        18:  199:    execute_release_callback(BUTTON);
        18:  199-block  0
+call    0 returned 18
        18:  200:    BUTTON->deb_rep_timer = PUSHBUTTON_DEBOUNCE_TIME;
        18:  201:    BUTTON->pushbutton_state_machine = BUTTON_RELEASED;
        18:  202:}
         -:  203:
+function execute_push_callback called 54 returned 100% blocks executed 100%
        54:  204:static void execute_push_callback(PUSHBUTTON_TypDef *BUTTON)
         -:  205:{
        54:  206:    if (BUTTON->push_callback != NULL)
        54:  206-block  0
+branch  0 taken 54 (fallthrough)
+branch  1 taken 0
         -:  207:    {
        54:  208:        BUTTON->push_callback(); // push callback to instancja gdzie trzeba zaerejsrować long push
        54:  208-block  0
+call    0 returned 54
         -:  209:    }
        54:  210:}
         -:  211:
+function execute_release_callback called 24 returned 100% blocks executed 100%
        24:  212:static void execute_release_callback(PUSHBUTTON_TypDef *BUTTON)
         -:  213:{
        24:  214:    if (BUTTON->release_callback != NULL)
        24:  214-block  0
+branch  0 taken 24 (fallthrough)
+branch  1 taken 0
         -:  215:    {
        24:  216:        BUTTON->release_callback(); // push callback to instancja gdzie trzeba zaerejsrować long push
        24:  216-block  0
+call    0 returned 24
         -:  217:    }
        24:  218:}
         -:  219:/**
@@ -283,6 +352,7 @@
         -:  234: *
         -:  235: *
         -:  236: */
+function init_pushbutton called 120 returned 100% blocks executed 100%
       120:  237:void init_pushbutton(PUSHBUTTON_TypDef *BUTTON,
         -:  238:                     const PB_repetition_t PB_repetition_mode,
         -:  239:                     const PB_trigger_mode_t PB_triger_mode,
@@ -290,8 +360,10 @@
         -:  241:{
       120:  242:    BUTTON->GPIO_interface = PB_get_driver_interface_adr_callback();
       120:  242-block  0
+call    0 returned 120
         -:  243:
       120:  244:    BUTTON->GPIO_interface->GPIO_init();
+call    0 returned 120
       120:  245:    BUTTON->repetition = PB_repetition_mode;
       120:  246:    BUTTON->trigger_mode = PB_triger_mode;
         -:  247:
@@ -319,23 +391,31 @@
         -:  269: * @see init_pushbutton, update_pushbutton_input_state, debounce_pushbutton_push_state,
         -:  270: * debounce_pushbutton_release_state, debounce_pushbutton_short_push_long_push_state
         -:  271: */
+function check_pushbutton called 3534 returned 100% blocks executed 100%
      3534:  272:void check_pushbutton(PUSHBUTTON_TypDef *BUTTON)
         -:  273:{
      3534:  274:    update_pushbutton_input_state(BUTTON);
      3534:  274-block  0
+call    0 returned 3534
      3534:  275:    switch (BUTTON->trigger_mode)
+branch  0 taken 540
+branch  1 taken 474
+branch  2 taken 2520
         -:  276:    {
       540:  277:    case TRIGGER_ON_PUSH:
       540:  278:        debounce_pushbutton_push_state(BUTTON);
       540:  278-block  0
+call    0 returned 540
       540:  279:        break;
       474:  280:    case TRIGGER_ON_RELEASE:
       474:  281:        debounce_pushbutton_release_state(BUTTON);
       474:  281-block  0
+call    0 returned 474
       474:  282:        break;
      2520:  283:    default:
      2520:  284:        debounce_pushbutton_short_push_long_push_state(BUTTON);
      2520:  284-block  0
+call    0 returned 2520
      2520:  285:        break;
         -:  286:    }
      3534:  287:}
@@ -356,6 +436,7 @@
         -:  302: * @warning Avoid lengthy operations or blocking code in the callback function, as it may impact the responsiveness
         -:  303: * of the system.
         -:  304: */
+function register_button_push_callback called 20 returned 100% blocks executed 100%
        20:  305:void register_button_push_callback(PUSHBUTTON_TypDef *BUTTON, PB_callback_t callback_on_push)
         -:  306:{
        20:  307:    BUTTON->push_callback = callback_on_push;
@@ -377,6 +458,7 @@
         -:  323: * @warning Avoid lengthy operations or blocking code in the release callback function, as it may impact the
         -:  324: * responsiveness of the system.
         -:  325: */
+function register_button_release_callback called 10 returned 100% blocks executed 100%
        10:  326:void register_button_release_callback(PUSHBUTTON_TypDef *BUTTON, PB_callback_t callback_on_button_release)
         -:  327:{
        10:  328:    BUTTON->release_callback = callback_on_button_release;
@@ -400,6 +482,7 @@
         -:  346: * @warning Avoid lengthy operations or blocking code in the callback functions, as it may impact the
         -:  347: * responsiveness of the system.
         -:  348: */
+function register_button_short_push_long_push_callbacks called 36 returned 100% blocks executed 100%
        36:  349:void register_button_short_push_long_push_callbacks(PUSHBUTTON_TypDef *BUTTON, PB_callback_t callback_on_short_push, PB_callback_t callback_on_long_push)
         -:  350:{
        36:  351:    BUTTON->release_callback = callback_on_short_push;
@@ -416,6 +499,7 @@
         -:  362: *
         -:  363: * @note If the pushbutton is not registered, this function has no effect.
         -:  364: */
+function enable_pusbutton_repetition called 18 returned 100% blocks executed 100%
        18:  365:void enable_pusbutton_repetition(PUSHBUTTON_TypDef *BUTTON)
         -:  366:{
        18:  367:    BUTTON->repetition = REPETITION_ON;
@@ -431,6 +515,7 @@
         -:  377: *
         -:  378: * @note If the pushbutton is not registered, this function has no effect.
         -:  379: */
+function disable_pusbutton_repetition called 38 returned 100% blocks executed 100%
        38:  380:void disable_pusbutton_repetition(PUSHBUTTON_TypDef *BUTTON)
         -:  381:{
        38:  382:    BUTTON->repetition = REPETITION_OFF;
@@ -451,6 +536,7 @@
         -:  397: * If the pushbutton is not registered or the timer is already at zero, this function has no effect.
         -:  398: * It is the responsibility of the caller to manage the timing of this function appropriately.
         -:  399: */
+function dec_pushbutton_deb_rep_timer called 69750 returned 100% blocks executed 100%
     69750:  400:void dec_pushbutton_deb_rep_timer(PUSHBUTTON_TypDef *BUTTON)
         -:  401:{
     69750:  402:    BUTTON->deb_rep_timer--;
