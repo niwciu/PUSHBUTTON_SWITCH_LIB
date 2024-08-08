@@ -40,6 +40,12 @@ jobs:
     - name: Run pushbutton tests
       working-directory: test/pushbutton/out
       run: ./pushbutton_test.exe -v
+    
+    - name: RUN GCOVR
+      run: make ccr
+      
+    - name: Coveralls
+      uses: coverallsapp/github-action@v2
 
   Switch_test_running:
     name: Switch Test RUN

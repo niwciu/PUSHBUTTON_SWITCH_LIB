@@ -54,4 +54,6 @@ else()
 		message(STATUS "python3 and gcovr were not found. \r\n\tInstall python 3 and gcovr to get predefined targets for uint tests code coverage report generation")
 	endif()
 endif()
-add_custom_target(ccr python3 -m gcovr CMakeFiles/pushbutton_test.dir/D_/EMBEDDED/LIBRARIES/C_libraries/PUSHBUTTON_SWITCH_LIB/src/PUSHBUTTON -r ../../.. --html-details ../../../reports/Code_Coverage/PUSHBUTTON/pushbutton_gcov_report.html)
+add_custom_target(ccr python3 -m gcovr CMakeFiles/pushbutton_test.dir/D_/EMBEDDED/LIBRARIES/C_libraries/PUSHBUTTON_SWITCH_LIB/src/PUSHBUTTON -r ../../.. 
+                  --html-details ../../../reports/Code_Coverage/PUSHBUTTON/pushbutton_gcov_report.html
+				  --coveralls --coveralls coverage.json)
