@@ -44,7 +44,7 @@ jobs:
           verbose: "true"
           arguments: "4"
           html: true
-          output_file: "Lizard_report.html"
+          output_file: "Lizard_report"
       # - name: Run Lizzard Switch
       #   uses: Uno-Takashi/Lizard-Runner@v3
       #   with:
