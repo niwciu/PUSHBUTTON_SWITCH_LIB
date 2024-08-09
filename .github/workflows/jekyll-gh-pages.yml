@@ -28,6 +28,30 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Create Report Folder
+        run: | 
+          mkdir ./reports/Cyclomatic_Complexity/PUSHBUTTON
+          mkdir ./reports/Cyclomatic_Complexity/SWITCH
+      - name: Run Lizzard PushButton
+        uses: Uno-Takashi/Lizard-Runner@v3
+        with:
+          path: "./src/PUSHBUTTON"
+          CCN: "12"
+          Threshold: "nloc=30"
+          language: "cpp"
+          verbose: "true"
+          arguments: "4"
+          output_file: ./reports/Cyclomatic_Complexity/PUSHBUTTON/Lizard_report.html
+      - name: Run Lizzard Switch
+        uses: Uno-Takashi/Lizard-Runner@v3
+        with:
+          path: "./src/SWITCH"
+          CCN: "12"
+          Threshold: "nloc=30"
+          language: "cpp"
+          verbose: "true"
+          arguments: "4"
+          output_file: ./reports/Cyclomatic_Complexity/SWITCH/Lizard_report.html
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Build with Jekyll
