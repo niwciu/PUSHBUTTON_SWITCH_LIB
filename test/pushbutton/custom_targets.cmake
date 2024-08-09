@@ -22,7 +22,7 @@ endif()
 # Prints CCM for src folder in the console
 add_custom_target(ccm lizard ../../../src/PUSHBUTTON/ --CCN 12 -Tnloc=30 -a 4 --languages cpp -V -i 1)
 # Create CCM report in reports/Cylcomatic_Complexity/
-add_custom_target(ccmr lizard ../../../src/PUSHBUTTON --CCN 12 -Tnloc=30 -a 4 --languages cpp -V -o ../../../reports/Cyclomatic_Complexity/PUSHBUTTON/Lizard_report.html)
+add_custom_target(ccmr lizard -o ../../../reports/Cyclomatic_Complexity/PUSHBUTTON/Lizard_report.html --CCN 12 -Tnloc=30 -a 4 --languages cpp -V ../../../src/PUSHBUTTON)
 
 # TARGET FOR MAKING STATIC ANALYSIS OF THE SOURCE CODE AND UNIT TEST CODE
 # check if cppchec software is available 
