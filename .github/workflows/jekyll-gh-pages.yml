@@ -30,8 +30,8 @@ jobs:
         uses: actions/checkout@v4
       - name: Create Report Folder
         run: | 
-          mkdir ./reports/Cyclomatic_Complexity/PUSHBUTTON
-          mkdir ./reports/Cyclomatic_Complexity/SWITCH
+          mkdir reports/Cyclomatic_Complexity/PUSHBUTTON
+          mkdir reports/Cyclomatic_Complexity/SWITCH
       - name: Run Lizzard PushButton
         uses: Uno-Takashi/Lizard-Runner@v3
         with:
