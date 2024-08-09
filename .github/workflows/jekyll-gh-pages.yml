@@ -32,6 +32,7 @@ jobs:
         run: | 
           mkdir -p reports/Cyclomatic_Complexity/PUSHBUTTON
           mkdir -p reports/Cyclomatic_Complexity/SWITCH
+          pip install jinja2
       - name: Run Lizzard PushButton
         uses: Uno-Takashi/Lizard-Runner@v3
         with:
