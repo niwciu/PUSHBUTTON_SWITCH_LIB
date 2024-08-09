@@ -33,16 +33,18 @@ jobs:
           mkdir -p reports/Cyclomatic_Complexity/PUSHBUTTON
           mkdir -p reports/Cyclomatic_Complexity/SWITCH
           pip install jinja2
+          pip install lizard
       - name: Run Lizzard PushButton
-        uses: Uno-Takashi/Lizard-Runner@v3
+        uses: niwciu/Lizard-Runner@v3
         with:
-          path: "./src/PUSHBUTTON"
+          path: "./src"
           CCN: "12"
           Threshold: "nloc=30"
           language: "cpp"
           verbose: "true"
           arguments: "4"
-          # output_file: "Lizard_report.html"
+          html: true
+          output_file: "Lizard_report.html"
       # - name: Run Lizzard Switch
       #   uses: Uno-Takashi/Lizard-Runner@v3
       #   with:
