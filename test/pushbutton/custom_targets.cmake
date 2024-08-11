@@ -55,3 +55,15 @@ else()
 	endif()
 endif()
 add_custom_target(ccr python3 -m gcovr CMakeFiles/pushbutton_test.dir/D_/EMBEDDED/LIBRARIES/C_libraries/PUSHBUTTON_SWITCH_LIB/src/PUSHBUTTON -r ../../.. --html-details ../../../reports/Code_Coverage/PUSHBUTTON/pushbutton_gcov_report.html)
+
+find_program(CLANG_FORMAT clang-format)
+if(CLANG_FORMAT)
+	message(STATUS "clang-format was found, you can use predefined target for formating the code in project predefined standard : \r\n\tformat_src \r\n\tformat_test")
+else()
+	message(STATUS "clang-format was not found. \r\n\tInstall clang-format to get predefined target for formating the code in project predefined standard")
+endif()
+add_custom_target(format_proj  clang-format -i -style=file 
+				../../../src/PUSHBUTTON/*.c 
+				../../../src/PUSHBUTTON/*.h
+				../../../src/SWITCH/*.c 
+				../../../src/SWITCH/*.h)
