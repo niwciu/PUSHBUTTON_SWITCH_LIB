@@ -41,7 +41,7 @@ jobs:
           make all -o pushbutton_test.o
           make run
           make ccm
-          make ccmr
+          make ccr
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Build with Jekyll
