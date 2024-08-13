@@ -36,7 +36,6 @@ jobs:
       - name: Run Lizzard PushButton
         working-directory: test/pushbutton
         run: |
-          echo $PATH
           jinja --version
           cmake -S./ -B out -G"Unix Makefiles"
           cd out
