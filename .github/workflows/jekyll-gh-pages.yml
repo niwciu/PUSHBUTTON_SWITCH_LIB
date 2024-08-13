@@ -36,11 +36,13 @@ jobs:
       - name: Run Lizzard PushButton
         working-directory: test/pushbutton
         run: |
+          echo $PATH
+          jinja --version
           cmake -S./ -B out -G"Unix Makefiles"
           cd out
           make all -o pushbutton_test.o
           make run
-          pipx install lizard && pipx install gcovr && pipx ensurepath
+          make ccm
           make ccmr
       - name: Setup Pages
         uses: actions/configure-pages@v5
