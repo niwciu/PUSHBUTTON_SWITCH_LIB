@@ -40,7 +40,7 @@ jobs:
           cd out
           make all -o pushbutton_test.o
           make run
-          lizard --version
+          pipx install lizard && pipx install gcovr && pipx ensurepath
           make ccmr
       - name: Setup Pages
         uses: actions/configure-pages@v5
