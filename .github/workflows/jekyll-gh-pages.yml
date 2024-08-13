@@ -25,6 +25,7 @@ jobs:
   # Build job
   build:
     runs-on: ubuntu-latest
+    container: niwciu/stm32_dev_container:latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -32,29 +33,14 @@ jobs:
         run: | 
           mkdir -p reports/Cyclomatic_Complexity/PUSHBUTTON
           mkdir -p reports/Cyclomatic_Complexity/SWITCH
-          pip install jinja2
-          pip install lizard
       - name: Run Lizzard PushButton
-        uses: Uno-Takashi/Lizard-Runner@v3
-        with:
-          path: "src"
-          CCN: "12"
-          Threshold: "nloc=30"
-          language: "cpp"
-          verbose: "true"
-          arguments: "4"
-          html: true
-          output_file: "Lizard_report"
-      # - name: Run Lizzard Switch
-      #   uses: Uno-Takashi/Lizard-Runner@v3
-      #   with:
-      #     path: "./src/SWITCH"
-      #     CCN: "12"
-      #     Threshold: "nloc=30"
-      #     language: "cpp"
-      #     verbose: "true"
-      #     arguments: "4"
-      #     output_file: ./reports/Cyclomatic_Complexity/SWITCH/Lizard_report.html
+        working-directory: test/pushbutton
+        run: |
+          cmake -S./ -B out -G"Unix Makefiles"
+          cd out
+          make all -o pushbutton_test.o
+          make run
+          make ccmr
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Build with Jekyll
