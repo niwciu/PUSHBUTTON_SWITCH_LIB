@@ -29,8 +29,12 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Jinja2 Action
-        uses: cuchi/jinja2-action@v1.2.2
+      - name: Jinja2 Templating
+        uses: jayamanikharyono/jinja-action@v1.1
+        with:
+          data: repo_name=${{ github.event.repository.name }}
+          path: tests/test_template_single.py
+            
       - name: Create Report Folder
         run: | 
           mkdir -p reports/Cyclomatic_Complexity/PUSHBUTTON
