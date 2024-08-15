@@ -58,7 +58,7 @@ jobs:
           language: "cpp"
           verbose: "true"
           arguments: "4"
-          output_file: "./reports/Cyclomatic_Complexity/PUSHBUTTON/lizard_report.html"
+          output_file: "./lizard_report.html"
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Build with Jekyll
