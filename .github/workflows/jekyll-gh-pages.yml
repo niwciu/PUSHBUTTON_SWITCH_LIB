@@ -29,6 +29,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Jinja2 Action
+        uses: cuchi/jinja2-action@v1.2.2
       - name: Create Report Folder
         run: | 
           mkdir -p reports/Cyclomatic_Complexity/PUSHBUTTON
