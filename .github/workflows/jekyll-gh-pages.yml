@@ -29,10 +29,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Install jinja2
+      - name: Install jinja
         uses: threeal/pipx-install-action@v1.0.0
         with:
-          packages: jinja2
+          packages: Jinja
             
       - name: Create Report Folder
         run: | 
