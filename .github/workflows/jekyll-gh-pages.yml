@@ -29,11 +29,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Jinja2 Templating
-        uses: fletort/jinja2-template-action@v1
+      - name: Install jinja2
+        uses: threeal/pipx-install-action@v1.0.0
         with:
-          data: repo_name=${{ github.event.repository.name }}
-          path: tests/test_template_single.py
+          packages: jinja2
             
       - name: Create Report Folder
         run: | 
