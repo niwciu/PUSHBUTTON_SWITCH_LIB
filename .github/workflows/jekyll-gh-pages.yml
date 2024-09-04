@@ -30,9 +30,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Install jinja2
-        uses: threeal/pipx-install-action@v1.0.0
-        with:
-          packages: Jinja2
+        run: apt install python3-jinja2
             
       - name: Create Report Folder
         run: | 
