@@ -29,8 +29,14 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Install jinja2
-        run: apt install python3-jinja2
+      - name: Set up Python
+        uses: actions/setup-python@v3 #v3, node12 will be deprecated soon
+        with:
+          python-version: 3.9  #just upgrading from the alpine 3.6 version
+
+      - name: Install dependencies
+        run: |
+          python -m pip install jinja2
             
       - name: Create Report Folder
         run: | 
