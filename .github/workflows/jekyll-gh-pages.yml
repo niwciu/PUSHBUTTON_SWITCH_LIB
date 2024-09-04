@@ -34,16 +34,7 @@ jobs:
         run: | 
           mkdir -p reports/Cyclomatic_Complexity/PUSHBUTTON
           mkdir -p reports/Cyclomatic_Complexity/SWITCH
-      # - name: Run Lizzard PushButton
-      #   working-directory: test/pushbutton
-      #   run: |
-      #     cmake -S./ -B out -G"Unix Makefiles"
-      #     cd out
-      #     make all -o pushbutton_test.o
-      #     make run
-      #     make ccm
-      #     make ccr
-      - name: Lizard Runner
+      - name: Run Lizard for PUSHBUTTON
         uses: niwciu/Lizard-Runner@main
         with:
           path: "./src/PUSHBUTTON"
@@ -52,7 +43,7 @@ jobs:
           language: "cpp"
           verbose: "true"
           arguments: "4"
-          output_file: "./lizard_report.html"
+          output_file: "./reports/Cyclomatic_Complexity/PUSHBUTTON/Lizard_report.html"
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Build with Jekyll
