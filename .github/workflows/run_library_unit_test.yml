@@ -86,10 +86,20 @@ jobs:
       working-directory: test/switch/out
       run: ./switch_test.exe -v
     
+    - name: Build binary
+      working-directory: test/pushbutton
+      run: |
+        mkdir out
+        cmake -Bout -GNinja
+        cmake --build out
+    
+    - name: Run inputs tests
+      working-directory: test/pushbutton/out
+      run: ./pushbutton_test.exe -v
+    
     - name: Generate a code coverage report
       uses: threeal/gcovr-action@v1.0.0
       with:
-        root: ../../../
         excludes: test
 
     # - name: Coveralls
