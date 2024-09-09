@@ -25,7 +25,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     python3 \
     pipx \
     make \
-    clang-format
+    clang-format \
+    stlink-tools
    
 
 #inlstall lizard & gcovr 
@@ -57,4 +58,5 @@ RUN cd ${TOOLS_DIRECTORY} && git clone https://github.com/danmar/cppcheck.git &&
     && cd .. && rm -rf cppcheck
 
 RUN apt-get remove pipx -y
+RUN apt autoremove -y
 RUN rm -rf /var/lib/apt/lists/*

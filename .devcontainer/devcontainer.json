@@ -5,11 +5,12 @@
 	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
 	"build":{
 		"dockerfile": "Dockerfile"
-	}
+	},
 
+	"mounts": ["type=bind,source=/dev/bus/usb,target=/dev/bus/usb"]
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	// "features": {},
-
+	
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [],
 
@@ -22,4 +23,3 @@
 	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
 	// "remoteUser": "root"
 }
-C:\Users\User\AppData\Roaming\Code\User\globalStorage\ms-vscode-remote.remote-containers\configs\PUSHBUTTON_SWITCH_LIB\.devcontainer\devcontainer.json
