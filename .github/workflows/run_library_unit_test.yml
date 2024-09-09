@@ -68,28 +68,31 @@ jobs:
     #   with:
     #     release: '10-2021.10'
         
-    # - name: Install Ninja
-    #   uses: seanmiddleditch/gha-setup-ninja@v3
+    - name: Install Ninja
+      uses: seanmiddleditch/gha-setup-ninja@v3
         
-    # - name: Build binary
-    #   working-directory: test/switch
-    #   run: |
-    #     mkdir out
-    #     cmake -Bout -GNinja
-    #     cmake --build out
+    - name: Build binary
+      working-directory: test/switch
+      run: |
+        mkdir out
+        cmake -Bout -GNinja
+        cmake --build out
 
-    # - name: List files
-    #   working-directory: test/switch/out
-    #   run: dir
+    - name: List files
+      working-directory: test/switch/out
+      run: dir
 
-    # - name: Run inputs tests
-    #   working-directory: test/switch/out
-    #   run: ./switch_test.exe -v
+    - name: Run inputs tests
+      working-directory: test/switch/out
+      run: ./switch_test.exe -v
+    
+    - name: Generate a code coverage report
+      uses: threeal/gcovr-action@v1.0.0
 
-    - name: Coveralls
-      uses: coverallsapp/github-action@v2
-      with:
-        files: ./switch_coverage.json ./pushbutton_coverage.json
+    # - name: Coveralls
+    #   uses: coverallsapp/github-action@v2
+    #   with:
+    #     files: ./switch_coverage.json ./pushbutton_coverage.json
 
       
 
