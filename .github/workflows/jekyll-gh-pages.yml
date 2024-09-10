@@ -61,11 +61,11 @@ jobs:
       - name: Run pushbutton tests
         working-directory: test/pushbutton/out
         run: ./pushbutton_test -v
-        
+
       - name: Generate Code Coverage Report
         uses: niwciu/gcovr-action@main
         with:
-          html-out: ./reports/Code_Coverage/PUSHBUTON/pushbutton_gcov_report.html
+          html-out: ./reports/Code_Coverage/PUSHBUTTON/pushbutton_gcov_report.html
           html-theme: github.dark-green
       
       - name: Build swtich binary
@@ -82,7 +82,7 @@ jobs:
       - name: Generate Code Coverage Report
         uses: niwciu/gcovr-action@main
         with:
-          html-out: ./reports/Code_Coverage/PUSHBUTON/pushbutton_gcov_report.html
+          html-out: ./reports/Code_Coverage/SWITCH/switch_gcov_report.html
           html-theme: github.dark-green
 
       - name: Setup Pages
