@@ -8,7 +8,7 @@ on:
 jobs:
   pushbutton_switch_test_running:
     name: PushButton Test RUN
-    runs-on: windows-latest 
+    runs-on: ubuntu-latest 
     # strategy:
     #   matrix:
     #     os: [ubuntu-latest, windows-latest]
@@ -53,7 +53,7 @@ jobs:
 
   Switch_test_running:
     name: Switch Test RUN
-    runs-on: windows-latest 
+    runs-on: ubuntu-latest 
     # strategy:
     #   matrix:
     #     os: [ubuntu-latest, windows-latest]
@@ -69,7 +69,30 @@ jobs:
     #     release: '10-2021.10'
         
     - name: Install Ninja
-      uses: seanmiddleditch/gha-setup-ninja@v3
+      uses: seanmiddleditch/gha-setup-ninja@v5
+    
+    # - name: Build Project
+    #   uses: threeal/cmake-action@v2.0.0
+    #   with:
+    #     generator: Ninja
+    #     # c-compiler: gcc
+    #     source-dir: "/test/switch/CMakeList.txt"
+    #     # build-dir: ./test/switch/out
+
+    - name: Check if cmake is installed
+      id: cmake-check
+      run: |
+        if command -v cmake > /dev/null; then
+          echo "cmake already installed"
+          echo "::set-output name=cmake_installed::true"
+        else
+          echo "cmake not installed"
+          echo "::set-output name=cmake_installed::false"
+        fi
+    
+    - name: Setup cmake
+      if: steps.cmake-check.outputs.cmake_installed == 'false'
+      uses: jwlawson/actions-setup-cmake@v2
         
     - name: Build binary
       working-directory: test/switch
@@ -84,7 +107,7 @@ jobs:
 
     - name: Run inputs tests
       working-directory: test/switch/out
-      run: ./switch_test.exe -v
+      run: ./switch_test -v
     
     - name: Build binary
       working-directory: test/pushbutton
@@ -95,7 +118,7 @@ jobs:
     
     - name: Run inputs tests
       working-directory: test/pushbutton/out
-      run: ./pushbutton_test.exe -v
+      run: ./pushbutton_test -v
     
     - name: Generate a code coverage report
       uses: threeal/gcovr-action@v1.0.0
