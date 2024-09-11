@@ -101,8 +101,9 @@ jobs:
       uses: threeal/gcovr-action@v1.0.0
       with:
         excludes: test
-        coveralls-send: true
-        github-token: ${{ secrets.GITHUB_TOKEN }}
+        # coveralls-send: true
+        # github-token: ${{ secrets.GITHUB_TOKEN }}
+        
     # - name: Coveralls
     #   uses: coverallsapp/github-action@v2
     #   with:
