@@ -17,7 +17,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Lizard Runner
-        uses: Uno-Takashi/Lizard-Runner@v3
+        uses: niwciu/Lizard-Runner@main
         with:
           path: "./src/${{matrix.module}}"
           CCN: "12"
