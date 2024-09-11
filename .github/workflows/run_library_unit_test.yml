@@ -33,13 +33,15 @@ jobs:
         cmake -Bout -GNinja
         cmake --build out
 
-    - name: List files
-      working-directory: test/pushbutton/out
-      run: dir
-
     - name: Run pushbutton tests
       working-directory: test/pushbutton/out
       run: ./pushbutton_test.exe -v
+
+    - name: generate GCOV report
+      uses: threeal/gcovr-action
+      with:
+        root: ../../..//
+        gcov-executable: test
 
   Switch_test_running:
     name: Switch Test RUN
@@ -67,10 +69,6 @@ jobs:
         mkdir out
         cmake -Bout -GNinja
         cmake --build out
-
-    - name: List files
-      working-directory: test/switch/out
-      run: dir
 
     - name: Run inputs tests
       working-directory: test/switch/out
