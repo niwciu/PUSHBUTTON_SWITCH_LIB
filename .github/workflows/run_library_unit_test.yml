@@ -40,7 +40,7 @@ jobs:
     - name: generate GCOV report
       uses: threeal/gcovr-action
       with:
-        root: ../../..//
+        # root: ../../..//
         gcov-executable: test
 
   Switch_test_running:
