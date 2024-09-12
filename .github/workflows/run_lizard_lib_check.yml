@@ -33,7 +33,7 @@ jobs:
         with:
           name: ${{matrix.module}}_CCM_report
 
-          path: ./ 
+          path: ./${{matrix.output}}
           if-no-files-found: error
           overwrite: true
 
