@@ -16,6 +16,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        
+      - name: Create out folder
+        run: mkdir out
 
       - name: Lizard Runner
         uses: niwciu/Lizard-Runner@main
