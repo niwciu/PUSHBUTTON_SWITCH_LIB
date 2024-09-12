@@ -11,7 +11,7 @@ jobs:
     strategy:
       matrix:
         module: [PUSHBUTTON , SWITCH]
-        output: ["","./CCM_report.html"]
+        output: ["","CCM_report.html"]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -26,14 +26,14 @@ jobs:
           language: "cpp"
           verbose: "true"
           arguments: "4"
-          output_file: ${{matrix.output}}
+          output_file: ./out/${{matrix.output}}
 
       - name: Archive ${{matrix.module}} Code Complexity Metrix artifacts
         uses: actions/upload-artifact@v4
         with:
           name: ${{matrix.module}}_CCM_report
 
-          path: ${{matrix.output}}
+          path: ./out
           if-no-files-found: error
           overwrite: true
 
