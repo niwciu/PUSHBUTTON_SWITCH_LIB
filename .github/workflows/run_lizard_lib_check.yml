@@ -11,7 +11,6 @@ jobs:
     strategy:
       matrix:
         module: [PUSHBUTTON , SWITCH]
-        output: ["","./out/CCM_report.html"]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -23,12 +22,12 @@ jobs:
       - name: Run Lizard Check
         uses: niwciu/Lizard-Runner@main
         with:
-          path: "./src/${{matrix.module}}"
-          CCN: "12"
-          Threshold: "nloc=30"
-          language: "cpp"
-          verbose: "true"
-          arguments: "4"
+          path: ./src/${{matrix.module}}
+          CCN: 12
+          Threshold: nloc=30
+          language: cpp
+          verbose: true
+          arguments: 4
 
       - name: Generate Lizard html report 
         uses: niwciu/Lizard-Runner@main
