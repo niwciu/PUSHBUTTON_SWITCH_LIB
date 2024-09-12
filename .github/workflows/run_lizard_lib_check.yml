@@ -16,11 +16,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        
+
       - name: Create out folder
         run: mkdir out
 
-      - name: Lizard Runner
+      - name: Run Lizard Check
         uses: niwciu/Lizard-Runner@main
         with:
           path: "./src/${{matrix.module}}"
@@ -29,13 +29,22 @@ jobs:
           language: "cpp"
           verbose: "true"
           arguments: "4"
-          output_file: ${{matrix.output}}
+
+      - name: Generate Lizard html report 
+        uses: niwciu/Lizard-Runner@main
+        with:
+          path: "./src/${{matrix.module}}"
+          CCN: "12"
+          Threshold: "nloc=30"
+          language: "cpp"
+          verbose: "true"
+          arguments: "4"
+          output_file: ./out/${{matrix.module}}_CCM_report.html
 
       - name: Archive ${{matrix.module}} Code Complexity Metrix artifacts
         uses: actions/upload-artifact@v4
         with:
           name: ${{matrix.module}}_CCM_report
-
           path: ./out
           if-no-files-found: error
           overwrite: true
