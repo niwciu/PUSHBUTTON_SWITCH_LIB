@@ -32,12 +32,12 @@ jobs:
       - name: Generate Lizard html report 
         uses: niwciu/Lizard-Runner@main
         with:
-          path: "./src/${{matrix.module}}"
-          CCN: "12"
-          Threshold: "nloc=30"
-          language: "cpp"
-          verbose: "true"
-          arguments: "4"
+          path: ./src/${{matrix.module}}
+          CCN: 12
+          Threshold: nloc=30
+          language: cpp
+          verbose: true
+          arguments: 4
           output_file: ./out/${{matrix.module}}_CCM_report.html
 
       - name: Archive ${{matrix.module}} Code Complexity Metrix artifacts
