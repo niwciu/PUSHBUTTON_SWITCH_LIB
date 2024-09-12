@@ -236,7 +236,7 @@ jobs:
     
   build_pushbutton_for_STM32G071:
     name: Build STM32G071_NUCLEO_LL_1_KEY_UI
-    needs: pushbutton_test_running
+    needs: [cppcheck-annotations,lizard]
     runs-on: ubuntu-latest
     steps:
     - name: Checkout code
@@ -261,7 +261,7 @@ jobs:
 
   build_switch_for_STM32G071:
     name: Build STM32G071_NUCLEO_LL_2_STATE_SWITCH
-    needs: switch_test_running
+    needs: [cppcheck-annotations,lizard]
     runs-on: ubuntu-latest
     steps:
     - name: Checkout code
