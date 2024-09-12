@@ -188,7 +188,7 @@ jobs:
 
     - name: Run inputs tests
       working-directory: test/switch/out
-      run: ./switch_test.exe -v
+      run: ./switch_test -v
 
   lizard:
     name: RUN Code Complexity Check
