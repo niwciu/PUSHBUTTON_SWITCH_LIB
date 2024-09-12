@@ -27,9 +27,99 @@ jobs:
         exclude-regex: ${{ matrix.path['exclude'] }}
         # fallback-style: 'Microsoft' # optional
 
+
+      
+
+  # unit_tests_running:
+  #   name: RUN PushButton Tests
+  #   needs: cppcheck-annotations
+  #   strategy:
+  #     matrix:
+  #       module: [pushbutton , switch]
+  #   runs-on: windows-latest 
+  #   steps:
+  #   - name: Checkout code
+  #     uses: actions/checkout@v4.1.1
+  #     with:
+  #       submodules: recursive
+        
+  #   - name: Install Ninja
+  #     uses: seanmiddleditch/gha-setup-ninja@v3
+        
+  #   - name: Build binary
+  #     working-directory: test/${{matrix.module}}
+  #     run: |
+  #       mkdir out
+  #       cmake -Bout -GNinja
+  #       cmake --build out
+
+  #   - name: List files
+  #     working-directory: test/${{matrix.module}}/out
+  #     run: dir
+
+  #   - name: Run ${{matrix.module}} tests
+  #     working-directory: test/${{matrix.module}}/out
+  #     run: ./${{matrix.module}}_test.exe -v
+
+  pushbutton_test_running:
+    name: RUN PushButton Tests
+    needs: formatting-check
+    runs-on: ubuntu-latest 
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        submodules: recursive
+        
+    - name: Install Ninja
+      uses: seanmiddleditch/gha-setup-ninja@v3
+        
+    - name: Build binary
+      working-directory: test/pushbutton
+      run: |
+        mkdir out
+        cmake -Bout -GNinja
+        cmake --build out
+
+    - name: List files
+      working-directory: test/pushbutton/out
+      run: dir
+
+    - name: Run pushbutton tests
+      working-directory: test/pushbutton/out
+      run: ./pushbutton_test -v
+
+  switch_test_running:
+    name: Run Switch Tests
+    needs: formatting-check
+    runs-on: ubuntu-latest 
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        submodules: recursive
+        
+    - name: Install Ninja
+      uses: seanmiddleditch/gha-setup-ninja@v3
+        
+    - name: Build binary
+      working-directory: test/switch
+      run: |
+        mkdir out
+        cmake -Bout -GNinja
+        cmake --build out
+
+    - name: List files
+      working-directory: test/switch/out
+      run: dir
+
+    - name: Run inputs tests
+      working-directory: test/switch/out
+      run: ./switch_test -v
+
   cppcheck-annotations:
     name: RUN_CppCheck
-    needs: formatting-check
+    needs: [pushbutton_test_running,switch_test_running]
     strategy:
       matrix:
         path: ['./src' , './test/template']
@@ -100,95 +190,6 @@ jobs:
   #         repo-token: "${{ secrets.GITHUB_TOKEN }}"
   #         title: 'Results of CppCheck test files'
   #         input: 'annotations.json'
-
-      
-
-  # unit_tests_running:
-  #   name: RUN PushButton Tests
-  #   needs: cppcheck-annotations
-  #   strategy:
-  #     matrix:
-  #       module: [pushbutton , switch]
-  #   runs-on: windows-latest 
-  #   steps:
-  #   - name: Checkout code
-  #     uses: actions/checkout@v4.1.1
-  #     with:
-  #       submodules: recursive
-        
-  #   - name: Install Ninja
-  #     uses: seanmiddleditch/gha-setup-ninja@v3
-        
-  #   - name: Build binary
-  #     working-directory: test/${{matrix.module}}
-  #     run: |
-  #       mkdir out
-  #       cmake -Bout -GNinja
-  #       cmake --build out
-
-  #   - name: List files
-  #     working-directory: test/${{matrix.module}}/out
-  #     run: dir
-
-  #   - name: Run ${{matrix.module}} tests
-  #     working-directory: test/${{matrix.module}}/out
-  #     run: ./${{matrix.module}}_test.exe -v
-
-  pushbutton_test_running:
-    name: RUN PushButton Tests
-    needs: cppcheck-annotations
-    runs-on: ubuntu-latest 
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-      with:
-        submodules: recursive
-        
-    - name: Install Ninja
-      uses: seanmiddleditch/gha-setup-ninja@v3
-        
-    - name: Build binary
-      working-directory: test/pushbutton
-      run: |
-        mkdir out
-        cmake -Bout -GNinja
-        cmake --build out
-
-    - name: List files
-      working-directory: test/pushbutton/out
-      run: dir
-
-    - name: Run pushbutton tests
-      working-directory: test/pushbutton/out
-      run: ./pushbutton_test -v
-
-  switch_test_running:
-    name: Run Switch Tests
-    needs: cppcheck-annotations
-    runs-on: ubuntu-latest 
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-      with:
-        submodules: recursive
-        
-    - name: Install Ninja
-      uses: seanmiddleditch/gha-setup-ninja@v3
-        
-    - name: Build binary
-      working-directory: test/switch
-      run: |
-        mkdir out
-        cmake -Bout -GNinja
-        cmake --build out
-
-    - name: List files
-      working-directory: test/switch/out
-      run: dir
-
-    - name: Run inputs tests
-      working-directory: test/switch/out
-      run: ./switch_test -v
 
   lizard:
     name: RUN Code Complexity Check
