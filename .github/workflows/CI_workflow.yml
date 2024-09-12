@@ -100,37 +100,6 @@ jobs:
   #         repo-token: "${{ secrets.GITHUB_TOKEN }}"
   #         title: 'Results of CppCheck test files'
   #         input: 'annotations.json'
-  
-  lizard:
-    name: RUN Code Complexity Check
-    needs: cppcheck-annotations
-    strategy:
-      matrix:
-        module: [PUSHBUTTON , SWITCH]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Lizard Runner
-        uses: Uno-Takashi/Lizard-Runner@v3
-        with:
-          path: "./src/${{matrix.module}}"
-          CCN: "12"
-          Threshold: "nloc=30"
-          language: "cpp"
-          verbose: "true"
-          arguments: "4"
-          output_file: "./CCM_report.html"
-
-      - name: Archive ${{matrix.module}} Code Complexity Metrix artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: ${{matrix.module}}_CCM_report
-
-          path: ./ 
-          if-no-files-found: error
-          overwrite: true
 
       
 
@@ -221,6 +190,49 @@ jobs:
       working-directory: test/switch/out
       run: ./switch_test.exe -v
 
+  lizard:
+    name: RUN Code Complexity Check
+    needs: [pushbutton_test_running,switch_test_running]
+    strategy:
+      matrix:
+        module: [PUSHBUTTON , SWITCH]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Create out folder
+        run: mkdir out
+
+      - name: Run Lizard Check
+        uses: niwciu/Lizard-Runner@main
+        with:
+          path: ./src/${{matrix.module}}
+          CCN: 12
+          Threshold: nloc=30
+          language: cpp
+          verbose: true
+          arguments: 4
+
+      - name: Generate Lizard html report 
+        uses: niwciu/Lizard-Runner@main
+        with:
+          path: ./src/${{matrix.module}}
+          CCN: 12
+          Threshold: nloc=30
+          language: cpp
+          verbose: true
+          arguments: 4
+          output_file: ./out/${{matrix.module}}_CCM_report.html
+
+      - name: Archive ${{matrix.module}} Code Complexity Metrix artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{matrix.module}}_CCM_report
+          path: ./out
+          if-no-files-found: error
+          overwrite: true
+    
   build_pushbutton_for_STM32G071:
     name: Build STM32G071_NUCLEO_LL_1_KEY_UI
     needs: pushbutton_test_running
