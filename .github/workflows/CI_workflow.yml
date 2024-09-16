@@ -61,7 +61,7 @@ jobs:
     - name: generate GCOV report
       uses: threeal/gcovr-action@main
       with:
-        root: ./src/${{matrix.module}}
+        # root: ./src/${{matrix.module}}
         gcov-executable: test
         html-out: ./reports/Code_Coverage/${{matrix.module}}/${{matrix.module}}_gcov_report.html
         html-theme: github.dark-green
