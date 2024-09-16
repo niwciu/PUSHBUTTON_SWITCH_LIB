@@ -33,10 +33,10 @@ jobs:
       run: ./pushbutton_test.exe -v
 
     - name: generate GCOV report
-      uses: threeal/gcovr-action@latest
-      with:
-        # root: ./src
-        gcov-executable: test
+      uses: threeal/gcovr-action@main
+      # with:
+      #   # root: ./src
+      #   gcov-executable: test
 
   # Switch_test_running:
   #   name: Switch Test RUN
