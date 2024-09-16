@@ -60,7 +60,7 @@ jobs:
     
     
     - name: generate GCOV report
-      uses: threeal/gcovr-action@v1.0.0
+      uses: threeal/gcovr-action@main
       with:
         root: ./src/${{matrix.module}}
         gcov-executable: test
