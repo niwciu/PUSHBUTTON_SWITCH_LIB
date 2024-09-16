@@ -58,14 +58,21 @@ jobs:
       working-directory: test/${{matrix.module}}/out
       run: ./${{matrix.module}}_test -v
     
-    
     - name: generate GCOV report
       uses: threeal/gcovr-action@main
       with:
         root: ./src/${{matrix.module}}
         gcov-executable: test
-        html-out: reports/Code_Coverage/${{matrix.module}}/${{matrix.module}}_gcov_report.html
+        html-out: ./reports/Code_Coverage/${{matrix.module}}/${{matrix.module}}_gcov_report.html
         html-theme: github.dark-green
+
+    - name: Archive ${{matrix.module}} Code Complexity Metrix artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: ${{matrix.module}}_CCM_report
+        path: ./reports/Code_Coverage/${{matrix.module}}/
+        if-no-files-found: error
+        overwrite: true
 
   # # pushbutton_test_running:
   # #   name: RUN PushButton Tests
