@@ -41,7 +41,7 @@ jobs:
         submodules: recursive
         
     - name: Install Ninja
-      uses: seanmiddleditch/gha-setup-ninja@v3
+      uses: seanmiddleditch/gha-setup-ninja@v5
         
     - name: Build binary
       working-directory: test/${{matrix.module}}
@@ -57,99 +57,83 @@ jobs:
     - name: Run ${{matrix.module}} tests
       working-directory: test/${{matrix.module}}/out
       run: ./${{matrix.module}}_test -v
+    
+    
+    - name: generate GCOV report
+      uses: threeal/gcovr-action@latest
+      with:
+        root: ./src/${{matrix.module}}
+        gcov-executable: test
+        html-out: reports/Code_Coverage/${{matrix.module}}/${{matrix.module}}_gcov_report.html
+        html-theme: github.dark-green
 
-  # pushbutton_test_running:
-  #   name: RUN PushButton Tests
-  #   needs: formatting-check
-  #   runs-on: ubuntu-latest 
-  #   steps:
-  #   - name: Checkout code
-  #     uses: actions/checkout@v4
-  #     with:
-  #       submodules: recursive
+  # # pushbutton_test_running:
+  # #   name: RUN PushButton Tests
+  # #   needs: formatting-check
+  # #   runs-on: ubuntu-latest 
+  # #   steps:
+  # #   - name: Checkout code
+  # #     uses: actions/checkout@v4
+  # #     with:
+  # #       submodules: recursive
         
-  #   - name: Install Ninja
-  #     uses: seanmiddleditch/gha-setup-ninja@v3
+  # #   - name: Install Ninja
+  # #     uses: seanmiddleditch/gha-setup-ninja@v5
         
-  #   - name: Build binary
-  #     working-directory: test/pushbutton
-  #     run: |
-  #       mkdir out
-  #       cmake -Bout -GNinja
-  #       cmake --build out
+  # #   - name: Build binary
+  # #     working-directory: test/pushbutton
+  # #     run: |
+  # #       mkdir out
+  # #       cmake -Bout -GNinja
+  # #       cmake --build out
 
-  #   - name: List files
-  #     working-directory: test/pushbutton/out
-  #     run: dir
+  # #   - name: List files
+  # #     working-directory: test/pushbutton/out
+  # #     run: dir
 
-  #   - name: Run pushbutton tests
-  #     working-directory: test/pushbutton/out
-  #     run: ./pushbutton_test -v
+  # #   - name: Run pushbutton tests
+  # #     working-directory: test/pushbutton/out
+  # #     run: ./pushbutton_test -v
 
-  # switch_test_running:
-  #   name: Run Switch Tests
-  #   needs: formatting-check
-  #   runs-on: ubuntu-latest 
-  #   steps:
-  #   - name: Checkout code
-  #     uses: actions/checkout@v4
-  #     with:
-  #       submodules: recursive
+  # # switch_test_running:
+  # #   name: Run Switch Tests
+  # #   needs: formatting-check
+  # #   runs-on: ubuntu-latest 
+  # #   steps:
+  # #   - name: Checkout code
+  # #     uses: actions/checkout@v4
+  # #     with:
+  # #       submodules: recursive
         
-  #   - name: Install Ninja
-  #     uses: seanmiddleditch/gha-setup-ninja@v3
+  # #   - name: Install Ninja
+  # #     uses: seanmiddleditch/gha-setup-ninja@v5
         
-  #   - name: Build binary
-  #     working-directory: test/switch
-  #     run: |
-  #       mkdir out
-  #       cmake -Bout -GNinja
-  #       cmake --build out
+  # #   - name: Build binary
+  # #     working-directory: test/switch
+  # #     run: |
+  # #       mkdir out
+  # #       cmake -Bout -GNinja
+  # #       cmake --build out
 
-  #   - name: List files
-  #     working-directory: test/switch/out
-  #     run: dir
+  # #   - name: List files
+  # #     working-directory: test/switch/out
+  # #     run: dir
 
-  #   - name: Run inputs tests
-  #     working-directory: test/switch/out
-  #     run: ./switch_test -v
+  # #   - name: Run inputs tests
+  # #     working-directory: test/switch/out
+  # #     run: ./switch_test -v
 
-  cppcheck-annotations:
-    name: RUN_CppCheck
-    # needs: [pushbutton_test_running,switch_test_running]
-    needs: unit_tests_running
-    strategy:
-      matrix:
-        path: ['./src' , './test/template']
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Run cppcheck-annotation-action for src
-        uses: Konstantin343/cppcheck-annotation-action@v1.0
-        with:
-          std: 'c99'
-          platform: 'unix64'
-          log-level: 'verbose'
-          sources: ${{matrix.path}}
-          annotation-failures: 'warning'
-          suppress: 'unusedFunction'
-          # annotation-level-default: 'error'
-      - name: Annotate lines with errors src 
-        uses: yuzutech/annotations-action@v0.5.0
-        with:
-          repo-token: "${{ secrets.GITHUB_TOKEN }}"
-          title: 'Results of CppCheck ${{matrix.path}}'
-          input: 'annotations.json'
-
-  # cppcheck-annotations_src:
-  #   name: Run CppCheck /src
-  #   needs: formatting-check
+  # cppcheck-annotations:
+  #   name: RUN_CppCheck
+  #   # needs: [pushbutton_test_running,switch_test_running]
+  #   needs: unit_tests_running
+  #   strategy:
+  #     matrix:
+  #       path: ['./src' , './test/template']
   #   runs-on: ubuntu-latest
   #   steps:
   #     - name: Checkout
-  #       uses: actions/checkout@v4.1.1
+  #       uses: actions/checkout@v4
 
   #     - name: Run cppcheck-annotation-action for src
   #       uses: Konstantin343/cppcheck-annotation-action@v1.0
@@ -157,133 +141,158 @@ jobs:
   #         std: 'c99'
   #         platform: 'unix64'
   #         log-level: 'verbose'
-  #         sources: './src'
+  #         sources: ${{matrix.path}}
   #         annotation-failures: 'warning'
-  #         # suppress: 'unusedFunction'
+  #         suppress: 'unusedFunction'
   #         # annotation-level-default: 'error'
-  #     - name: Annotate lines with errors src
+  #     - name: Annotate lines with errors src 
   #       uses: yuzutech/annotations-action@v0.5.0
   #       with:
   #         repo-token: "${{ secrets.GITHUB_TOKEN }}"
-  #         title: 'Results of CppCheck src files'
+  #         title: 'Results of CppCheck ${{matrix.path}}'
   #         input: 'annotations.json'
-  # cppcheck-annotations_test:
-  #   name: Run CppCheck /test
-  #   needs: formatting-check
+
+  # # cppcheck-annotations_src:
+  # #   name: Run CppCheck /src
+  # #   needs: formatting-check
+  # #   runs-on: ubuntu-latest
+  # #   steps:
+  # #     - name: Checkout
+  # #       uses: actions/checkout@v4.1.1
+
+  # #     - name: Run cppcheck-annotation-action for src
+  # #       uses: Konstantin343/cppcheck-annotation-action@v1.0
+  # #       with:
+  # #         std: 'c99'
+  # #         platform: 'unix64'
+  # #         log-level: 'verbose'
+  # #         sources: './src'
+  # #         annotation-failures: 'warning'
+  # #         # suppress: 'unusedFunction'
+  # #         # annotation-level-default: 'error'
+  # #     - name: Annotate lines with errors src
+  # #       uses: yuzutech/annotations-action@v0.5.0
+  # #       with:
+  # #         repo-token: "${{ secrets.GITHUB_TOKEN }}"
+  # #         title: 'Results of CppCheck src files'
+  # #         input: 'annotations.json'
+  # # cppcheck-annotations_test:
+  # #   name: Run CppCheck /test
+  # #   needs: formatting-check
+  # #   runs-on: ubuntu-latest
+  # #   steps:
+  # #     - name: Run CppCheck /tests
+  # #       uses: Konstantin343/cppcheck-annotation-action@v1.0
+  # #       with:
+  # #         std: 'c99'
+  # #         platform: 'unix64'
+  # #         log-level: 'verbose'
+  # #         sources: './test/template'
+  # #         annotation-failures: 'warning'
+  # #         # suppress: 'unusedFunction'
+  # #         # annotation-level-default: 'error'
+  # #     - name: Annotate lines with errors test_src
+  # #       uses: yuzutech/annotations-action@v0.5.0
+  # #       with:
+  # #         repo-token: "${{ secrets.GITHUB_TOKEN }}"
+  # #         title: 'Results of CppCheck test files'
+  # #         input: 'annotations.json'
+
+  # lizard:
+  #   name: RUN Code Complexity Check
+  #   # needs: [pushbutton_test_running,switch_test_running]
+  #   needs: unit_tests_running
+  #   strategy:
+  #     matrix:
+  #       module: [PUSHBUTTON , SWITCH]
   #   runs-on: ubuntu-latest
   #   steps:
-  #     - name: Run CppCheck /tests
-  #       uses: Konstantin343/cppcheck-annotation-action@v1.0
+  #     - name: Checkout
+  #       uses: actions/checkout@v4
+
+  #     - name: Create out folder
+  #       run: mkdir out
+
+  #     - name: Run Lizard Check
+  #       uses: niwciu/Lizard-Runner@main
   #       with:
-  #         std: 'c99'
-  #         platform: 'unix64'
-  #         log-level: 'verbose'
-  #         sources: './test/template'
-  #         annotation-failures: 'warning'
-  #         # suppress: 'unusedFunction'
-  #         # annotation-level-default: 'error'
-  #     - name: Annotate lines with errors test_src
-  #       uses: yuzutech/annotations-action@v0.5.0
+  #         path: ./src/${{matrix.module}}
+  #         CCN: 12
+  #         Threshold: nloc=30
+  #         language: cpp
+  #         verbose: true
+  #         arguments: 4
+
+  #     - name: Generate Lizard html report 
+  #       uses: niwciu/Lizard-Runner@main
   #       with:
-  #         repo-token: "${{ secrets.GITHUB_TOKEN }}"
-  #         title: 'Results of CppCheck test files'
-  #         input: 'annotations.json'
+  #         path: ./src/${{matrix.module}}
+  #         CCN: 12
+  #         Threshold: nloc=30
+  #         language: cpp
+  #         verbose: true
+  #         arguments: 4
+  #         output_file: ./out/${{matrix.module}}_CCM_report.html
 
-  lizard:
-    name: RUN Code Complexity Check
-    # needs: [pushbutton_test_running,switch_test_running]
-    needs: unit_tests_running
-    strategy:
-      matrix:
-        module: [PUSHBUTTON , SWITCH]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Create out folder
-        run: mkdir out
-
-      - name: Run Lizard Check
-        uses: niwciu/Lizard-Runner@main
-        with:
-          path: ./src/${{matrix.module}}
-          CCN: 12
-          Threshold: nloc=30
-          language: cpp
-          verbose: true
-          arguments: 4
-
-      - name: Generate Lizard html report 
-        uses: niwciu/Lizard-Runner@main
-        with:
-          path: ./src/${{matrix.module}}
-          CCN: 12
-          Threshold: nloc=30
-          language: cpp
-          verbose: true
-          arguments: 4
-          output_file: ./out/${{matrix.module}}_CCM_report.html
-
-      - name: Archive ${{matrix.module}} Code Complexity Metrix artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: ${{matrix.module}}_CCM_report
-          path: ./out
-          if-no-files-found: error
-          overwrite: true
+  #     - name: Archive ${{matrix.module}} Code Complexity Metrix artifacts
+  #       uses: actions/upload-artifact@v4
+  #       with:
+  #         name: ${{matrix.module}}_CCM_report
+  #         path: ./out
+  #         if-no-files-found: error
+  #         overwrite: true
     
-  build_pushbutton_for_STM32G071:
-    name: Build STM32G071_NUCLEO_LL_1_KEY_UI
-    needs: [cppcheck-annotations,lizard]
-    runs-on: ubuntu-latest
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v4.1.1
-      with:
-        submodules: recursive
+  # build_pushbutton_for_STM32G071:
+  #   name: Build STM32G071_NUCLEO_LL_1_KEY_UI
+  #   needs: [cppcheck-annotations,lizard]
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #   - name: Checkout code
+  #     uses: actions/checkout@v4.1.1
+  #     with:
+  #       submodules: recursive
 
-    - name: Install Ninja
-      uses: seanmiddleditch/gha-setup-ninja@v3
+  #   - name: Install Ninja
+  #     uses: seanmiddleditch/gha-setup-ninja@v5
 
-    - name: Install Arm GNU Toolchain (arm-none-eabi-gcc)
-      uses: carlosperate/arm-none-eabi-gcc-action@v1
-    - run: arm-none-eabi-gcc --version
+  #   - name: Install Arm GNU Toolchain (arm-none-eabi-gcc)
+  #     uses: carlosperate/arm-none-eabi-gcc-action@v1
+  #   - run: arm-none-eabi-gcc --version
 
-    - name: Build binary
-      working-directory: examples/STM32G071_NUCLEO_LL_1_KEY_UI
-      run: |
-        mkdir out
-        cmake -DCMAKE_TOOLCHAIN_FILE=cmake/arm-none-eabi-gcc.cmake
-        cmake -Bout -GNinja
-        cmake --build out 
+  #   - name: Build binary
+  #     working-directory: examples/STM32G071_NUCLEO_LL_1_KEY_UI
+  #     run: |
+  #       mkdir out
+  #       cmake -DCMAKE_TOOLCHAIN_FILE=cmake/arm-none-eabi-gcc.cmake
+  #       cmake -Bout -GNinja
+  #       cmake --build out 
 
-  build_switch_for_STM32G071:
-    name: Build STM32G071_NUCLEO_LL_2_STATE_SWITCH
-    needs: [cppcheck-annotations,lizard]
-    runs-on: ubuntu-latest
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v4.1.1
-      with:
-        submodules: recursive
+  # build_switch_for_STM32G071:
+  #   name: Build STM32G071_NUCLEO_LL_2_STATE_SWITCH
+  #   needs: [cppcheck-annotations,lizard]
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #   - name: Checkout code
+  #     uses: actions/checkout@v4.1.1
+  #     with:
+  #       submodules: recursive
 
-    - name: Install Ninja
-      uses: seanmiddleditch/gha-setup-ninja@v3
+  #   - name: Install Ninja
+  #     uses: seanmiddleditch/gha-setup-ninja@v5
 
-    - name: Install Arm GNU Toolchain (arm-none-eabi-gcc)
-      uses: carlosperate/arm-none-eabi-gcc-action@v1
-    - run: arm-none-eabi-gcc --version
+  #   - name: Install Arm GNU Toolchain (arm-none-eabi-gcc)
+  #     uses: carlosperate/arm-none-eabi-gcc-action@v1
+  #   - run: arm-none-eabi-gcc --version
 
-    - name: Build binary
-      working-directory: examples/STM32G071_NUCLEO_LL_2_STATE_SWITCH
-      run: |
-        mkdir out
-        cmake -DCMAKE_TOOLCHAIN_FILE=cmake/arm-none-eabi-gcc.cmake
-        cmake -Bout -GNinja
-        cmake --build out         
+  #   - name: Build binary
+  #     working-directory: examples/STM32G071_NUCLEO_LL_2_STATE_SWITCH
+  #     run: |
+  #       mkdir out
+  #       cmake -DCMAKE_TOOLCHAIN_FILE=cmake/arm-none-eabi-gcc.cmake
+  #       cmake -Bout -GNinja
+  #       cmake --build out         
       
       
-  # next steps is project page along with metrix report deploy. Reports are artefacts from Lizard and Unit Test runners
+  # # next steps is project page along with metrix report deploy. Reports are artefacts from Lizard and Unit Test runners
 
-  #     #next job can be builds check on for specific platforms. Those buils can produce artefacts taht can be later deployed on github page
+  # #     #next job can be builds check on for specific platforms. Those buils can produce artefacts taht can be later deployed on github page
