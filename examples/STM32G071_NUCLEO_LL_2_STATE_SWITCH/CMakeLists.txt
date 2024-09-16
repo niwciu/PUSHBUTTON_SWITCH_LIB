@@ -35,7 +35,7 @@ set(INCLUDE_DIRS
 # Core/Src
 # Core/Startup
 
-../../src/SWITCH
+../../src/switch
 
 ./Core/Inc 
 ./Drivers/STM32G0xx_HAL_Driver/Inc 
@@ -62,7 +62,7 @@ set(C_SRCS
     Core/Src/system_stm32g0xx.c
     
 
-    ../../src/SWITCH/switch.c
+    ../../src/switch/switch.c
     
 	
 )
