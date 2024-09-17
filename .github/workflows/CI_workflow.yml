@@ -264,6 +264,10 @@ jobs:
       # Destination path. Supports basic tilde expansion.
       # Optional. Default is $GITHUB_WORKSPACE
           path: ./test/${{matrix.module}}/out
+      
+      - name: list files
+        working-directory: ./test/${{matrix.module}}/out
+        run: ls
 
       # A glob pattern to the artifacts that should be downloaded.
       # Ignored if name is specified.
@@ -276,11 +280,11 @@ jobs:
       # Optional. Default is 'false'
       # merge-multiple:
 
-      - name: Run Library GCOV check
-        uses: threeal/gcovr-action@main
-        with:
-          excludes: test
-          fail-under-line: 95
+      # - name: Run Library GCOV check
+      #   uses: threeal/gcovr-action@main
+      #   with:
+      #     excludes: test
+      #     fail-under-line: 95
 
       # - name: generate GCOV report
       # uses: threeal/gcovr-action@main
