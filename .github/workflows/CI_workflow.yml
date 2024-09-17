@@ -269,21 +269,17 @@ jobs:
         working-directory: ./test/${{matrix.module}}/out
         run: ls
 
-      # A glob pattern to the artifacts that should be downloaded.
-      # Ignored if name is specified.
-      # Optional.
-      # pattern:
+      - name: list files
+        working-directory: ./test
+        run: ls
+      - name: list files
+        working-directory: ./test/${{matrix.module}}
+        run: ls
 
-      # When multiple artifacts are matched, this changes the behavior of the destination directories.
-      # If true, the downloaded artifacts will be in the same directory specified by path.
-      # If false, the downloaded artifacts will be extracted into individual named directories within the specified path.
-      # Optional. Default is 'false'
-      # merge-multiple:
-
-      # - name: Run Library GCOV check
-      #   uses: threeal/gcovr-action@main
-      #   with:
-      #     excludes: test
+      - name: Run Library GCOV check
+        uses: threeal/gcovr-action@main
+        with:
+            excludes: test/
       #     fail-under-line: 95
 
       # - name: generate GCOV report
