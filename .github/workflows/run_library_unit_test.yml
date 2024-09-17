@@ -8,7 +8,7 @@ on:
 jobs:
   pushbutton_switch_test_running:
     name: PushButton Test RUN
-    runs-on: windows-latest 
+    runs-on: ubuntu-latest 
     # strategy:
     #   matrix:
     #     os: [ubuntu-latest, windows-latest]
@@ -35,7 +35,6 @@ jobs:
     - name: generate GCOV report
       uses: threeal/gcovr-action@main
       with: 
-        root: ../../../
         excludes: test/
 
 
