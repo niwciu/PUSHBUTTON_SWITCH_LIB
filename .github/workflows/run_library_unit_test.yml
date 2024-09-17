@@ -33,7 +33,7 @@ jobs:
       run: ./pushbutton_test -v
 
     - name: generate GCOV report
-      uses: threeal/gcovr-action@latest
+      uses: threeal/gcovr-action@main
       with:
         excludes: test
 
