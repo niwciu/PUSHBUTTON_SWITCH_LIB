@@ -58,11 +58,6 @@ jobs:
       working-directory: ./test/${{matrix.module}}/out
       run: ./${{matrix.module}}_test -v
 
-    - name: Run Library GCOV check
-      uses: threeal/gcovr-action@v1.0.0
-      with:
-        excludes: test
-
     - name: Archive ${{matrix.module}} GCOVR outputs
       uses: actions/upload-artifact@v4
       with:
@@ -279,6 +274,11 @@ jobs:
       - name: list files
         working-directory: ./
         run: ls
+
+      - name: Run Library GCOV check
+        uses: threeal/gcovr-action@v1.0.0
+        with:
+          excludes: test
 
       - name: Run Library GCOV check
         uses: threeal/gcovr-action@main
