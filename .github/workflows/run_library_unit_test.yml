@@ -33,9 +33,10 @@ jobs:
       run: ./pushbutton_test -v
 
     - name: generate GCOV report
-      uses: niwciu/gcovr-action@main
+      uses: threeal/gcovr-action@main
       with:
         excludes: test
+    
 
 
   # Switch_test_running:
