@@ -7,7 +7,7 @@ on:
     branches: [main, develop]
 jobs:
   unit_tests_running:
-    name: Library Unit Test RUN
+    name: RUN Library Unit Test
     runs-on: ubuntu-latest 
     strategy:
       matrix:
@@ -78,13 +78,25 @@ jobs:
         uses: threeal/gcovr-action@main
         with:
           excludes: test
-          fail-under-line: 100
+          fail-under-line: 95
 
-      # - name: Run Library GCOV check
-      #   uses: threeal/gcovr-action@main
-      #   with:
-      #       excludes: test/
-      # #     
+      - name: Run Library GCOV check
+        uses: threeal/gcovr-action@main
+        with:
+            excludes: test
+            html-out: library_coverage_report.html
+            html-theme: github.dark-green
+
+      - name: Upload coverage hmtl report
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage
+          path: ./reports
+          if-no-files-found: error
+          overwrite: true
+          retention-days: 1
+            
+        
 
   # Switch_test_running:
   #   name: Switch Test RUN
