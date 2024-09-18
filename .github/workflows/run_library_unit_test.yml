@@ -54,14 +54,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # - name: create pushbutton artifacts folder
-      #   working-directory: ./test/pushbutton
-      #   run: mkdir out
-      
-      # - name: create switch artifacts folder
-      #   working-directory: ./test/switch
-      #   run: mkdir out
-
       - name: Get pushbutton GCOV data
         uses: actions/download-artifact@v4
         with:
@@ -84,7 +76,7 @@ jobs:
         uses: threeal/gcovr-action@main
         with:
             excludes: test
-            html-out: library_coverage_report.html
+            html-out: ./reports/library_coverage_report.html
             html-theme: github.dark-green
 
       - name: Upload coverage hmtl report
