@@ -6,12 +6,12 @@ on:
   pull_request:
     branches: [main, develop]
 jobs:
-  pushbutton_test_running:
-    name: PushButton Test RUN
+  unit_tests_running:
+    name: Library Unit Test RUN
     runs-on: ubuntu-latest 
-    # strategy:
-    #   matrix:
-    #     os: [ubuntu-latest, windows-latest]
+    strategy:
+      matrix:
+        module: [pushbutton, switch]
     steps:
     - name: Checkout code
       uses: actions/checkout@v4.1.1
@@ -19,76 +19,71 @@ jobs:
         submodules: recursive
         
     - name: Install Ninja
-      uses: seanmiddleditch/gha-setup-ninja@v3
+      uses: seanmiddleditch/gha-setup-ninja@v5
         
     - name: Build binary
-      working-directory: test/pushbutton
+      working-directory: test/${{matrix.module}}
       run: |
         mkdir out
         cmake -Bout -GNinja
         cmake --build out
 
-    - name: Run pushbutton tests
-      working-directory: test/pushbutton/out
-      run: ./pushbutton_test -v
+    - name: Run ${{matrix.module}} tests
+      working-directory: test/${{matrix.module}}/out
+      run: ./${{matrix.module}}_test -v
 
-    - name: generate GCOV report
-      uses: threeal/gcovr-action@main
-      with:
-        excludes: test
+    # - name: generate GCOV report
+    #   uses: threeal/gcovr-action@main
+    #   with:
+    #     excludes: test
     
     - name: Save Unit Tests run artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: tests_artifacts
-        path: test/pushbutton/out
+        name: ${{matrix.module}}_tests_artifacts
+        path: test/${{matrix.module}}/out
         if-no-files-found: error
         overwrite: true
         retention-days: 1
     
   code_coverage:
     name: RUN Code Coverage Check
-    needs: pushbutton_test_running
+    needs: unit_tests_running
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: create artifacts folder
+      - name: create pushbutton artifacts folder
         working-directory: ./test/pushbutton
         run: mkdir out
+      
+      - name: create switch artifacts folder
+        working-directory: ./test/switch
+        run: mkdir out
 
-      - name: Get GCOV data
+      - name: Get pushbutton GCOV data
         uses: actions/download-artifact@v4
         with:
-          name: tests_artifacts
+          name: pushbutton_tests_artifacts
           path: ./test/pushbutton/out
-
-      - name: list files
-        working-directory: ./test/pushbutton/out
-        run: ls
-
-      - name: list files
-        working-directory: ./test
-        run: ls
-      - name: list files
-        working-directory: ./test/pushbutton
-        run: ls
-
-      - name: list files
-        working-directory: ./
-        run: ls
-
-      - name: Run Library GCOV check
-        uses: threeal/gcovr-action@v1.0.0
+          
+      - name: Get switch GCOV data
+        uses: actions/download-artifact@v4
         with:
-          excludes: test
+          name: switch_tests_artifacts
+          path: ./test/switch/out
 
       - name: Run Library GCOV check
         uses: threeal/gcovr-action@main
         with:
-            excludes: test/
-      #     fail-under-line: 95
+          excludes: test
+
+      # - name: Run Library GCOV check
+      #   uses: threeal/gcovr-action@main
+      #   with:
+      #       excludes: test/
+      # #     fail-under-line: 95
 
   # Switch_test_running:
   #   name: Switch Test RUN
