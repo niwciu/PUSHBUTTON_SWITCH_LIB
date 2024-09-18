@@ -73,10 +73,12 @@ jobs:
           fail-under-line: 95
 
       - name: Run Library GCOV check
-        uses: threeal/gcovr-action@main
+        uses: niwciu/gcovr-action@develop
         with:
             excludes: test
             html-out: ./reports/library_coverage_report.html
+            html-details: true
+            html-title: PUSHBUTTON, SWITCH library GCC Code Coverage Report
             html-theme: github.dark-green
 
       - name: Upload coverage hmtl report
