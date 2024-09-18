@@ -56,7 +56,7 @@ jobs:
 
       - name: create artifacts folder
         working-directory: ./test/pushbutton
-        run: mkdin out
+        run: mkdir out
 
       - name: Get GCOV data
         uses: actions/download-artifact@v4
