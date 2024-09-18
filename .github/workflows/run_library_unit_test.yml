@@ -64,6 +64,32 @@ jobs:
           name: tests_artifacts
           path: ./test/pushbutton/out
 
+      - name: list files
+        working-directory: ./test/pushbutton/out
+        run: ls
+
+      - name: list files
+        working-directory: ./test
+        run: ls
+      - name: list files
+        working-directory: ./test/pushbutton
+        run: ls
+
+      - name: list files
+        working-directory: ./
+        run: ls
+
+      - name: Run Library GCOV check
+        uses: threeal/gcovr-action@v1.0.0
+        with:
+          excludes: test
+
+      - name: Run Library GCOV check
+        uses: threeal/gcovr-action@main
+        with:
+            excludes: test/
+      #     fail-under-line: 95
+
   # Switch_test_running:
   #   name: Switch Test RUN
   #   runs-on: windows-latest 
