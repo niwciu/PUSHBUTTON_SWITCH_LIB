@@ -54,13 +54,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: create pushbutton artifacts folder
-        working-directory: ./test/pushbutton
-        run: mkdir out
+      # - name: create pushbutton artifacts folder
+      #   working-directory: ./test/pushbutton
+      #   run: mkdir out
       
-      - name: create switch artifacts folder
-        working-directory: ./test/switch
-        run: mkdir out
+      # - name: create switch artifacts folder
+      #   working-directory: ./test/switch
+      #   run: mkdir out
 
       - name: Get pushbutton GCOV data
         uses: actions/download-artifact@v4
