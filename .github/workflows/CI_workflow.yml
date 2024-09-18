@@ -242,6 +242,7 @@ jobs:
           path: ./out
           if-no-files-found: error
           overwrite: true
+          retention-days: 1
 
   code_coverage:
     name: RUN Code Coverage Check
