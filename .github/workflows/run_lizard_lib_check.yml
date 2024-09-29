@@ -12,7 +12,7 @@ jobs:
       matrix:
         module: [PUSHBUTTON , SWITCH]
     runs-on: ubuntu-latest
-    cancel-timeout-minutes: 1
+    timeout-minutes: 1
     steps:
       - name: Checkout
         uses: actions/checkout@v4
