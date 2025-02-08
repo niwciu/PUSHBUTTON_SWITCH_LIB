@@ -183,7 +183,7 @@ jobs:
                 additional-args: --force -UUNITY_FIXTURE_FREE -UUNITY_FIXTURE_MALLOC -UUNITY_OUTPUT_CHAR
                 log-level: verbose
                 std: c99
-                suppress: missingIncludeSystem,missingInclude #,unusedFunction:./test/{{matrix.module}}/master_PDU_read_test_runner.c
+                suppress: missingIncludeSystem,missingInclude,unusedFunction:./test/${{matrix.module}}/${{matrix.module}}_test_runner.c:3
                 action-fail-level: 'failure,warning'
                 # annotation-notices:
                 # annotation-failures: 

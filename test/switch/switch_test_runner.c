@@ -14,15 +14,5 @@ TEST_GROUP_RUNNER(Switch)
     RUN_TEST_CASE(Switch, GivenSwitchIsONAndTestTimerEqual10AndSW1InitAndDecTimerFunctionRegisteredToSwOffAndSW1SwitchedOffAndBouncingWhenSW1StableForDebounceTimeThenTestTimerEqual9);
     RUN_TEST_CASE(Switch, GivenSwitchIsONAndTestTimerEqual10AndSW1InitAndDecTimerFunctionRegisteredToSwOffAndSW1SwitchedOffAndBouncingWhenSW1StableForDebounceTimeMinus1ThenTestTimerEqual9);
     RUN_TEST_CASE(Switch, GivenSwitchIsONAndTestTimerEqual10AndSW1InitAndDecTimerFunctionRegisteredToSwOffAndSW1SwitchedOffAndBouncingWhenSW1StableForDebounceTimePlus1ThenTestTimerEqual9);
-    // RUN_TEST_CASE(Switch, );
-    // RUN_TEST_CASE(Switch, );
-    // RUN_TEST_CASE(Switch, );
-    // RUN_TEST_CASE(Switch, );
-    // RUN_TEST_CASE(Switch, );
-    // RUN_TEST_CASE(Switch, );
-    // RUN_TEST_CASE(Switch, );
-    // RUN_TEST_CASE(Switch, );
-    // RUN_TEST_CASE(Switch, );
-    // RUN_TEST_CASE(Switch, );
-    // RUN_TEST_CASE(Switch, );
+
 }

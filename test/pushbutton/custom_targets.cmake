@@ -65,7 +65,7 @@ add_custom_target(cppcheck cppcheck
 					# --platform=win64 
 					--suppress=missingIncludeSystem 
 					--suppress=missingInclude
-					# --suppress=unusedFunction:../../../test/pushbutton/pushbutton_test_runner.c:3
+					--suppress=unusedFunction:../../../test/pushbutton/pushbutton_test_runner.c:3
 					# --checkers-report=cppcheck_checkers_report.txt
 					)
 # TARGET FOR CREATING CODE COVERAGE REPORTS
