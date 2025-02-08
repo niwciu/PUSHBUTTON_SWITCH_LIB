@@ -179,7 +179,7 @@ jobs:
             - name: Run cppcheck-annotation-action
               uses: niwciu/cppcheck-annotation-action@develop
               with:
-                sources: ./src ./test/${{matrix.module}}
+                sources: ./src/${{matrix.module}} ./test/${{matrix.module}}
                 additional-args: --force -UUNITY_FIXTURE_FREE -UUNITY_FIXTURE_MALLOC -UUNITY_OUTPUT_CHAR
                 log-level: verbose
                 std: c99
