@@ -81,10 +81,10 @@ else()
 	message(STATUS "pyton 3 was found but gcovr was not found. \r\n\tInstall gcovr to get predefined targets for uint tests code coverage report generation")
 endif()
 add_custom_command(
-    OUTPUT ../../../reports/CCR/pushbutton/ ../../../reports/CCR/JSON_ALL/ ../../../reports/CCR/HTML_OUT/
+    OUTPUT ../../../reports/CCR/pushbutton/ ../../../reports/CCR/JSON_ALL/ ../../../reports/CCR/JSON_ALL/HTML_OUT/
     COMMAND ${CMAKE_COMMAND} -E make_directory ../../../reports/CCR/pushbutton/
     COMMAND ${CMAKE_COMMAND} -E make_directory ../../../reports/CCR/JSON_ALL/
-	COMMAND ${CMAKE_COMMAND} -E make_directory ../../../reports/CCR/HTML_OUT/
+	COMMAND ${CMAKE_COMMAND} -E make_directory ../../../reports/CCR/JSON_ALL/HTML_OUT/
     COMMENT "Tworzenie katalogów raportów Code Coverage"
 )
 add_custom_target(ccr
@@ -111,12 +111,13 @@ add_custom_target(ccca gcovr
 )
 						
 add_custom_target(ccra  
-	COMMAND ${CMAKE_COMMAND} -E make_directory ../../../reports/CCR/HTML_OUT/
+	COMMAND ${CMAKE_COMMAND} -E make_directory ../../../reports/CCR/JSON_ALL/HTML_OUT/
 	COMMAND ${CMAKE_COMMAND} -E make_directory ../../../reports/CCR/JSON_ALL/
 	COMMAND gcovr 
 				-r ../../../ 
 				--json-add-tracefile \"../../../reports/CCR/JSON_ALL/coverage_*.json\"  
-				--html-details -o ../../../reports/CCR/HTML_OUT/project_coverage.html
+				--html-details -o ../../../reports/CCR/JSON_ALL/HTML_OUT/project_coverage.html
+				--html-theme github.dark-green
 				.
 )
 add_dependencies(ccra ccr)

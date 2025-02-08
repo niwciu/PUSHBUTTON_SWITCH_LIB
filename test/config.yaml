@@ -1,0 +1,24 @@
+modules:
+  - name: pushbutton
+    targets:
+      - clean
+      - all
+      - run
+      - ccmr
+      - ccr
+  - name: switch
+    targets:
+      - clean
+      - all
+      - run
+      - ccmr
+      - ccr
+      - ccra
+ 
+
+# # Lista raportów, które mają zostać otwarte dodatkowo
+reports_to_show:
+  - "CCM"
+  - "CCR"
+  - "../reports/CCR/JSON_ALL/html_out/coverage.html"
+
