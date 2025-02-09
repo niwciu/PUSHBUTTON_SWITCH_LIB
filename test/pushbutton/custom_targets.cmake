@@ -63,6 +63,7 @@ add_custom_target(cppcheck cppcheck
 					--std=c99
 					# --inline-suppr 
 					# --platform=win64 
+					--check-level=exhaustive
 					--suppress=missingIncludeSystem 
 					--suppress=missingInclude
 					--suppress=unusedFunction:../../../test/pushbutton/pushbutton_test_runner.c:3
