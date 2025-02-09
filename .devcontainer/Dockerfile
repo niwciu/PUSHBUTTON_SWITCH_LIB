@@ -24,6 +24,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     xz-utils \
     python3 \
     python3-venv \
+    pip \
     pipx \
     make \
     clang-format \

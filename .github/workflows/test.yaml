@@ -29,9 +29,10 @@ jobs:
               shell: bash
               run: |
                  source venv/bin/activate
+                 pip install -r requirements.txt
 
-            - name: Create PyScript Venv
-              working-directory: test/_config_scripts
-              shell: bash
-              run: |
-                pip install -r requirements.txt
+            # - name: Create PyScript Venv
+            #   working-directory: test/_config_scripts
+            #   shell: bash
+            #   run: |
+                
