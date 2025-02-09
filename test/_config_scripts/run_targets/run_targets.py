@@ -1,8 +1,8 @@
 import os
 import subprocess
-import yaml
 import webbrowser
 import argparse
+import yaml
 
 # Funkcja do wczytywania konfiguracji z pliku YAML
 def load_config(yaml_file):
@@ -14,11 +14,11 @@ def create_required_directories(config):
     """
     Tworzy wymaganą strukturę folderów na podstawie pliku YAML.
     """
-    base_report_path = "../reports"
+    base_report_path = "../../../reports"
     ccm_path = os.path.join(base_report_path, "CCM")
     ccr_path = os.path.join(base_report_path, "CCR")
     json_all_path = os.path.join(ccr_path, "JSON_ALL")
-    ccr_html_out_path = os.path.join(json_all_path, "HTML_OUT")
+    ccr_html_out_path = os.path.join(json_all_path, "html_out")
 
     # Tworzenie folderów bazowych
     os.makedirs(base_report_path, exist_ok=True)
@@ -34,19 +34,38 @@ def create_required_directories(config):
         os.makedirs(module_path, exist_ok=True)
 
     print(f"Struktura folderów została wygenerowana w '{os.path.abspath(base_report_path)}'.")
+# Funkcja sprawdzająca czy usunąć zbudowane wcześniej konfiguracje
+def check_reconfiguration_flag(rp_flag, module_path):
+
+    out_path = os.path.join(module_path, 'out')
+
+    if (rp_flag & os.path.isdir(out_path)):
+        print("Flaga reconfigure_project została podana. Usuwam poprzednią kofigurację projektu jeśli istnieje...")
+        # Komenda do wykonania
+        command = ["rm", "-r", "out"]
+        subprocess.run(command, cwd=module_path, check=True)
 
 # Funkcja do uruchamiania targetów w folderze "out"
 def run_make_targets(module_path, targets):
+
     out_path = os.path.join(module_path, 'out')
 
     if os.path.isdir(out_path):
-        print(f"Przechodzimy do folderu {out_path}")
-
-        for target in targets:
-            print(f"Uruchamianie 'make {target}' w {out_path}")
-            subprocess.run(['make', target], cwd=out_path, check=True)
+        print(f"Folder 'out' w module {module_path} znaleziony")
     else:
-        print(f"Brak folderu 'out' w module {module_path}")
+        print(f"Brak folderu 'out' w module {module_path}.")
+        print(f"Uruchamiamy Cmake dla modułu {module_path}.")
+        # Komenda do wykonania
+        command = ["cmake", "-S./", "-B", "out", "-G", "Unix Makefiles"]
+        subprocess.run(command, cwd=module_path, check=True)
+    
+    print(f"Przechodzimy do folderu {out_path}")
+    # command = ["cmake", "-S./","-G", "Unix Makefiles"]
+    # subprocess.run(command, cwd=module_path, check=True)
+
+    for target in targets:
+        print(f"Uruchamianie 'make {target}' w {out_path}")
+        subprocess.run(['make', target], cwd=out_path, check=True)
 
 # Funkcja do generowania strony informacyjnej o braku raportu
 def generate_missing_report_page(report_folder):
@@ -247,11 +266,24 @@ def open_html_files_in_default_browser(reports):
 
 def main():
     # Ustawiamy parser argumentów
-    parser = argparse.ArgumentParser(description="Skrypt do wczytywania konfiguracji z pliku YAML.")
+    parser = argparse.ArgumentParser(
+        description=(
+            "Skrypt do zarządzania konfiguracją i operacjami związanymi z projektem. "
+            "Pozwala na wczytywanie ustawień z pliku YAML oraz wykonywanie dodatkowych operacji, "
+            "takich jak ponowna konfiguracja projektu."
+            )
+    )
+
     parser.add_argument(
         '-c', '--config', 
         default='config.yaml', 
         help='Ścieżka do pliku YAML z konfiguracją (domyślnie: config.yaml)'
+    )
+
+    parser.add_argument(
+        '-rp', '--reconfigure_project',
+        action='store_true',
+        help='Jeśli flaga jest podana, wykonaj operacje związane z ponowną konfiguracją projektu.'
     )
 
     # Parsujemy argumenty
@@ -263,7 +295,7 @@ def main():
 
     create_required_directories(config)
 
-    test_folder = '.'
+    test_folder = '../../../test'
 
     # Wczytujemy listę raportów, które mają być wyświetlane z pliku YAML
     reports_to_open = []
@@ -272,9 +304,9 @@ def main():
     
     for report in reports_to_show:
         if report.lower() == 'ccm':
-            reports_to_open.append("../reports/CCM/index.html")
+            reports_to_open.append("../../../reports/CCM/index.html")
         elif report.lower() == 'ccr':
-            reports_to_open.append("../reports/CCR/JSON_ALL/HTML_OUT/project_coverage.html")
+            reports_to_open.append("../ ../reports/CCR/JSON_ALL/html_out/coverage.html")
         else:
             # Dla innych raportów, traktujemy je jako pełne ścieżki
             if os.path.exists(report):
@@ -290,15 +322,16 @@ def main():
         
         if os.path.isdir(module_path):
             print(f"Zaczynamy dla modułu: {module_path}")
+            check_reconfiguration_flag(args.reconfigure_project, module_path)
             run_make_targets(module_path, targets)
         else:
             print(f"Folder {module_path} nie istnieje.")
 
     # Tworzymy stronę informacyjną o braku raportów
-    generate_missing_report_page("../reports/CCM")
+    generate_missing_report_page("../../../reports/CCM")
 
     # Generujemy raporty
-    generate_main_report("../reports/CCM", "config.yaml")
+    generate_main_report("../../../reports/CCM", "config.yaml")
 
     # Otwieramy raporty
     if reports_to_open:

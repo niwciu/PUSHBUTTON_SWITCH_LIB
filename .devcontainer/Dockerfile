@@ -17,22 +17,24 @@ FROM ubuntu:latest
 RUN apt-get update && apt-get install -y --no-install-recommends \
     ca-certificates \
     cmake \
-    g++ \
+    g++ \ 
     git \
     ninja-build \
     wget \
     xz-utils \
     python3 \
+    python3-venv \
     pipx \
     make \
     clang-format \
     stlink-tools
-   
+
+# Set working directory and switch to the new user
+WORKDIR /home/workspace
 
 #inlstall lizard & gcovr 
-RUN pipx install lizard && pipx install gcovr && pipx ensurepath
-
-WORKDIR /home/workspace
+# Install lizard & gcovr in the global directory
+RUN pipx install lizard && pipx install gcovr && pipx ensurepath && pipx runpip lizard install jinja2
 
 # tools directory
 ARG TOOLS_DIRECTORY=/home/opt
@@ -51,8 +53,8 @@ ENV PATH=${PATH}:${TOOLS_DIRECTORY}/${ARM_TOOLCHAIN_DIRECTORY}/bin
 # avr toolchain
 
 # cppcheck
-ARG CPPCHECK_VERSION=2.13.0
-RUN cd ${TOOLS_DIRECTORY} && git clone https://github.com/danmar/cppcheck.git && cd cppcheck && git checkout 2.13.0 \
+ARG CPPCHECK_VERSION=2.16.2
+RUN cd ${TOOLS_DIRECTORY} && git clone https://github.com/danmar/cppcheck.git && cd cppcheck && git checkout ${CPPCHECK_VERSION} \
     && cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DUSE_MATCHCOMPILER=ON -G Ninja \
     && cmake --build build && cmake --install build \
     && cd .. && rm -rf cppcheck
