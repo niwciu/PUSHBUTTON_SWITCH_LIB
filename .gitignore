@@ -12,5 +12,6 @@ library_documentation/
 reports/
 
 .venv/
+venv/
 
 

@@ -6,7 +6,9 @@ jobs:
     generate_ccm_ccr_reports:
         name: Generate Code Coverage Report
         runs-on: ubuntu-latest
-        container: niwciu/stm32_dev_container:1.0.3
+        container: 
+          image: niwciu/stm32_dev_container:1.0.3
+          options: --user root
         steps:
             - name: checkout
               uses: actions/checkout@v4
