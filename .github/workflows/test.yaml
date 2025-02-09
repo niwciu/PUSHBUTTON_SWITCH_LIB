@@ -21,11 +21,11 @@ jobs:
                 deactivate
 
             - name: Run All Targets
-              working-directory: test/_config_scripts
+              working-directory: test/_config_scripts/run_targets
               shell: bash
               run: |
-                source venv/bin/activate
-                python3 run_targets/run_targets.py -rp
+                source ../venv/bin/activate
+                python3 run_targets.py -rp
                 deactivate
 
             - name: Save Generated Reports
