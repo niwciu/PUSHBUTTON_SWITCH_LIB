@@ -13,6 +13,7 @@ jobs:
               
             - name: Create PyScript Venv
               working-directory: test/_config_scripts
+              shell: bash
               run: |
                 python3 -m venv venv
 
@@ -25,10 +26,12 @@ jobs:
 
             - name: Create PyScript Venv
               working-directory: test/_config_scripts
+              shell: bash
               run: |
                  source venv/bin/activate
 
             - name: Create PyScript Venv
               working-directory: test/_config_scripts
+              shell: bash
               run: |
                 pip install -r requirements.txt
