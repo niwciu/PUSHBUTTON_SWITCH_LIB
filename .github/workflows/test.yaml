@@ -1,0 +1,28 @@
+name: test
+on:
+    workflow_dispatch: 
+
+jobs:
+    generate_ccm_ccr_reports:
+        name: Generate Code Coverage Report
+        runs-on: ubuntu-latest
+        container: niwciu/stm32_dev_container:1.0.3
+        steps:
+            - name: checkout
+              uses: actions/checkout@v4
+              
+            - name: Create PyScript Venv
+              working-directory: test/_config_scripts
+              run: |
+                python3 -m venv .venv
+
+            - name: Create PyScript Venv 2
+              working-directory: test/_config_scripts
+              run: |
+                source .venv/bin/activate
+
+
+            - name: Create PyScript Venv
+              working-directory: test/_config_scripts
+              run: |
+                pip install -r requirements.txt

@@ -6,13 +6,6 @@ on:
       branches: 
         - main
         - develop
-env:
-  path: ./src
-  CCN: 12
-  Threshold: nloc=30
-  arguments: 4
-  language: cpp
-  verbose: true
 
 jobs:
     build_unit_tets:
@@ -223,7 +216,7 @@ jobs:
                 verbose: ${{env.verbose}}
 
           
-    generate_code_coverage_report:
+    generate_ccm_ccr_reports:
         name: Generate Code Coverage Report
         runs-on: ubuntu-latest
         container: niwciu/stm32_dev_container:1.0.3
@@ -238,7 +231,7 @@ jobs:
               uses: actions/checkout@v4
               
             - name: Create PyScript Venv
-              working-directory: ./test/_config_scripts
+              working-directory: test/_config_scripts
               run: |
                 python3 -m venv .venv
                 source .venv/bin/activate
