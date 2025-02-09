@@ -16,23 +16,22 @@ jobs:
               shell: bash
               run: |
                 python3 -m venv venv
+                source venv/bin/activate
+                pip install -r requirements.txt
+                deactivate
 
-            - name: Create PyScript Venv 2
+            - name: Run All Targets
               working-directory: test/_config_scripts
               run: |
-                ls
-               
+                source venv/bin/activate
+                python3 run_targets/run_targets.py -rp
+                deactivate
 
-
-            - name: Create PyScript Venv
-              working-directory: test/_config_scripts
-              shell: bash
-              run: |
-                 source venv/bin/activate
-                 pip install -r requirements.txt
-
-            # - name: Create PyScript Venv
-            #   working-directory: test/_config_scripts
-            #   shell: bash
-            #   run: |
-                
+            - name: Save Generated Reports
+              uses: actions/upload-artifact@v4
+              with:
+                  name: CCM_CCR_Reports
+                  path: ./reports # need to save all files in folder
+                  if-no-files-found: warn
+                  retention-days: 5
+                  overwrite: true

@@ -1,11 +1,11 @@
 name: CI Pipeline
 on:
     workflow_dispatch: 
-    push:
-    pull_request: 
-      branches: 
-        - main
-        - develop
+    # push:
+    # pull_request: 
+    #   branches: 
+    #     - main
+    #     - develop
 
 jobs:
     build_unit_tets:
@@ -216,38 +216,38 @@ jobs:
                 verbose: ${{env.verbose}}
 
           
-    generate_ccm_ccr_reports:
-        name: Generate Code Coverage Report
-        runs-on: ubuntu-latest
-        container: niwciu/stm32_dev_container:1.0.3
-        needs: 
-            - run_clang-format_check
-            - run_unit_tests
-            - run_code_coverage_check
-            - run_cppcheck
-            - run_code_complexity_check
-        steps:
-            - name: checkout
-              uses: actions/checkout@v4
+    # generate_ccm_ccr_reports:
+    #     name: Generate Code Coverage Report
+    #     runs-on: ubuntu-latest
+    #     container: niwciu/stm32_dev_container:1.0.3
+    #     needs: 
+    #         - run_clang-format_check
+    #         - run_unit_tests
+    #         - run_code_coverage_check
+    #         - run_cppcheck
+    #         - run_code_complexity_check
+    #     steps:
+    #         - name: checkout
+    #           uses: actions/checkout@v4
               
-            - name: Create PyScript Venv
-              working-directory: test/_config_scripts
-              run: |
-                python3 -m venv .venv
-                source .venv/bin/activate
-                pip install -r requirements.txt
+    #         - name: Create PyScript Venv
+    #           working-directory: test/_config_scripts
+    #           run: |
+    #             python3 -m venv .venv
+    #             source .venv/bin/activate
+    #             pip install -r requirements.txt
 
-            - name: Run All Project Targets
-              working-directory: ./test/_config_scripts
-              run: |
-                python3 run_targets/run_targets.py -rp
-                deactivate
+    #         - name: Run All Project Targets
+    #           working-directory: ./test/_config_scripts
+    #           run: |
+    #             python3 run_targets/run_targets.py -rp
+    #             deactivate
 
-            - name: Save Generated Reports
-              uses: actions/upload-artifact@v4
-              with:
-                  name: CCM_CCR_Reports
-                  path: ./reports # need to save all files in folder
-                  if-no-files-found: warn
-                  retention-days: 5
-                  overwrite: true
+    #         - name: Save Generated Reports
+    #           uses: actions/upload-artifact@v4
+    #           with:
+    #               name: CCM_CCR_Reports
+    #               path: ./reports # need to save all files in folder
+    #               if-no-files-found: warn
+    #               retention-days: 5
+    #               overwrite: true
