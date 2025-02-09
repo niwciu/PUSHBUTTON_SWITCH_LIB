@@ -19,8 +19,14 @@ jobs:
             - name: Create PyScript Venv 2
               working-directory: test/_config_scripts
               run: |
-                source .venv/bin/activate
+                ls
+               
 
+
+            - name: Create PyScript Venv
+              working-directory: test/_config_scripts
+              run: |
+                 source .venv/bin/activate
 
             - name: Create PyScript Venv
               working-directory: test/_config_scripts
