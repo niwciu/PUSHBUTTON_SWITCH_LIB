@@ -18,7 +18,7 @@ def create_required_directories(config):
     ccm_path = os.path.join(base_report_path, "CCM")
     ccr_path = os.path.join(base_report_path, "CCR")
     json_all_path = os.path.join(ccr_path, "JSON_ALL")
-    ccr_html_out_path = os.path.join(json_all_path, "html_out")
+    ccr_html_out_path = os.path.join(json_all_path, "HTML_OUT")
 
     # Tworzenie folderów bazowych
     os.makedirs(base_report_path, exist_ok=True)
@@ -235,7 +235,8 @@ def generate_main_report(report_folder, modules_yaml_file):
                 file_path = os.path.join(report_folder, matching_files[0])
                 print(f"Znaleziono raport dla modułu: {module_name} w {file_path}")
                 # Generujemy przycisk z nazwą modułu
-                f.write(f'<li><a href="file://{os.path.abspath(file_path)}"><button class="report-button">{module_name}</button></a></li>\n')
+                # Teraz linki są względne, zamiast pełnej ścieżki
+                f.write(f'<li><a href="{matching_files[0]}"><button class="report-button">{module_name}</button></a></li>\n')
             else:
                 print(f"Brak pliku dla modułu: {module_name} w {report_folder}")
                 # Generujemy przycisk prowadzący do wspólnej strony o braku raportu
@@ -251,6 +252,7 @@ def generate_main_report(report_folder, modules_yaml_file):
 ''')
 
     print(f"Zapisano główny raport w {main_report_path}")
+
 
 
 # Funkcja do otwierania pliku HTML w domyślnej przeglądarce
@@ -306,7 +308,7 @@ def main():
         if report.lower() == 'ccm':
             reports_to_open.append("../../../reports/CCM/index.html")
         elif report.lower() == 'ccr':
-            reports_to_open.append("../ ../reports/CCR/JSON_ALL/html_out/coverage.html")
+            reports_to_open.append("../ ../reports/CCR/JSON_ALL/HTML_OUT/project_coverage.html")
         else:
             # Dla innych raportów, traktujemy je jako pełne ścieżki
             if os.path.exists(report):
