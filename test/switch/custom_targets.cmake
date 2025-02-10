@@ -84,7 +84,7 @@ add_custom_command(
     OUTPUT ../../../reports/CCR/switch/ ../../../reports/CCR/JSON_ALL/ ../../../reports/CCR/JSON_ALL/HTML_OUT/
     COMMAND ${CMAKE_COMMAND} -E make_directory ../../../reports/CCR/switch/
     COMMAND ${CMAKE_COMMAND} -E make_directory ../../../reports/CCR/JSON_ALL/
-	COMMAND ${CMAKE_COMMAND} -E make_directory ../../../reports/CCR/JSON_ALL//HTML_OUT/
+	COMMAND ${CMAKE_COMMAND} -E make_directory ../../../reports/CCR/JSON_ALL/HTML_OUT/
     COMMENT "Tworzenie katalogów raportów Code Coverage"
 )
 add_custom_target(ccr
@@ -111,8 +111,8 @@ add_custom_target(ccca gcovr
 )
 						
 add_custom_target(ccra  
-	COMMAND ${CMAKE_COMMAND} -E make_directory ../../../reports/CCR/HTML_OUT/
 	COMMAND ${CMAKE_COMMAND} -E make_directory ../../../reports/CCR/JSON_ALL/
+	COMMAND ${CMAKE_COMMAND} -E make_directory ../../../reports/CCR/JSON_ALL/HTML_OUT/
 	COMMAND gcovr 
 				-r ../../../ 
 				--json-add-tracefile \"../../../reports/CCR/JSON_ALL/coverage_*.json\"  
