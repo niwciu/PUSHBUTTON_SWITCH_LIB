@@ -13,53 +13,70 @@
 ############################################################################################################
 FROM ubuntu:latest
 
-# packages
+# Install necessary packages
 RUN apt-get update && apt-get install -y --no-install-recommends \
     ca-certificates \
     cmake \
-    g++ \ 
+    g++ \
     git \
     ninja-build \
     wget \
     xz-utils \
     python3 \
     python3-venv \
-    pip \
+    python3-pip \
     pipx \
     make \
     clang-format \
-    stlink-tools
+    stlink-tools && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Set working directory and switch to the new user
-WORKDIR /home/workspace
+# Create a new non-root user
+ARG USERNAME=developer
+ARG USER_HOME=/home/${USERNAME}
 
-#inlstall lizard & gcovr 
-# Install lizard & gcovr in the global directory
-RUN pipx install lizard && pipx install gcovr && pipx ensurepath && pipx runpip lizard install jinja2
+RUN groupadd -r ${USERNAME} && useradd -m -r -g ${USERNAME} -s /bin/bash ${USERNAME}
 
-# tools directory
-ARG TOOLS_DIRECTORY=/home/opt
-RUN mkdir -p ${TOOLS_DIRECTORY}
+# Set working directory
+WORKDIR ${USER_HOME}/workspace
 
-# arm toolchain
+# Ensure pipx installs globally and is available for all users
+ENV PIPX_BIN_DIR=/usr/local/bin
+ENV PIPX_HOME=/usr/local/pipx
+ENV PATH="${PIPX_BIN_DIR}:${PIPX_HOME}/bin:${PATH}"
+
+RUN pipx install --system-site-packages lizard && \
+    pipx install --system-site-packages gcovr && \
+    pipx runpip lizard install jinja2
+
+# Set tools directory
+ARG TOOLS_DIRECTORY=/opt/tools
+RUN mkdir -p ${TOOLS_DIRECTORY} && chown -R ${USERNAME}:${USERNAME} ${TOOLS_DIRECTORY}
+
+# Install ARM toolchain
 ARG ARM_TOOLCHAIN_VERSION=13.2
 ARG ARM_TOOLCHAIN_FILE=arm-gnu-toolchain-${ARM_TOOLCHAIN_VERSION}.rel1-x86_64-arm-none-eabi.tar.xz
 ARG ARM_TOOLCHAIN_DIRECTORY=arm-gnu-toolchain-${ARM_TOOLCHAIN_VERSION}.Rel1-x86_64-arm-none-eabi
 
-RUN wget -q https://developer.arm.com/-/media/Files/downloads/gnu/${ARM_TOOLCHAIN_VERSION}.rel1/binrel/${ARM_TOOLCHAIN_FILE} \
-    && tar xf ${ARM_TOOLCHAIN_FILE} -C ${TOOLS_DIRECTORY} \
-    && rm ${ARM_TOOLCHAIN_FILE}
-ENV PATH=${PATH}:${TOOLS_DIRECTORY}/${ARM_TOOLCHAIN_DIRECTORY}/bin
+RUN wget -q https://developer.arm.com/-/media/Files/downloads/gnu/${ARM_TOOLCHAIN_VERSION}.rel1/binrel/${ARM_TOOLCHAIN_FILE} && \
+    tar xf ${ARM_TOOLCHAIN_FILE} -C ${TOOLS_DIRECTORY} && \
+    rm ${ARM_TOOLCHAIN_FILE}
 
-# avr toolchain
+ENV PATH="${PATH}:${TOOLS_DIRECTORY}/${ARM_TOOLCHAIN_DIRECTORY}/bin"
 
-# cppcheck
+# Install cppcheck
 ARG CPPCHECK_VERSION=2.16.2
-RUN cd ${TOOLS_DIRECTORY} && git clone https://github.com/danmar/cppcheck.git && cd cppcheck && git checkout ${CPPCHECK_VERSION} \
-    && cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DUSE_MATCHCOMPILER=ON -G Ninja \
-    && cmake --build build && cmake --install build \
-    && cd .. && rm -rf cppcheck
+RUN git clone https://github.com/danmar/cppcheck.git /tmp/cppcheck && \
+    cd /tmp/cppcheck && git checkout ${CPPCHECK_VERSION} && \
+    cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DUSE_MATCHCOMPILER=ON -G Ninja && \
+    cmake --build build && cmake --install build && \
+    rm -rf /tmp/cppcheck
 
-RUN apt-get remove pipx -y
-RUN apt autoremove -y
-RUN rm -rf /var/lib/apt/lists/*
+# Set ownership and permissions
+RUN chown -R ${USERNAME}:${USERNAME} ${USER_HOME}
+
+# Switch to non-root user
+USER ${USERNAME}
+
+# Default command
+CMD ["/bin/bash"]
