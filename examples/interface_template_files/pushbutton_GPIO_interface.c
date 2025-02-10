@@ -3,8 +3,10 @@
 
 static void key_1_gpio_init(void);
 static PB_input_state_t get_key_1_state(void);
+/*************** For more pusbuttons *************/
 // static void key_2_gpio_init(void);
 // static PB_input_state_t get_key_2_state(void);
+/************************************************/
 
 PB_driver_interface_t KEY_1_GPIO_interface_struct = {
     key_1_gpio_init,
@@ -46,8 +48,9 @@ PB_driver_interface_t *pushbutton_1_GPIO_interface_get(void)
 {
     return &KEY_1_GPIO_interface_struct;
 }
-
+/*************** For more pusbuttons *************/
 // PB_driver_interface_t *pushbutton_2_GPIO_interface_get(void)
 // {
 //     return &KEY_2_GPIO_interface_struct;
 // }
+/************************************************/

@@ -15,43 +15,130 @@ add_custom_target(run pushbutton_test)
 # check if lizard software is available 
 find_program(lizard_program lizard)
 if(lizard_program)
-	message(STATUS "Lizard was found, you can use predefined targets for PUSHBUTTON src folder Code Complexity Metrics: \r\n\tccm,\r\n\tccmr,")
+	message(STATUS "Lizard was found, you can use predefined targets for src folder Code Complexity Metrics: \r\n\tccm,\r\n\tccmr,")
 else()
-	message(STATUS "Lizard was not found. \r\n\tInstall Lizard to get predefined targets for PUSHBUTTON src folder Code Complexity Metrics")
+	message(STATUS "Lizard was not found. \r\n\tInstall Lizard to get predefined targets for src folder Code Complexity Metrics")
 endif()
 # Prints CCM for src folder in the console
-add_custom_target(ccm lizard ../../../src/PUSHBUTTON/ --CCN 12 -Tnloc=30 -a 4 --languages cpp -V -i 1)
+add_custom_target(ccm lizard 
+						../../../src/pushbutton 
+						--CCN 12 -Tnloc=30 
+						-a 4 
+						--languages cpp 
+						-V 
+						-i 1)
 # Create CCM report in reports/Cylcomatic_Complexity/
-add_custom_target(ccmr lizard ../../../src/PUSHBUTTON --CCN 12 -Tnloc=30 -a 4 --languages cpp -V -o ../../../reports/Cyclomatic_Complexity/PUSHBUTTON/Lizard_report.html)
+add_custom_command(
+    OUTPUT ../../../reports/CCM/
+    COMMAND ${CMAKE_COMMAND} -E make_directory ../../../reports/CCM/
+    COMMENT "Tworzenie katalogów raportów Code Coverage"
+)
+add_custom_target(ccmr 
+	COMMAND ${CMAKE_COMMAND} -E make_directory ../../../reports/CCM/
+	COMMAND lizard 
+				../../../src/pushbutton 
+				--CCN 12 
+				-Tnloc=30 
+				-a 4 
+				--languages cpp 
+				-V 
+				-o ../../../reports/CCM/pushbutton.html
+)
 
 # TARGET FOR MAKING STATIC ANALYSIS OF THE SOURCE CODE AND UNIT TEST CODE
 # check if cppchec software is available 
 find_program(cppcheck_program cppcheck)
 if(cppcheck_program)
-	message(STATUS "CppCheck was found, you can use predefined targets for static analize : \r\n\tcppcheck_src,\r\n\tcppcheck_test,")
+	message(STATUS "CppCheck was found, you can use predefined targets for static analize : \r\n\tcppcheck,")
 else()
 	message(STATUS "CppCheck was not found. \r\n\tInstall CppCheck to get predefined targets for static analize")
 endif()
-# Prints static analize output for src folder in the console
-add_custom_target(cppcheck_src cppcheck ../../../src/PUSHBUTTON/ --enable=all --inconclusive --force --inline-suppr --platform=win64 --suppress=missingInclude --suppress=missingIncludeSystem --suppress=unusedFunction)
-# Prints static analize output for specific test_module folder in the console
-add_custom_target(cppcheck_test cppcheck ../../../test/pushbutton -itest/pushbutton/out -itest/pushbutton/out_avr --enable=all --inconclusive --force --inline-suppr --platform=win64 --suppress=missingInclude --suppress=missingIncludeSystem || echo "test")
-
+add_custom_target(cppcheck cppcheck
+					../../../src/pushbutton
+					../../../test/pushbutton
+					-i../../../test/pushbutton/out
+					--enable=all
+					--force
+					# --inconclusive
+					--std=c99
+					# --inline-suppr 
+					# --platform=win64 
+					--check-level=exhaustive
+					--suppress=missingIncludeSystem 
+					--suppress=missingInclude
+					--suppress=unusedFunction:../../../test/pushbutton/pushbutton_test_runner.c:3
+					# --checkers-report=cppcheck_checkers_report.txt
+					)
 # TARGET FOR CREATING CODE COVERAGE REPORTS
 # check if python 3 and gcovr are available 
 find_program(GCOVR gcovr)
-find_program(PYTHON3 python3)
-if(PYTHON3)
-	if(GCOVR)
-		message(STATUS "python 3 and gcovr was found, you can use predefined targets for uint tests code coverage report generation : \r\n\tccr,")
-	else()
-		message(STATUS "pyton 3 was found but gcovr was not found. \r\n\tInstall gcovr to get predefined targets for uint tests code coverage report generation")
-	endif()
+if(GCOVR)
+	message(STATUS "python 3 and gcovr was found, you can use predefined targets for uint tests code coverage report generation : 
+					\r\tccc - Code Coverage Check, 
+					\r\tccr - Code Coverage Reports generation,
+					\r\tccca - Code Coverage Check All -> whole project check, 
+					\r\tccra - Code Coverage Reports All -> whole project raport generation")
 else()
-	if(GCOVR)
-		message(STATUS "python3 was not found. \r\n\tInstall python 3 to get predefined targets for uint tests code coverage report generation")
-	else()
-		message(STATUS "python3 and gcovr were not found. \r\n\tInstall python 3 and gcovr to get predefined targets for uint tests code coverage report generation")
-	endif()
+	message(STATUS "pyton 3 was found but gcovr was not found. \r\n\tInstall gcovr to get predefined targets for uint tests code coverage report generation")
 endif()
-add_custom_target(ccr python3 -m gcovr CMakeFiles/pushbutton_test.dir/D_/EMBEDDED/LIBRARIES/C_libraries/PUSHBUTTON_SWITCH_LIB/src/PUSHBUTTON -r ../../.. --html-details ../../../reports/Code_Coverage/PUSHBUTTON/pushbutton_gcov_report.html)
+add_custom_command(
+    OUTPUT ../../../reports/CCR/pushbutton/ ../../../reports/CCR/JSON_ALL/ ../../../reports/CCR/JSON_ALL/HTML_OUT/
+    COMMAND ${CMAKE_COMMAND} -E make_directory ../../../reports/CCR/pushbutton/
+    COMMAND ${CMAKE_COMMAND} -E make_directory ../../../reports/CCR/JSON_ALL/
+	COMMAND ${CMAKE_COMMAND} -E make_directory ../../../reports/CCR/JSON_ALL/HTML_OUT/
+    COMMENT "Tworzenie katalogów raportów Code Coverage"
+)
+add_custom_target(ccr
+	COMMAND ${CMAKE_COMMAND} -E make_directory ../../../reports/CCR/pushbutton/
+	COMMAND ${CMAKE_COMMAND} -E make_directory ../../../reports/CCR/JSON_ALL/
+	COMMAND gcovr 
+				-r ../../../src/pushbutton 
+				--json ../../../reports/CCR/JSON_ALL/coverage_pushbutton.json
+				--json-base  src/pushbutton
+				--html-details ../../../reports/CCR/pushbutton/pushbutton_report.html 
+				.
+)
+		
+add_custom_target(ccc gcovr  
+						-r ../../../src/pushbutton 
+						--fail-under-line 90
+						.
+)
+
+add_custom_target(ccca gcovr  
+						-r ../../../ 
+						--json-add-tracefile \"../../../reports/CCR/JSON_ALL/coverage_*.json\"  
+						.
+)
+						
+add_custom_target(ccra  
+	COMMAND ${CMAKE_COMMAND} -E make_directory ../../../reports/CCR/JSON_ALL/HTML_OUT/
+	COMMAND ${CMAKE_COMMAND} -E make_directory ../../../reports/CCR/JSON_ALL/
+	COMMAND gcovr 
+				-r ../../../ 
+				--json-add-tracefile \"../../../reports/CCR/JSON_ALL/coverage_*.json\"  
+				--html-details -o ../../../reports/CCR/JSON_ALL/HTML_OUT/project_coverage.html
+				--html-theme github.dark-green
+				.
+)
+add_dependencies(ccra ccr)
+add_dependencies(ccca ccr)
+
+find_program(CLANG_FORMAT clang-format)
+if(CLANG_FORMAT)
+	message(STATUS "clang-format was found, you can use predefined target for formating the code in project predefined standard : \r\n\tformat \r\n\tformat_test")
+else()
+	message(STATUS "clang-format was not found. \r\n\tInstall clang-format to get predefined target for formating the code in project predefined standard")
+endif()
+add_custom_target(format  clang-format 
+							-i 
+							-style=file 
+							../../../src/pushbutton/*.c 
+							../../../src/pushbutton/*.h
+)
+add_custom_target(format_test  clang-format 
+								-i 
+								-style=file 
+								../*.c 
+								../*.h
+)

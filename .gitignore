@@ -9,5 +9,9 @@ library_documentation/
 .cproject
 .project
 .settings/
+reports/
+
+.venv/
+venv/
 
 
