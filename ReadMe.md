@@ -1,7 +1,7 @@
 # PUSHBUTTON_SWITCH_LIB - simple C cross-platform library 
 ![keypad_lib](https://github.com/user-attachments/assets/d7c28488-53b3-46a1-956d-2e8736f214d3)    
 
-![GitHub License](https://img.shields.io/github/license/niwciu/PUSHBUTTON_SWITCH_LIB) ![GitHub top language](https://img.shields.io/github/languages/top/niwciu/PUSHBUTTON_SWITCH_LIB) ![GitHub Release](https://img.shields.io/github/v/release/niwciu/PUSHBUTTON_SWITCH_LIB) <a href='https://coveralls.io/github/niwciu/PUSHBUTTON_SWITCH_LIB?branch=feature/code_coverage_page_deploy'><img src='https://coveralls.io/repos/github/niwciu/PUSHBUTTON_SWITCH_LIB/badge.svg?branch=feature/code_coverage_page_deploy' alt='Coverage Status' /></a> ![Unit Tests](https://github.com/niwciu/PUSHBUTTON_SWITCH_LIB/actions/workflows/CI_workflow.yml/badge.svg)
+![GitHub License](https://img.shields.io/github/license/niwciu/PUSHBUTTON_SWITCH_LIB) ![GitHub top language](https://img.shields.io/github/languages/top/niwciu/PUSHBUTTON_SWITCH_LIB) ![GitHub Release](https://img.shields.io/github/v/release/niwciu/PUSHBUTTON_SWITCH_LIB) <a href='https://coveralls.io/github/niwciu/PUSHBUTTON_SWITCH_LIB?branch=feature/code_coverage_page_deploy'><img src='https://coveralls.io/repos/github/niwciu/PUSHBUTTON_SWITCH_LIB/badge.svg?branch=feature/code_coverage_page_deploy' alt='Coverage Status' /></a> ![CI PiPeline](https://github.com/niwciu/PUSHBUTTON_SWITCH_LIB/actions/workflows/CI_Pipeline.yml/badge.svg)
 
 <b><a href='https://niwciu.github.io/PUSHBUTTON_SWITCH_LIB/reports/CCR/JSON_ALL/HTML_OUT/project_coverage.html'>Library GCOVR Report</a></b>  
 <b><a href='https://niwciu.github.io/PUSHBUTTON_SWITCH_LIB/reports/CCM/index.html'>Library Code Complexity Report</a></b>  
@@ -34,7 +34,9 @@ The `PUSHBUTTON_SWITCH_LIB` is a simple cross-platform C library providing inter
 
 For more information about usage, examples, colaboration and all features please refer to [project wiki](https://github.com/niwciu/PUSHBUTTON_SWITCH_LIB/wiki)
 
+<div align="center">
+
 ***
 ![myEmbeddedWayBanerWhiteSmaller](https://github.com/user-attachments/assets/f4825882-e285-4e02-a75c-68fc86ff5716)
 ***
-
+</div>
