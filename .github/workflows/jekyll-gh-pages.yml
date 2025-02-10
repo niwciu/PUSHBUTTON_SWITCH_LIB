@@ -31,12 +31,42 @@ jobs:
 
       - name: Create Reports Folder
         run: mkdir reports
-        
-      - name: Get CCM CCR Reports
+      
+      - name: Get workflow_id for "test" workflow
+        id: get_workflow_id
+        run: |
+          WORKFLOW_ID=$(curl -s -H "Authorization: Bearer ${{ secrets.GH_PAT }}" \
+              "https://api.github.com/repos/${{ github.repository }}/actions/workflows" \
+              | jq -r '.workflows[] | select(.name=="test") | .id')
+          
+          if [ -z "$WORKFLOW_ID" ]; then
+            echo "Nie znaleziono workflow o nazwie 'test'"
+            exit 1
+          fi
+
+          echo "WORKFLOW_ID=$WORKFLOW_ID" >> $GITHUB_ENV
+
+      - name: Get run-id from last "test" workflow run
+        id: get_run_id
+        run: |
+          RUN_ID=$(curl -s -H "Authorization: Bearer ${{ secrets.GH_PAT }}" \
+              "https://api.github.com/repos/${{ github.repository }}/actions/workflows/${{ env.WORKFLOW_ID }}/runs?status=completed" \
+              | jq -r '.workflow_runs[0].id')
+
+          if [ -z "$RUN_ID" ]; then
+            echo "Nie znaleziono zakończonych uruchomień dla workflow ID ${{ env.WORKFLOW_ID }}"
+            exit 1
+          fi
+
+          echo "RUN_ID=$RUN_ID" >> $GITHUB_ENV
+
+      - name: Pobierz artefakty z workflow "generate-reports"
         uses: actions/download-artifact@v4
         with:
-          name: CCM_CCR_Reports
-          path: reports/
+          name: CCM_CCR_Reports  # Nazwa artefaktu
+          github-token: ${{ secrets.GH_PAT }}
+          repository: ${{ github.repository }}
+          run-id: ${{ env.RUN_ID }}
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
