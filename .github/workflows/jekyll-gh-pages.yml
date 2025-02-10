@@ -38,7 +38,7 @@ jobs:
         with:
           name: CCM_CCR_Reports
           repo: ${{ github.repository }}
-          workflow: CI_Pipeline.yaml
+          workflow: CI_Pipeline.yml
           path: ./reports/
           search_artifacts: true
 
