@@ -208,46 +208,51 @@ jobs:
             - name: Lizard Runner
               uses: niwciu/Lizard-Runner@develop
               with: 
-                path: ${{env.path}}/${{matrix.module}}
-                CCN: ${{env.CCN}}
-                Threshold: ${{env.Threshold}}
-                arguments: ${{env.arguments}}
-                language: ${{env.language}}
-                verbose: ${{env.verbose}}
+                path: ./src/${{matrix.module}}
+                CCN: 12
+                Threshold: nloc=30
+                arguments: 4
+                language: cpp
+                verbose: true
 
-          
-    # generate_ccm_ccr_reports:
-    #     name: Generate Code Coverage Report
-    #     runs-on: ubuntu-latest
-    #     container: niwciu/stm32_dev_container:1.0.3
-    #     needs: 
-    #         - run_clang-format_check
-    #         - run_unit_tests
-    #         - run_code_coverage_check
-    #         - run_cppcheck
-    #         - run_code_complexity_check
-    #     steps:
-    #         - name: checkout
-    #           uses: actions/checkout@v4
+    generate_ccm_ccr_reports:
+        name: Generate Code Coverage Report
+        runs-on: ubuntu-latest
+        container: 
+          image: niwciu/stm32_dev_container:1.0.3
+          options: --user root
+        needs: 
+            - run_clang-format_check
+            - run_unit_tests
+            - run_code_coverage_check
+            - run_cppcheck
+            - run_code_complexity_check
+        steps:
+            - name: checkout
+              uses: actions/checkout@v4
               
-    #         - name: Create PyScript Venv
-    #           working-directory: test/_config_scripts
-    #           run: |
-    #             python3 -m venv .venv
-    #             source .venv/bin/activate
-    #             pip install -r requirements.txt
+            - name: Create PyScript Venv
+              working-directory: test/_config_scripts
+              shell: bash
+              run: |
+                python3 -m venv venv
+                source venv/bin/activate
+                pip install -r requirements.txt
+                deactivate
 
-    #         - name: Run All Project Targets
-    #           working-directory: ./test/_config_scripts
-    #           run: |
-    #             python3 run_targets/run_targets.py -rp
-    #             deactivate
+            - name: Run All Targets
+              working-directory: test/_config_scripts/run_targets
+              shell: bash
+              run: |
+                source ../venv/bin/activate
+                python3 run_targets.py -rp
+                deactivate
 
-    #         - name: Save Generated Reports
-    #           uses: actions/upload-artifact@v4
-    #           with:
-    #               name: CCM_CCR_Reports
-    #               path: ./reports # need to save all files in folder
-    #               if-no-files-found: warn
-    #               retention-days: 5
-    #               overwrite: true
+            - name: Save Generated Reports
+              uses: actions/upload-artifact@v4
+              with:
+                  name: CCM_CCR_Reports
+                  path: ./reports # need to save all files in folder
+                  if-no-files-found: warn
+                  retention-days: 5
+                  overwrite: true
