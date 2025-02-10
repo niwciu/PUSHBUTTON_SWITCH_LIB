@@ -25,65 +25,18 @@ jobs:
   # Build job
   build:
     runs-on: ubuntu-latest
-    # container: niwciu/stm32_dev_container:latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      
-      - name: Install Ninja
-        uses: seanmiddleditch/gha-setup-ninja@v3
-            
-      - name: Create Reports Folders
-        run: | 
-          mkdir -p reports/Cyclomatic_Complexity/PUSHBUTTON
-          mkdir -p reports/Cyclomatic_Complexity/SWITCH
-          mkdir -p reports/Code_Coverage/PUSHBUTTON
-          mkdir -p reports/Code_Coverage/SWITCH
 
-      - name: Run Lizard for PUSHBUTTON
-        uses: niwciu/Lizard-Runner@main
+      - name: Create Reports Folder
+        run: mkdir reports
+        
+      - name: Get CCM CCR Reports
+        uses: actions/download-artifact@v4
         with:
-          path: "./src/PUSHBUTTON"
-          CCN: "12"
-          Threshold: "nloc=30"
-          language: "cpp"
-          verbose: "true"
-          arguments: "4"
-          output_file: "./reports/Cyclomatic_Complexity/PUSHBUTTON/Lizard_report.html"
-      
-      - name: Build pushbutton binary
-        working-directory: test/pushbutton
-        run: |
-          mkdir out
-          cmake -Bout -GNinja
-          cmake --build out
-
-      - name: Run pushbutton tests
-        working-directory: test/pushbutton/out
-        run: ./pushbutton_test -v
-
-      - name: Generate Code Coverage Report
-        uses: niwciu/gcovr-action@main
-        with:
-          html-out: ./reports/Code_Coverage/PUSHBUTTON/pushbutton_gcov_report.html
-          html-theme: github.dark-green
-      
-      - name: Build swtich binary
-        working-directory: test/switch
-        run: |
-          mkdir out
-          cmake -Bout -GNinja
-          cmake --build out
-
-      - name: Run switch tests
-        working-directory: test/switch/out
-        run: ./switch_test -v
-
-      - name: Generate Code Coverage Report
-        uses: niwciu/gcovr-action@main
-        with:
-          html-out: ./reports/Code_Coverage/SWITCH/switch_gcov_report.html
-          html-theme: github.dark-green
+          name: CCM_CCR_Reports
+          path: reports/
 
       - name: Setup Pages
         uses: actions/configure-pages@v5

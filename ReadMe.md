@@ -3,11 +3,9 @@
 
 ![GitHub License](https://img.shields.io/github/license/niwciu/PUSHBUTTON_SWITCH_LIB) ![GitHub top language](https://img.shields.io/github/languages/top/niwciu/PUSHBUTTON_SWITCH_LIB) ![GitHub Release](https://img.shields.io/github/v/release/niwciu/PUSHBUTTON_SWITCH_LIB) <a href='https://coveralls.io/github/niwciu/PUSHBUTTON_SWITCH_LIB?branch=feature/code_coverage_page_deploy'><img src='https://coveralls.io/repos/github/niwciu/PUSHBUTTON_SWITCH_LIB/badge.svg?branch=feature/code_coverage_page_deploy' alt='Coverage Status' /></a> ![Unit Tests](https://github.com/niwciu/PUSHBUTTON_SWITCH_LIB/actions/workflows/CI_workflow.yml/badge.svg)
 
-<b><a href='https://niwciu.github.io/PUSHBUTTON_SWITCH_LIB/reports/Code_Coverage/PUSHBUTTON/pushbutton_gcov_report.html'>PushButton GCOVR Report</a></b>  
-<b><a href='https://niwciu.github.io/PUSHBUTTON_SWITCH_LIB/reports/Cyclomatic_Complexity/PUSHBUTTON/Lizard_report.html'>PushButton Code Complexity Report</a></b>  
-  
-<b><a href='https://niwciu.github.io/PUSHBUTTON_SWITCH_LIB/reports/Code_Coverage/SWITCH/switch_gcov_report.html'>Switch GCOVR Report</a></b>   
-<b><a href='https://niwciu.github.io/PUSHBUTTON_SWITCH_LIB/reports/Cyclomatic_Complexity/SWITCH/Lizard_report.html'>Switch Code Complexity Report</a></b>
+<b><a href='https://niwciu.github.io/PUSHBUTTON_SWITCH_LIB/reports/CCR/JSON_ALL/HTML_OUT/project_coverage.html'>Library GCOVR Report</a></b>  
+<b><a href='https://niwciu.github.io/PUSHBUTTON_SWITCH_LIB/reports/CCM/index.html'>Library Code Complexity Report</a></b>  
+
 
 The `PUSHBUTTON_SWITCH_LIB` is a simple cross-platform C library providing interfaces for pushbuttons and two-state switches (two-state input signals).
 
