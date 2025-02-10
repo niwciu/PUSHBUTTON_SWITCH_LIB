@@ -35,7 +35,7 @@ set(INCLUDE_DIRS
 # Core/Src
 # Core/Startup
 
-../../src/SWITCH
+../../src/switch
 
 ./Core/Inc 
 ./Drivers/STM32G0xx_HAL_Driver/Inc 
@@ -62,7 +62,7 @@ set(C_SRCS
     Core/Src/system_stm32g0xx.c
     
 
-    ../../src/SWITCH/switch.c
+    ../../src/switch/switch.c
     
 	
 )
@@ -72,7 +72,7 @@ set(ASM_SRCS
 )
 
 set(GLOBAL_DEFINES
--DDEBUG 
+-DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
 -DSTM32G071xx 
 -DUSE_FULL_LL_DRIVER 
 -DHSE_VALUE=8000000 
