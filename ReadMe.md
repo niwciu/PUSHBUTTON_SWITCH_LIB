@@ -1,10 +1,11 @@
 # PUSHBUTTON_SWITCH_LIB - simple C cross-platform library 
-![keypad_lib](https://github.com/user-attachments/assets/d7c28488-53b3-46a1-956d-2e8736f214d3)    
+![keypad_lib](https://github.com/user-attachments/assets/91f53293-e0e2-43eb-ac10-cd1eeca71594) 
 
-![GitHub License](https://img.shields.io/github/license/niwciu/PUSHBUTTON_SWITCH_LIB) ![GitHub top language](https://img.shields.io/github/languages/top/niwciu/PUSHBUTTON_SWITCH_LIB) ![GitHub Release](https://img.shields.io/github/v/release/niwciu/PUSHBUTTON_SWITCH_LIB) <a href='https://coveralls.io/github/niwciu/PUSHBUTTON_SWITCH_LIB?branch=feature/code_coverage_page_deploy'><img src='https://coveralls.io/repos/github/niwciu/PUSHBUTTON_SWITCH_LIB/badge.svg?branch=feature/code_coverage_page_deploy' alt='Coverage Status' /></a> ![CI PiPeline](https://github.com/niwciu/PUSHBUTTON_SWITCH_LIB/actions/workflows/CI_Pipeline.yml/badge.svg)
+![GitHub License](https://img.shields.io/github/license/niwciu/PUSHBUTTON_SWITCH_LIB) ![GitHub top language](https://img.shields.io/github/languages/top/niwciu/PUSHBUTTON_SWITCH_LIB) ![GitHub Release](https://img.shields.io/github/v/release/niwciu/PUSHBUTTON_SWITCH_LIB) ![CI PiPeline](https://github.com/niwciu/PUSHBUTTON_SWITCH_LIB/actions/workflows/CI_Pipeline.yml/badge.svg)
 
 <b><a href='https://niwciu.github.io/PUSHBUTTON_SWITCH_LIB/reports/CCR/JSON_ALL/HTML_OUT/project_coverage.html'>Library GCOVR Report</a></b>  
-<b><a href='https://niwciu.github.io/PUSHBUTTON_SWITCH_LIB/reports/CCM/index.html'>Library Code Complexity Report</a></b>  
+<b><a href='https://niwciu.github.io/PUSHBUTTON_SWITCH_LIB/reports/CCM/index.html'>Library Code Complexity Report</a></b>  <br><br>
+<b><a href='https://niwciu.github.io/PUSHBUTTON_SWITCH_LIB/doc/lib_doc/html/index.html'>Doxygen Code Documentation </a></b> 
 
 
 The `PUSHBUTTON_SWITCH_LIB` is a simple cross-platform C library providing interfaces for pushbuttons and two-state switches (two-state input signals).
