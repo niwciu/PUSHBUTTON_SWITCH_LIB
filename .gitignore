@@ -3,6 +3,7 @@ Release/
 Debug/
 Build/
 library_documentation/
+lib_doc/
 .vscode/
 # HW test ingnored files
 .metadata/
